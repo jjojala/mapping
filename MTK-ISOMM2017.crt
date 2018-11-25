@@ -1,0 +1,779 @@
+
+# 
+101		CLASS=CONTOUR
+102		CLASS=INDEX
+103		CLASS=FORMLINE
+
+# Reunaviivatyypit:
+# 30211 - yksikäsitteinen reunaviiva
+# 30212 - epämääräinen reunaviiva
+# 30100 - keinotekoinen rantaviiva
+# 30900 - vesialueiden välinen reuna
+# 30999 - tekninen reunaviiva
+
+# Suoja-alue ja sen reunaviiva, ampuma-alueen reunaviiva
+#		LUOKKA=62200
+#		LUOKKA=62200
+#		LUOKKA=62100
+
+# Kunta (alue)
+#		LUOKKA=84200
+
+# Kallioaluetta (34100), ei rajata
+214		LUOKKA=34100
+0		KARTOGLK=34100 AND (LUOKKA=30211 OR LUOKKA=30212)
+
+#Valtakunnan rajapyykki	82500
+526		LUOKKA=82500
+#Kunnan hallintokeskus	
+#Läänin pääkaupunki (ei ylläpidettävä kohde)	84301
+#Muu kaupunki	84302
+#Muu kunta	84303
+#Aluemeren ulkoraja	82100
+#Kunnan hallintoraja	
+#Valtakunnan raja	84111
+#Aluehallintoviraston toimialueen raja	84112
+#Kunnan raja	84113
+#Käymätön raja	84114
+#Maakunnan raja	84115
+#Rajavyöhykkeen takaraja	82200
+#Sisäisten aluevesien ulkoraja	82300
+#Ulko- ja sisäsaariston raja	82400
+#Muuntaja	22100
+531		LUOKKA=22100
+
+Puhelinlinjan symboli (poistunut kohde)	24191
+510		LUOKKA=24191
+
+#Puhelupaikka (poistunut kohde)	24200
+#Putkijohdon symboli	
+#Putkijohdon symboli, kaasu	26191
+529		LUOKKA=26191
+
+#Putkijohdon symboli, kiinteä aine	26192
+529		LUOKKA=26192
+
+#Putkijohdon symboli, lämpö	26193
+529		LUOKKA=26193
+
+#Putkijohdon symboli, vesi	26194
+529		LUOKKA=26194
+
+#Putkijohdon symboli, vesihöyry	26195
+529		LUOKKA=26195
+
+#Putkijohdon symboli, viemäri	26196
+529		LUOKKA=26196
+
+#Putkijohdon symboli, öljy	26197
+529		LUOKKA=26197
+
+#Suurjännitelinjan pylväs	22392
+#Sähkölinjan symboli (tallennettu alaluokkiin)	22391
+511.1	LUOKKA=22391
+
+#Suurjännitelinjan symboli	22394
+511.1	LUOKKA=22394
+
+#Jakelujännitelinjan symboli	22395
+510		LUOKKA=22395
+
+#Vedenottamo	26200
+#Vesitorni	45800
+524		LUOKKA=45800
+
+#Muuntoasema	22200
+531		LUOKKA=22200
+
+#Puhelinlinja (poistunut kohde)	24100
+510		LUOKKA=24100
+
+#Putkijohto	
+#Putkijohto, kaasu	26111
+529		LUOKKA=26111
+
+#Putkijohto, kiinteä aine	26112
+529		LUOKKA=26112
+
+#Putkijohto, lämpö	26113
+529		LUOKKA=26113
+
+#Putkijohto, vesi	26114
+529		LUOKKA=26114
+
+#Putkijohto, vesihöyry	26115
+529		LUOKKA=26115
+
+#Putkijohto, viemäri	26116
+529		LUOKKA=26116
+
+#Putkijohto, öljy	26117
+529		LUOKKA=26117
+
+#Sähkölinja (tallennettu alaluokkiin)	22300
+510		LUOKKA=22300
+
+#Sähkölinja, suurjännite 	22311
+511.1	LUOKKA=22311
+
+#Sähkölinja, jakelujännite 	22312
+510		LUOKKA=22312
+
+#Karttasymboli	
+#Eloperäinen ainessymboli	32191
+#Hieno kivennäisainessymboli	32192
+#Hautausmaan symboli	32291
+520		LUOKKA=32291
+
+#Louhoksen symboli	32591
+#Niityn symboli	32891, niitty rajataan
+401		LUOKKA=32891
+415		KARTOGLK=32891 AND LUOKKA=30211
+416		KARTOGLK=32891 AND LUOKKA=30212
+
+#Täytemaan symboli	33091
+213		LUOKKA=33091
+415		KARTOGLK=32891 AND LUOKKA=33091
+416		KARTOGLK=32891 AND LUOKKA=33091
+
+#Varastoalueen symboli	38991
+#501.1	LUOKKA=38991
+
+#Tunnelin aukko	16800
+512.1	LUOKKA=16800
+
+#Kolmiopiste	
+#Kolmiopiste, I luokka	95111
+#Kolmiopiste, II luokka	95112
+#Kolmiopiste, III luokka	95113
+#Korkeuskiintopiste	
+#Korkeuskiintopiste, I luokka	95211
+#Korkeuskiintopiste, II luokka	95212
+#Korkeuskiintopiste, III luokka	95213
+#Korkeuskiintopiste, IV luokka	95214
+#Vesiasteikko	95300
+#Maanpintapiste	
+#Viettoviiva	
+#Korkeuskäyrän viettoviiva	52192
+#Apukäyrän viettoviiva	52193
+#Syvyyskäyrän viettoviiva 	54192
+#Korkeusmalli_2	
+#Korkeusmalli_10	
+#Korkeusmalli_25 (poistunut tuote)	
+#Korkeuskäyrän korkeusarvo	52191
+#Korkeuspiste (poistunut kohde)	52210
+#Syvyyskäyrän syvyysarvo	54191
+#Syvyyspiste	54210
+#Korkeuskäyrä	52100
+#Syvyyskäyrä	54100
+#Autoliikennealue	32421
+#Hautausmaa	32200, selvä rajaus
+520		LUOKKA=32200
+415		KARTOGLK=32200 AND (LUOKKA=30211 OR LUOKKA=30212)
+
+#Hietikko	34300, rajaus mahdollinen
+213		LUOKKA=34300
+415		KARTOGLK=32200 AND LUOKKA=30211
+416		KARTOGLK=32200 AND LUOKKA=30212
+
+#Kaatopaikka	32300
+520.2	LUOKKA=32300
+415		KARTOGLK=32300 AND LUOKKA=30211
+416		KARTOGLK=32300 AND LUOKKA=30212
+
+#Kallio - alue	34100, reunaviivaa ei piirretä
+214		LUOKKA=34100
+
+#Kivikko	34700, reunaviivaa ei piirretä
+211		LUOKKA=34700
+
+#Lentokenttäalue	
+#Lentokentän kiitotie (tallennettu alaluokkiin)	32410
+520.2	LUOKKA=32410
+
+#Lentokentän kiitotie, päällystetty 	32411
+520.2	LUOKKA=32410
+
+#Lentokentän kiitotie, päällystämätön 	32412
+520.2	LUOKKA=32412
+
+#Muu lentokenttäalue	32413
+520.2	LUOKKA=32413
+
+#Muu lentokenttäalue, päällystetty 	32415
+520.2	LUOKKA=32415
+
+#Muu lentokenttäalue, päällystämätön 	32416
+520.2	LUOKKA=32416
+
+#Muu lentoliikennealue	32414
+520.2	LUOKKA=32414
+
+#Muu lentoliikennealue, päällystetty 	32417
+520.2	LUOKKA=32417
+
+#Muu lentoliikennealue, päällystämätön 	32418
+520.2	LUOKKA=32418
+
+#Louhos	32500, rajataan
+213		LUOKKA=32500
+415		KARTOGLK=32500 AND LUOKKA=30211
+416		KARTOGLK=32500 AND LUOKKA=30212
+
+#Maa-aineksenottoalue	
+#Maa-aineksenottoalue, karkea kivennäisaines	32111
+213		LUOKKA=32111
+415		KARTOGLK=32111 AND LUOKKA=30211
+416		KARTOGLK=32111 AND LUOKKA=30212
+
+#Maa-aineksenottoalue, hieno kivennäisaines	32112
+213		LUOKKA=32112
+415		KARTOGLK=32112 AND LUOKKA=30211
+416		KARTOGLK=32112 AND LUOKKA=30212
+
+#Maa-aineksenottoalue, eloperäinen aines	32113
+213		LUOKKA=32113
+415		KARTOGLK=32113 AND LUOKKA=30211
+416		KARTOGLK=32113 AND LUOKKA=30212
+
+#Maatalousmaa	
+#Pelto	32611, rajataan
+412		LUOKKA=32611
+415		KARTOGLK=32611 AND LUOKKA=30211
+416		KARTOGLK=32611 AND LUOKKA=30212
+
+#Puutarha	32612
+413		LUOKKA=32612
+415		KARTOGLK=32612 AND LUOKKA=30211
+416		KARTOGLK=32612 AND LUOKKA=30212
+
+#Niitty	32800
+401		LUOKKA=32800
+415		KARTOGLK=32800 AND LUOKKA=30211
+416		KARTOGLK=32800 AND LUOKKA=30212
+
+#Puisto	32900
+401		LUOKKA=32900
+415		KARTOGLK=32900 AND LUOKKA=30211
+416		KARTOGLK=32900 AND LUOKKA=30212
+
+#Ratapiha (poistunut kohde)	32431
+#Soistuma	35300, ei rajata
+310		35300
+
+#Suo (tallennettu alaluokkiin)	35400, ei rajata
+308		35400
+
+#Suo, helppokulkuinen puuton 	35411
+308		35411
+403		35411
+416		KARTOGLK=35411 AND (LUOKKA=30211 OR LUOKKA=30212)
+
+#Suo, helppokulkuinen metsää kasvava 	35412, ei rajata
+308		35412
+
+#Suo, vaikeakulkuinen puuton 	35421, ei rajata
+307.1	35421
+403		35421
+416		KARTOGLK=35421 AND (LUOKKA=30211 OR LUOKKA=30212)
+
+#Suo, vaikeakulkuinen metsää kasvava 	35422, suota ei rajata
+307.1	LUOKKA=35422
+
+#Täytemaa	33000
+403		LUOKKA=33000
+415		KARTOGLK=33000 AND LUOKKA=30211
+416		KARTOGLK=33000 AND LUOKKA=30212
+
+#Urheilu- ja virkistysalue	33100
+501.1	LUOKKA=33100
+415		KARTOGLK=33100 AND LUOKKA=30211
+416		KARTOGLK=33100 AND LUOKKA=30212
+
+#Vakavesi	
+#Järvivesi	36200
+301.1	LUOKKA=36200
+301.2	KARTOGLK=36200 AND (LUOKKA=30211 OR LUOKKA=30100)
+#416		KARTOGLK=36200 AND LUOKKA=30212
+
+#Merivesi	36211
+301.1	LUOKKA=36211
+301.2	KARTOGLK=36211 AND (LUOKKA=30211 OR LUOKKA=30100)
+
+#Virtavesialue	36313
+301.1	LUOKKA=36313
+301.2	KARTOGLK=36213 AND (LUOKKA=30211 OR LUOKKA=30100)
+
+#Harva louhikko	34200
+208.1	LUOKKA=34200
+
+#Kallio - symboli	34100
+
+#Kivi	34600
+205		LUOKKA=34600
+
+#Lähde	36100
+312		LUOKKA=36100
+
+#Merkittävä luontokohde	34900
+419		LUOKKA=34900
+
+#Metsämaan kasvillisuus	
+#Havumetsä	32710
+#Lehtimetsä	32713
+#Sekametsä	32714
+#Varvikko	32715
+#Pensaikko	32719
+#Metsämaan muokkaus	
+
+#Metsämaan ojitus	32721
+306		LUOKKA=32721
+
+#Vaotettu alue (poistunut kohde)	32722
+#Puu	35100
+417		LUOKKA=35100
+
+#Vesikuoppa	36400
+303		LUOKKA=36400
+
+#Virtaveden juoksusuunta (tallennettu alaluokkiin)	36391
+#Kapean virtaveden juoksusuunta	36392
+#Leveän virtaveden juoksusuunta	36393
+#Vedenpinnan korkeusluku	36291
+
+#Jyrkänne	34400
+201		LUOKKA=34400
+
+#Kalliohalkeama	34500
+
+#Luiska	34800
+
+#Maastokuvion reuna, kuvataan sellaisenaan vain ellei liity mihinkään
+#Yksikäsitteinen reunaviiva	30211
+415		LUOKKA=30211 AND KARTOGLK=0
+
+#Epämääräinen reunaviiva	30212
+416		LUOKKA=30212 AND KARTOGLK=0
+
+#Keinotekoinen rantaviiva	30100
+#Vesialueiden välinen reuna	30900
+
+
+#Pato	30300
+#Puurivi	35200
+#Sulkuportti	30400
+#Suojänne	35500
+#Maasto/1 tekninen viiva 	30999
+
+#Virtavesi - kapea	
+#Virtavesi, alle 2m	36311
+305		LUOKKA=36311
+
+#Virtavesi, 2-5m	36312
+304		LUOKKA=36312
+
+#Maatuva vesialue	38300
+310		LUOKKA=38300
+415		KARTOGLK=38300 AND LUOKKA=30211
+416		KARTOGLK=38300 AND LUOKKA=30212
+
+#Matalikko	38700
+#Muu avoin alue	
+#Avoin metsämaa	39110
+404		LUOKKA=39110
+416		KARTOGLK=39110 AND (LUOKKA=30211 OR LUOKKA=30212)
+
+#Varvikko	39120
+403		LUOKKA=39120
+416		KARTOGLK=39120 AND (LUOKKA=30211 OR LUOKKA=30212)
+
+#Avoin vesijättö	39130
+403		LUOKKA=39130
+416		KARTOGLK=39130 AND (LUOKKA=30211 OR LUOKKA=30212)
+
+#Taajama (poistunut kohde)	
+#Kerrostaloalue (poistunut kohde)	39211
+#Pientaloalue (poistunut kohde)	39212
+#Teollisuusalue (poistunut kohde)	39213
+#Tulva-alue	38400
+310		LUOKKA=38400
+415		KARTOGLK=38400 AND LUOKKA=30211
+416		KARTOGLK=38400 AND LUOKKA=30212
+
+#Varastoalue	38900
+501.1	LUOKKA=38900
+415		KARTOGLK=38900 AND LUOKKA=30211
+416		KARTOGLK=38900 AND LUOKKA=30212
+
+#Vesikivikko	38600
+#Kaislikko	38100
+#Uittolaite	38800
+531		LUOKKA=38800
+
+#Vesikivi	
+#Vesikivi, vedenalainen	38511
+#Vesikivi, pinnassa	38512
+#Vesikivi, vedenpäällinen	38513
+204		LUOKKA=38513
+
+#Koski	38200
+
+#Maasto/2-kuvion reuna	
+#Maasto/2 yksikäsitteinen reunaviiva	30211
+#Maasto/2 epämääräinen reunaviiva	30212
+#Maasto/2 tekninen viiva 	30999
+
+#Metsän raja	39500, vain ellei liity mihinkään
+416		LUOKKA=30212 AND KARTOGLK=0
+
+#Uittoränni	39000
+#Huomaute	3001
+#Karttatiedoston reunaviiva (poistunut kohde)	256
+#Osoitepiste	
+#Lähiosoite	96001
+#Kulkupaikka	96002
+#Pelastuskoodipiste	96010
+#Paikannimi	
+#Autotien nimi	12101
+#Kulkuväylän nimi	12301
+#Rautatieliikennepaikan nimi	14201
+#Turvalaitteen nimi	16101
+#Maa-aineksenottoalueen nimi	32101
+#Hautausmaan nimi	32201
+#Kaatopaikan nimi	32301
+#Liikennealueen nimi	32401
+#Louhoksen nimi	32501
+#Puiston nimi	32901
+#Täytemaan nimi	33001
+#Urheilu- ja virkistysalueen nimi	33101
+#Kiven nimi	34601
+#Merkittävän luontokohteen nimi	34901
+#Pellon tai niityn nimi	35010
+#Metsäalueen nimi	35020
+#Suon nimi	35030
+#Kohouman nimi	35040
+#Painanteen nimi	35050
+#Niemen nimi	35060
+#Saaren nimi	35070
+#Matalikon nimi	35080
+#Muu maastonimi	35090
+#Puun nimi	35101
+#Lähteen nimi	36101
+#Vakaveden nimi	36201
+#Virtaveden nimi	36301
+#Vakaveden osan nimi	36410
+#Virtaveden osan nimi	36420
+#Muu vesistökohteen nimi	36490
+#Kosken nimi	38201
+#Vesikiven nimi	38501
+#Varastoalueen nimi	38901
+#Rakennuksen nimi	42101
+#Rakennusryhmän nimi	42201
+#Altaan nimi	44301
+#Muistomerkin nimi	44901
+#Kaupungin nimi	48111
+#Muun kunnan nimi	48112
+#Kylän, kaupunginosan tai kulmakunnan nimi	48120
+#Talon nimi	48130
+#Muu asutusnimi	48190
+#Luonnonsuojelualueen nimi	72201
+#Luonnonmuistomerkin nimi	72303
+#Muinaisjäännöksen nimi	72403
+#Luonnonpuiston nimi	72502
+#Kansallispuiston nimi	72601
+#Rauhoitetun kohteen nimi (poistunut kohde)	72301
+#Rauhoitetun alueen nimi (poistunut kohde)	72401
+#Erämaa-alueen nimi	72701
+#Retkeilyalueen nimi	72801
+#Valtakunnan rajapyykin nimi	82501
+#Rajapyykin nimi	92401
+
+#Allas - alue	44300
+301.2	LUOKKA=44300 AND RYHMA=27
+301.1	LUOKKA=44300 AND RYHMA=75
+
+#Pistolaituri - alue	
+#Aitasymboli (poistunut kohde)	9325
+516		LUOKKA=9325
+
+#Ilmaradan kannatinpylväs	44591
+#Kellotapuli	44600
+524		LUOKKA=44600
+
+#Lähestymisvalo	44700
+524		LUOKKA=44700
+
+#Masto	44800
+524		LUOKKA=44800
+
+#Muistomerkki	44900
+530		LUOKKA=44900
+
+#Näkötorni	45000
+524		LUOKKA=45000
+
+#Portti	45200
+519		LUOKKA=45200
+
+#Savupiippu	45300
+524		LUOKKA=45300
+
+#Tervahauta	45400
+112		LUOKKA=45400
+
+#Tulentekopaikka	45710
+#Tuulivoimala	45500
+524		LUOKKA=45500
+
+#Maston korkeus	44803
+#Savupiipun korkeus	45303
+#Aallonmurtaja	44100
+
+#Aita	
+#Aita,tekoaines	44211
+516		LUOKKA=44211
+
+#Aita, istutettu	44213
+411.2	LUOKKA=44213
+
+#Allas - viiva	44300
+#Ilmarata	44500
+#Pistolaituri - viiva	
+#Pistolaituri, alle 5 m	45111
+#Pistolaituri, vähintään 5 m	45112
+#Rakennelma	45700
+521.4	LUOKKA=45700
+
+#Rakennusalueen reunaviiva	42200
+#Rakennus	
+#Asuinrakennus, ? krs	42110
+521		LUOKKA=42110
+#Asuinrakennus, 1-2 krs	42111
+521		LUOKKA=42111
+#Asuinrakennus, 3-n krs	42112
+521		LUOKKA=42112
+#Liike- tai julkinen rakennus, ? krs	42120
+521		LUOKKA=42120
+#Liike- tai julkinen rakennus, 1-2 krs	42121
+521		LUOKKA=42121
+#Liike- tai julkinen rakennus, 3-n krs	42122
+521		LUOKKA=42122
+#Lomarakennus, ? krs	42130
+521		LUOKKA=42130
+#Lomarakennus, 1-2 krs	42131
+521		LUOKKA=42131
+#Lomarakennus, 3-n krs	42132
+521		LUOKKA=42132
+#Teollinen rakennus, ? krs	42140
+521		LUOKKA=42140
+#Teollinen rakennus, 1-2 krs	42141
+521		LUOKKA=42141
+#Teollinen rakennus, 3-n krs	42142
+521		LUOKKA=42142
+#Kirkko	42170
+521		LUOKKA=42170
+#Kirkollinen rakennus, ? krs	42150
+521		LUOKKA=42150
+#Kirkollinen rakennus, 1-2 krs	42151
+521		LUOKKA=42151
+#Kirkollinen rakennus, 3-n krs	42152
+521		LUOKKA=42152
+#Muu rakennus, ? krs	42160
+521		LUOKKA=42160
+#Muu rakennus, 1-2 krs	42161
+521		LUOKKA=42161
+#Muu rakennus, 3-n krs	42162
+521		LUOKKA=42162
+#Asuinrakennus, ? krs	42210
+521		LUOKKA=42210
+#Asuinrakennus, 1-2 krs	42211
+521		LUOKKA=42211
+#Asuinrakennus, 3-n krs	42212
+521		LUOKKA=42212
+#Liike- tai julkinen rakennus, ? krs	42220
+521		LUOKKA=42220
+#Liike- tai julkinen rakennus, 1-2 krs	42221
+521		LUOKKA=42221
+#Liike- tai julkinen rakennus, 3-n krs	42222
+521		LUOKKA=42222
+#Lomarakennus, ? krs	42230
+521		LUOKKA=42230
+#Lomarakennus, 1-2 krs	42231
+521		LUOKKA=42231
+#Lomarakennus, 3-n krs	42232
+521		LUOKKA=42232
+#Teollinen rakennus, ? krs	42240
+521		LUOKKA=42240
+#Teollinen rakennus, 1-2 krs	42241
+521		LUOKKA=42241
+#Teollinen rakennus, 3-n krs	42242
+521		LUOKKA=42242
+#Kirkko	42270
+521		LUOKKA=42270
+#Kirkollinen rakennus, ? krs	42250
+521		LUOKKA=42250
+#Kirkollinen rakennus, 1-2 krs	42251
+521		LUOKKA=42251
+#Kirkollinen rakennus, 3-n krs	42252
+521		LUOKKA=42252
+#Muu rakennus, ? krs	42260
+521		LUOKKA=42260
+#Muu rakennus, 1-2 krs	42261
+521		LUOKKA=42261
+#Muu rakennus, 3-n krs	42262
+521		LUOKKA=42262
+#Rautatiekilometripylväs (poistunut kohde)	14300
+#Rautatieliikennepaikka	14200
+#Rautatien symboli	
+#Rautatie, sähköistyssymboli	14191
+#Rautatie, käytöstä poistetun symboli	14192
+509		LUOKKA=14192
+#Rautatiepylvään kilometriluku (poistunut kohde)	14311
+#Rautatie (tallennettu alaluokkiin)	14110
+509		LUOKKA=14110
+#Rautatie, sähköistetty 	14111
+509		LUOKKA=14111
+#Rautatie, sähköistämätön 	14112
+509		LUOKKA=14112
+#Kapearaiteinen rautatie	14121
+509		LUOKKA=14121
+#Metro	14131
+509		LUOKKA=14131
+#Selite	
+#Kulkuväylän selite	12302
+#Turvalaitteen selite	16102
+#Vedenottamon selite	26202
+#Maa-aineksenottoalueen selite	32102
+#Hautausmaan selite	32202
+#Kaatopaikan selite	32302
+#Liikennealueen selite	32402
+#Louhoksen selite	32502
+#Maatalousmaan selite	32602
+#Puiston selite	32902
+#Täytemaan selite	33002
+#Urheilu- ja virkistysalueen selite	33102
+#Merkittävän luontokohteen selite	34902
+#Puun selite	35102
+#Muun maastokohteen selite	36500
+#Varastoalueen selite	38902
+#Metsän rajan selite	39502
+#Rakennuksen selite	42102
+#Rakennusryhmän selite	42202
+#Aidan selite	44202
+#Altaan selite	44302
+#Ilmaradan selite	44402
+#Muistomerkin selite	44902
+#Näkötornin selite	45002
+#Tervahaudan selite	45402
+#Tuulivoimalan selite	45502
+#Rakennelman selite	45702
+#Vesitornin selite	45802
+#Sotilasalueen selite	62102
+#Suoja-alueen selite	62202
+#Aarnialueen selite (poistunut kohde)	72102
+#Luonnonsuojelualueen selite	72202
+#Rauhoitetun kohteen selite (poistunut kohde)	72302
+#Luonnonmuistomerkin selite	72304
+#Rauhoitetun alueen selite (poistunut kohde)	72402
+#Muinaisjäännöksen selite	72404
+#Suojametsän selite	72501
+#Luonnonhoitometsän selite (poistunut kohde)	72602
+#Kansallispuiston selite	72603
+#Luonnonpuiston selite	72604
+#Erämaa-alueen selite	72702
+#Retkeilyalueen selite	72802
+#Aluemeren ulkorajan selite	82102
+#Rajavyöhykkeen takarajan selite	82202
+#Sisäisten aluevesien ulkorajan selite	82302
+#Ulko- ja sisäsaariston rajan selite	82402
+#Kunnan hallintorajan selite	85100
+#Vesiasteikon selite	95302
+#Aarnialue (poistunut kohde)	72100
+#Luonnonsuojelualue	72200
+#Luonnonpuisto	72201
+#Kansallispuisto	72202
+#Rauhoitettu alue (poistunut kohde)	72400
+#Retkeilyalue	72800
+#Suojametsä	72500
+#Luonnonhoitometsä (poistunut kohde)	72600
+#Luonnonmuistomerkki
+	
+#Rauhoitettu kivi	72310
+204		LUOKKA=72310
+
+#Rauhoitettu puu	72320
+419		LUOKKA=72320
+
+#Muu rauhoitettu kohde	72340
+#Muinaisjäännös	72330
+#Erämaa-alue	72700
+
+#Luonnonmuistomerkki	
+#Rauhoitettu kivi	72410
+204		LUOKKA=72410
+
+#Rauhoitettu puu	72420
+419		72420
+
+#Muu rauhoitettu kohde	72440
+#Muinaisjäännös	74330
+#Rauhoitettu alue (poistunut kohde)	72400
+#Suojametsä	72500
+#Suojelualueen reunaviiva	72000
+#Suojelukohteet tekninen viiva	30999
+#Taajaan rakennettu alue	40200
+520		LUOKKA=40200
+
+#Taajaan rakennetun alueen reunaviiva	40100
+520.1	LUOKKA=40100
+
+#Tiesymboli	
+#Lauttasymboli	12192
+#Lossisymboli	12193
+#Esterakennelma	12200
+#Kevytväylän alikulkusymboli (poistunut kohde)	12391
+#Autoliikennepaikka (poistunut kohde)	12500
+#Tieteksti	
+#Kulkukorkeusrajoitteen korkeus (poistunut kohde)	10111
+#Autotien siltanumero (poistunut kohde)	12105
+#Autotien lauttanumero	12106
+#Paikallistien numero	12181
+#Maantien numero	12182
+#E- valta- tai kantatien numero	12183
+#Autotien tienumero (poistunut kohde)	12191
+#Kulkurajoitus	
+#Tieviiva	
+#Autotie Ia	12111
+502.2		LUOKKA=12111
+
+#Autotie Ib	12112
+502.2		LUOKKA=12112
+
+#Autotie IIa	12121
+502.1		LUOKKA=12121
+
+#Autotie IIb	12122
+502.1		LUOKKA=12122
+
+#Autotie IIIa	12131
+502		LUOKKA=12131
+
+#Autotie IIIb	12132
+502		LUOKKA=12132
+
+#Ajotie	12141
+503		LUOKKA=12141
+
+#Lautta	12151
+#Lossi	12152
+#Huoltoaukko ilman puomia	12153
+#Huoltoaukko puomilla	12154
+#Talvitie	12312
+#Polku	12313
+505		LUOKKA=12313
+
+#Kävely- ja pyörätie	12314
+503		LUOKKA=12314
+
+#Ajopolku	12316
+504		LUOKKA=12316
