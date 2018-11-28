@@ -84,36 +84,41 @@
 #		MTK:72410	Rauhoitettu kivi
 204			LUOKKA=38513 OR LUOKKA=72310 OR LUOKKA=72410
 
-# 205	Iso kivi (MML: Kivi 34600)
+# 205	Iso kivi
+#		MML:34600	Kivi
 205			LUOKKA=34600
 
 # 206	Gigantic boulder
 
 # 207	Kiviryhmä
 
-# 208	Louhikko (MTK: Harva louhikko 34200)
+# 208	Louhikko
+#		MTK:34200	Harva louhikko
 208.1		LUOKKA=34200
 
 # 209	Dense boulder field
 
 # 210	Stony ground, slow running
 
-# 211	Stony ground, walk (MTK: Kivikko 34700)
+# 211	Stony ground, walk
+#		MTK:34700	Kivikko
 211			LUOKKA=34700
 
 # 212	Stony ground, fight
 
 # 213	Avonainen hietikko
-#			MTK: Louhos	32500; 
-#                maa-aineksenottoalue, karkea kiviaines 32111;
-#                maa-aineksenottoalue, hieno kivennäisaines 32112;
-#                maa-aineksenottoalue, eloperäinen aines 32113
-#                täytemaan symboli 33091, Hietikko 34300
+#		MTK:32600	Louhos
+#		MTK:32111	Maa-aineksenottoalue, karkea kiviaines
+#		MTK:32112	Maa-aineksenottoalue, hieno kivennäisaines
+#		MTK:32113	Maa-aineksenottoalue, eloperäinen aines
+#		MTK:33091	Täytemaan symboli
+#		MTK:34300	Hietikko
 213			LUOKKA=32500 OR LUOKKA=32111 OR LUOKKA=32112 OR LUOKKA=32113 OR LUOKKA=33091 OR LUOKKA=34300
 415			LUOKKA=30211 AND (KARTOGLK=32500 OR KARTOGLK=32111 OR KARTOGLK=32112 OR KARTOGLK=32113 OR KARTOGLK=33091 OR KARTOGLK=34300)
 416			LUOKKA=30212 AND (KARTOGLK=32500 OR KARTOGLK=32111 OR KARTOGLK=32112 OR KARTOGLK=32113 OR KARTOGLK=33091 OR KARTOGLK=34300)
 
-# 214	Avokallio (MTK: Kallioaluetta 34100)
+# 214	Avokallio
+#		MTK:34100	Kallioaluetta
 214			LUOKKA=34100
 
 # 215	Trench
@@ -124,48 +129,59 @@
 ##
 
 # 301	Uncrossable body of water
-#		MTK: Järvivesi 36200, Merivesi 36211, virtavesialue 36313, allas - alue 44300
+#		MTK:36200	Järvivesi
+#		MTK:36211	Merivesi
+#		MTK:36313	Virtavesialue
+#		MTK:44300	Allas - alue
 301.1		LUOKKA=36200 OR LUOKKA=36211 OR LUOKKA=36313 OR (LUOKKA=44300 AND RYHMA=75)
 301.2		(LUOKKA=30211 OR LUOKKA=30100) AND (KARTOGLK=36200 OR KARTOGLK=36211 OR KARTOGLK=36313)
 301.2		LUOKKA=44300 AND RYHMA=27
 
 # 302 	Shallow body of water
 
-# 303	Vesikuoppa (MTK: Vesikuoppa	36400)
+# 303	Vesikuoppa
+#		MTK:36400	Vesikuoppa
 303			LUOKKA=36400
 
-# 304	Leveä puro tai oja (MTK: Virtavesi, 2-5m 36312)
+# 304	Leveä puro tai oja
+#		MTK:36312	Virtavesi, 2-5m
 304			LUOKKA=36312
 
-# 305	Ylitettävä pieni puro tai oja (MTK: Virtavesi, alle 2m 36311)
+# 305	Ylitettävä pieni puro tai oja
+#		MTK:36311	Virtavesi, alle 2m
 305			LUOKKA=36311
 
-# 306	Epäselvä oja (MTK: Metsämaan ojitus 32721)
+# 306	Epäselvä oja
+#		MTK:32721	Metsämaan ojitus
 306			LUOKKA=32721
 
 # 307	Ylipääsemätön suo
-#           MTK: Suo, vaikeakulkuinen puuton 35421
-#                Suo, vaikeakulkuinen metsää kasvava 35422
+#		MTK:35421	Suo, vaikeakulkuinen puuton
+#		MTK:35422	Suo, vaikeakulkuinen metsää kasvava
 307.1		LUOKKA=35421 OR LUOKKA=35422
 403			LUOKKA=35421
 416			(LUOKKA=30211 OR LUOKKA=30212) AND (KARTOGLK=35421 OR KARTOGLK=35422) 
 
 # 308	Suo
-#           MTK: Suo (tallennettu alaluokkiin)	35400
+#		MTK:35400	Suo (tallennettu alaluokkiin)
 308			LUOKKA=35400 OR LUOKKA=35411 OR LUOKKA=35412
 403			LUOKKA=35411
 416			(LUOKKA=30211 OR LUOKKA=30212) AND (KARTOGLK=35400 OR KARTOGLK=35411 OR KARTOGLK=35412) 
 
 # 309	Suojuotti
 
-# 310	Soistuva maa (MTK: Soistuma 35300, Maatuva vesialue 38300, tulva-alue 38400
+# 310	Soistuva maa
+#		MTK:35300	Soistuma
+#		MTK:38300	Maatuva vesialue
+#		MTK:38400	Tulva-alue
 310			LUOKKA=35300 OR LUOKKA=38300 OR LUOKKA=38400
 415			LUOKKA=30211 AND (KARTOGLK=35300 OR KARTOGLK=38300 OR KARTOGLK=38400)
 416			LUOKKA=30212 AND (KARTOGLK=35300 OR KARTOGLK=38300 OR KARTOGLK=38400)
 
 # 311	Kaivo
 
-# 312	Lähde (MTK: Lähde 36100)
+# 312	Lähde
+#		MTK:36100	Lähde
 312			LUOKKA=36100
 
 # 313	Huomattava vesistön erikoiskohde
@@ -175,7 +191,8 @@
 ##
 
 # 401	Avoin alue, helppokulkuinen
-#          MTK: Niitty 32800, puisto 32900
+#		MTK:32800	Niitty
+#		MTK:32900	puisto
 401			LUOKKA=32800 OR LUOKKA=32900
 415			LUOKKA=30211 AND (KARTOGLK=32800 OR KARTOGLK=32900) 
 416			LUOKKA=30212 AND (KARTOGLK=32800 OR KARTOGLK=32900)
@@ -183,12 +200,15 @@
 # 402 	Puoliavoin alue, helppokulkuinen
 
 # 403 	Avoin maasto
-#		MTK: Täytemaa 33000, varvikko 39120, avoin vesijättö 39130
+#		MTK:33000	Täytemaa
+#		MTK:39120	Varvikko
+#		MTK:39130	Avoin vesijättö
 403			LUOKKA=33000 OR LUOKKA=39120 OR LUOKKA=39130
 415			LUOKKA=30211 AND (KARTOGLK=33000 OR KARTOGLK=39120 OR KARTOGLK=39130) 
 416			LUOKKA=30212 AND (KARTOGLK=33000 OR KARTOGLK=39120 OR KARTOGLK=39130) 
 
-# 404	Puoliavoin maasto, hakkuuala (MML: Avoin metsämaa 39110)
+# 404	Puoliavoin maasto, hakkuuala
+#		MML:39110	Avoin metsämaa
 404			LUOKKA=39110
 416			KARTOGLK=39110 AND (LUOKKA=30211 OR LUOKKA=30212)
 
@@ -205,34 +225,41 @@
 # 410 	Vegetation, fight
 
 # 411	Vegetation, impassable
-#		MTK:44213		Aita, istutettu
+#		MTK:44213	Aita, istutettu
 411.2		LUOKKA=44213
 
-# 412	Viljelty maa (MTK: Pelto 32611)
+# 412	Viljelty maa
+#		MTK:32611	Pelto
 412			LUOKKA=32611
 415			LUOKKA=30211 AND KARTOGLK=32611
 416			LUOKKA=30212 AND KARTOGLK=32611
 
-# 413	Puutarha (MTK: Puutarha 32612)
+# 413	Puutarha
+#		MTK:32612	Puutarha
 413			LUOKKA=32612
 415			LUOKKA=30211 AND KARTOGLK=32612
 416			LUOKKA=30212 AND KARTOGLK=32612
 
 # 414	Viinitarha
 
-# 415	Erittäin selvä kuvioraja (MTK: Yksikäsitteinen reunaviiva 30211)
+# 415	Erittäin selvä kuvioraja
+#		MTK:30211	Yksikäsitteinen reunaviiva
 415			LUOKKA=30211 AND KARTOGLK=0
 
-# 416	Selvä kuvioraja (MTK: Epämääräinen reunaviiva 30212)
+# 416	Selvä kuvioraja
+#		MTK:30212	Epämääräinen reunaviiva
 416			LUOKKA=30212 AND KARTOGLK=0
 
-# 417	Huomattavan suuri puu (MTK: Puu 35100)
+# 417	Huomattavan suuri puu
+#		MTK:35100	Puu
 417			LUOKKA=35100
 
 # 418	Prominent bush or tree
 
 # 419	Huomattava kasvillisuuden erikoiskohde
-#           MTK: Merkittävä luontokohde 34900, Rauhoitettu puu 72320, 72420
+#		MTK:34900	Merkittävä luontokohde
+#		MTK:72320	Rauhoitettu puu
+#		MTK:72420	Rauhoitettu puu
 419			LUOKKA=34900 OR LUOKKA=72320 OR LUOKKA=72420
 
 ##
@@ -240,26 +267,34 @@
 ##
 
 # 501	Kenttä
-#		MTK: Urheilu- ja virkistysalue 33100, varastoalue 38900
+#		MTK:33100	Urheilu- ja virkistysalue
+#		MTK:38900	Varastoalue
 501.1		LUOKKA=33100 OR LUOKKA=38900
 415			LUOKKA=30211 AND (KARTOGLK=33100 OR KARTOGLK=38900)
 416			LUOKKA=30212 AND (KARTOGLK=33100 OR KARTOGLK=38900
 
 # 502	Leveä tie
-#		MTK: Autotie Ia 12111, Autotie Ib 12112;
-#             Autotie IIa 12121, Autotie IIb 12122;
-#                Autotie IIIa 12131, Autotie IIIb 12132
+#		MTK:12111	Autotie Ia
+#		MTK:12112	Autotie Ib
+#		MTK:12121	Autotie IIa
+#		MTK:12122	Autotie IIb
+#		MTK:12131	Autotie IIIa
+#		MTK:12132	Autotie IIIb
 502.2		LUOKKA=12111 OR LUOKKA=12112
 502.1		LUOKKA=12121 OR LUOKKA=12122
 502			LUOKKA=12131 OR LUOKKA=12132
 
-# 503 	Ajotie (MTK: Ajotie 12141, Kävely- ja pyörätie 12314)
+# 503 	Ajotie
+#		MTK:12141	Ajotie
+#		MTK:12314	Kävely- ja pyörätie
 503			LUOKKA=12141 OR LUOKKA=12314
 
-# 504	Ajopolku (MTK: Ajopolku 12316)
+# 504	Ajopolku
+#		MTK:12316	Ajopolku
 504			LUOKKA=12316
 
-# 505	Polku (MML: Polku 12313)
+# 505	Polku
+#		MML:12313	Polku
 505			LUOKKA=12313
 
 # 506	Pieni polku
@@ -269,81 +304,106 @@
 # 508	Kapea linja, juontoura
 
 # 509	Rautatie
-#		MTK: Rautatie, käytöstä poistetun symboli 14192,
-#                Rautatie (tallennettu alaluokkiin) 14110,
-#                Rautatie, sähköistetty 14111,
-#                Rautatie, sähköistämätön 14112,
-#                Kapearaiteinen rautatie 14121,
-#                Metro	14131
+#		MTK:14192	Rautatie, käytöstä poistetun symboli
+#		MTK:14110	Rautatie (tallennettu alaluokkiin)
+#		MTK:14111	Rautatie, sähköistetty
+#		MTK:14112	Rautatie, sähköistämätön
+#		MTK:14121	Kapearaiteinen rautatie
+#		MTK:14131	Metro
 509			LUOKKA=14192 OR LUOKKA=14110 OR LUOKKA=14111 OR LUOKKA=14112 OR LUOKKA=14121 OR LUOKKA=14131
 
 # 510	Sähkölinja 
-#		MTK: Puhelinlinjan symboli (poistunut kohde) 24191,
-#                Jakelujännitelinjan symboli 22395,
-#                Puhelinlinja (poistunut kohde)	24100
-#                Sähkölinja (tallennettu alaluokkiin) 22300,
-#                Sähkölinja, jakelujännite 22312
+#		MTK:24191	Puhelinlinjan symboli (poistunut kohde)
+#		MTK:22395	Jakelujännitelinjan symboli
+#		MTK:24100	Puhelinlinja (poistunut kohde)
+#		MTK:22300	Sähkölinja (tallennettu alaluokkiin)
+#		MTK:22312	Sähkölinja, jakelujännite
 510			LUOKKA=24191 OR LUOKKA=22395 OR LUOKKA=24100 OR LUOKKA=22300 OR LUOKKA=22312
 
 # 511 	Major power line
-#		MTK: Suurjännitelinjan pylväs 22392,
-#                Sähkölinjan symboli (tallennettu alaluokkiin) 22391
-#                Suurjännitelinjan symboli 22394
-#                Sähkölinja, suurjännite 22311
+#		MTK:22392	Suurjännitelinjan pylväs
+#		MTK:22391	Sähkölinjan symboli (tallennettu alaluokkiin)
+#		MTK:22394	Suurjännitelinjan symboli
+#		MTK:22311	Sähkölinja, suurjännite
 511.1		LUOKKA=22391 OR LUOKKA=22394 OR LUOKKA=22311
 
-# 512 	Silta tai tunneli (MTK: Tunnelin aukko 16800)
+# 512 	Silta tai tunneli
+#		MTK:16800	Tunnelin aukko
 512.1		LUOKKA=16800
 
 # 513	Muuri
 
 # 514	Matala kiviaita
 
-# 515	Impassable wall
+# 515	Ylipääsemätön kiviaita
 
 # 516	Aita
 
 # 517	Sortunut aita
 
 # 518	Ylipääsemätön aita
+#		MTK:44211	Aita, tekoaines
 518			LUOKKA=44211
 
-# 519	Portti (MTK: Portti 45200)
+# 519	Portti
+#		MTK:45200	Portti
 519			LUOKKA=45200
 
 # 520	Piha-alue
-#           MTK:32200		Hautausmaa
-#			MTK:32300		Kaatopaikka
-#			MTK:40200 Taajaan rakennettu alue
+#		MTK:32200	Hautausmaa
+#		MTK:32300	Kaatopaikka
+#		MTK:40200 	Taajaan rakennettu alue
 520			LUOKKA=32200 OR LUOKKA=40200
 415			(LUOKKA=30211 OR LUOKKA=30212) AND (KARTOGLK=32200 OR KARTOGLK=40200)
-#		MTK:32410		Lentokentän kiitotie (tallennettu alaluokkiin)
+#		MTK:32410	Lentokentän kiitotie (tallennettu alaluokkiin)
 520.2		LUOKKA=32300 OR LUOKKA=32410 OR LUOKKA=32411 OR LUOKKA=32412 OR LUOKKA=32413 OR LUOKKA=32415 OR LUOKKA=32416 OR LUOKKA=32417 OR LUOKKA=32418
 401			LUOKKA=32300 OR LUOKKA=32413 OR LUOKKA=32414
 501			LUOKKA=32411 OR LUOKKA=32412 OR LUOKKA=32415 OR LUOKKA=32416 OR LUOKKA=32417 OR LUOKKA=32418
 415			LUOKKA=30211 AND KARTOGLK=32300
 416			LUOKKA=30212 AND KARTOGLK=32300
-#		MTK:40100		Taajaan rakennetun alueen reunaviiva
+#		MTK:40100	Taajaan rakennetun alueen reunaviiva
 520.1		LUOKKA=40100
 
 # 521	Rakennus
-#		MML: Rakennelma 45700;
-#                Asuinrakennus, ? krs 42110, Asuinrakennus, 1-2 krs 42111,
-#                Asuinrakennus, 3-n krs 42112, Liike- tai julkinen rakennus, ? krs 42120,
-#                Liike- tai julkinen rakennus, 1-2 krs 42121, Liike- tai julkinen rakennus, 3-n krs 42122,
-#                Lomarakennus, ? krs 42130, Lomarakennus, 1-2 krs 42131, Lomarakennus, 3-n krs 42132,
-#                Teollinen rakennus, ? krs 42140,#Asuinrakennus, ? krs	42210,
-#                Teollinen rakennus, 1-2 krs 42141, Teollinen rakennus, 3-n krs 42142,
-#                Kirkko 42170, Kirkollinen rakennus, ? krs 42150, Kirkollinen rakennus, 1-2 krs 42151,
-#                Kirkollinen rakennus, 3-n krs 42152, Muu rakennus, ? krs 42160, Muu rakennus, 1-2 krs 42161,
-#                Muu rakennus, 3-n krs 42162, Asuinrakennus, 1-2 krs 42211, Asuinrakennus, 3-n krs 42212,
-#                Liike- tai julkinen rakennus, ? krs 42220, Liike- tai julkinen rakennus, 1-2 krs 42221,
-#                Liike- tai julkinen rakennus, 3-n krs 42222, Lomarakennus, ? krs 42230,
-#                Lomarakennus, 1-2 krs 42231, Lomarakennus, 3-n krs 42232, Teollinen rakennus, ? krs 42240,
-#                Teollinen rakennus, 1-2 krs 42241, Teollinen rakennus, 3-n krs 42242, Kirkko 42270,
-#                Kirkollinen rakennus, ? krs 42250, Kirkollinen rakennus, 1-2 krs 42251,
-#                Kirkollinen rakennus, 3-n krs 42252, Muu rakennus, ? krs 42260, Muu rakennus, 1-2 krs 42261,
-#                Muu rakennus, 3-n krs 42262
+#		MML:45700	Rakennelma
+#		MML:42110	Asuinrakennus, ? krs
+#		MML:42111	Asuinrakennus, 1-2 krs
+#		MML:42112	Asuinrakennus, 3-n krs
+#		MML:42120	Liike- tai julkinen rakennus, ? krs
+#		MML:42121	Liike- tai julkinen rakennus, 1-2 krs
+#		MML:42122	Liike- tai julkinen rakennus, 3-n krs
+#		MML:42130	Lomarakennus, ? krs
+#		MML:42131	Lomarakennus, 1-2 krs
+#		MML:42132	Lomarakennus, 3-n krs
+#		MML:42140	Teollinen rakennus, ? krs
+#		MML:42210	Asuinrakennus, ? krs
+#		MML:42141	Teollinen rakennus, 1-2 krs
+#		MML:42142	Teollinen rakennus, 3-n krs
+#		MML:42170	Kirkko
+#		MML:42150	Kirkollinen rakennus, ? krs
+#		MML:42151	Kirkollinen rakennus, 1-2 krs
+#		MML:42152	Kirkollinen rakennus, 3-n krs
+#		MML:42160	Muu rakennus, ? krs
+#		MML:42161	Muu rakennus, 1-2 krs
+#		MML:42162	Muu rakennus, 3-n krs
+#		MML:42211	Asuinrakennus, 1-2 krs
+#		MML:42212	Asuinrakennus, 3-n krs
+#		MML:42220	Liike- tai julkinen rakennus, ? krs
+#		MML:42221	Liike- tai julkinen rakennus, 1-2 krs
+#		MML:42222	Liike- tai julkinen rakennus, 3-n krs
+#		MML:42230	Lomarakennus, ? krs
+#		MML:42231	Lomarakennus, 1-2 krs
+#		MML:42232	Lomarakennus, 3-n krs
+#		MML:42240	Teollinen rakennus, ? krs
+#		MML:42241	Teollinen rakennus, 1-2 krs
+#		MML:42242	Teollinen rakennus, 3-n krs
+#		MML:42270	Kirkko
+#		MML:42250	Kirkollinen rakennus, ? krs
+#		MML:42251	Kirkollinen rakennus, 1-2 krs
+#		MML:42252	Kirkollinen rakennus, 3-n krs
+#		MML:42260	Muu rakennus, ? krs
+#		MML:42261	Muu rakennus, 1-2 krs
+#		MML:42262	Muu rakennus, 3-n krs
 521.4		LUOKKA=45700
 521			LUOKKA=42110 OR LUOKKA=42111 OR LUOKKA=42112 OR LUOKKA=42120 OR LUOKKA=42121 OR LUOKKA=42122 OR LUOKKA=42130 OR LUOKKA=42131 OR LUOKKA=42132 OR LUOKKA=42140 OR LUOKKA=42141 OR LUOKKA=42142 OR LUOKKA=42170 OR LUOKKA=42150 OR LUOKKA=42151 OR LUOKKA=42152 OR LUOKKA=42160 OR LUOKKA=42161 OR LUOKKA=42162 OR LUOKKA=42210 OR LUOKKA=42211 OR LUOKKA=42212 OR LUOKKA=42220 OR LUOKKA=42221 OR LUOKKA=42222 OR LUOKKA=42230 OR LUOKKA=42231 OR LUOKKA=42232 OR LUOKKA=42240 OR LUOKKA=42241 OR LUOKKA=42242 OR LUOKKA=42270 OR LUOKKA=42250 OR LUOKKA=42251 OR LUOKKA=42252 OR LUOKKA=42260 OR LUOKKA=42261 OR LUOKKA=42262
 
