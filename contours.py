@@ -43,7 +43,7 @@ def info(argv):
 		print "\t%5.2fm   | %4d" % (k, elevDistrib[k])
 
 def classify(norm_z, contourInterval):
-	if norm_z % (5*contourInterval) == 0:
+	if norm_z % (contourInterval * 5.0) == 0:
 		return 'INDEX'
 	elif norm_z % contourInterval == 0:
 		return 'CONTOUR'
@@ -58,7 +58,7 @@ def tag(argv):
 		return
 		
 	indexElev = float(argv[0])
-	contourInterval = int(argv[1])
+	contourInterval = float(argv[1])
 	srcFileName = argv[2]
 	dstFileName = argv[3]
 
