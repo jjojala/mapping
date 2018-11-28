@@ -30,19 +30,42 @@ MML:n tiedostpalvelusta noudettavat materiaalit:
 * laserkeilaus-, eli pistepilviaineisto (mielellään stereomalliluokiteltu)
 * kiinteistörekisterikartta, vektori, kaikki kohteet
 
+Kopioi ladatut aineistot esimerkiksi hakemistoon `MML`. Pura zip -paketit vastaavan nimiseen hakemistoon,
+esim. `MML\M4211R.shp.zip` --> `MML\M4211R.shp`
+
 ### MapAnt
 
 MapAnt -palvelusta (https://www.mapant.fi/) haetaan kartoitettavan alueen kattava karttapala
-"Export" -toiminnolla (Zoom=9, Format="Georeferenced PNG")
+"Export" -toiminnolla (Zoom=9, Format="Georeferenced PNG"). 
 
 ## Aineiston alustava valmistelu
 
 ### Alueen rajaus
 
-Kartoitettava alue rajataan palvelussa http://geojson.io/#map=2/20.0/0.0 Polygonina rajattu alue tallennetaan Shapefile -muodossa.
-Pura ladattu tiedosto haluamaasi hakemistoon.
+Kartoitettava alue rajataan palvelussa http://geojson.io/#map=2/20.0/0.0 Polygonina raj ttu alue tallennetaan Shapefile -muodossa.
+Pura ladattu tiedosto esimerkiksi hakemistoon `geojson.io`.
 
 Käynnistä OSGeo4W -komentotulkki ja muuta aluerajaus MML:n käyttämään koordinaatistoon:
 
-`ogr2ogr -t_srs EPSG:3067 rajaus.shp layers\POLYGON.shp`
+`> ogr2ogr -t_srs EPSG:3067 rajaus.shp geojson.io\layers\POLYGON.shp`
+
+### MapAnt -kartan valmistelu
+
+Pura palvelusta tuotu MapAnt.zip esimerkiksi hakemistoon `MapAnt` ja rajaa siitä tarvitsemasi osa:
+
+`> gdalwarp -cutline rajaus.shp -crop_to_cutline -dstalpha -s_srs EPSG:3067 -co COMPRESS=JPEG -co WORLDFILE=YES MapAnt\MapAnt.png Kaitajarvi_MapAnt.tif`
+
+Tässä vaiheessa on luontevaa luoda OOM -kartta ja tuoda sinne edellä synnytetty `Kaitajarvi_MapAnt.tif` taustakartaksi
+georeferointeineen ja karttapohjoisen asetuksineen (kts. pikakartan valmistusohjetta).
+
+### Ortoilmakuvien valmistelu
+
+Yhdistetään kuvat (jos useita):
+`gdalwarp MML\M4211E.jp2 MML\M4211F.jp2 MML\M4211E+F.tif`
+
+... ja rajataan kartoitettavaan alueeseen (kuten MapAnt -kartta):
+
+`gdalwarp -cutline rajaus.shp -crop_to_cutline -dstalpha -s_srs EPSG:3067 -co COMPRESS=JPEG -co WORLDFILE=YES MML\M4211E+f.tif Kaitajarvi_Orto.tif`
+
+
 
