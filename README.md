@@ -61,11 +61,46 @@ georeferointeineen ja karttapohjoisen asetuksineen (kts. pikakartan valmistusohj
 ### Ortoilmakuvien valmistelu
 
 Yhdistetään kuvat (jos useita):
-`gdalwarp MML\M4211E.jp2 MML\M4211F.jp2 MML\M4211E+F.tif`
+`> gdalwarp MML\M4211E.jp2 MML\M4211F.jp2 MML\M4211E+F.tif`
 
 ... ja rajataan kartoitettavaan alueeseen (kuten MapAnt -kartta):
 
-`gdalwarp -cutline rajaus.shp -crop_to_cutline -dstalpha -s_srs EPSG:3067 -co COMPRESS=JPEG -co WORLDFILE=YES MML\M4211E+f.tif Kaitajarvi_Orto.tif`
+`> gdalwarp -cutline rajaus.shp -crop_to_cutline -dstalpha -s_srs EPSG:3067 -co COMPRESS=JPEG -co WORLDFILE=YES MML\M4211E+f.tif Kaitajarvi_Orto.tif`
 
+Tässä vaiheessa on jälleen hyvä avata syntynyt `Kaitajarvi_Orto.tif` luotavan kartan taustakartaksi.
 
+### Maastotietokannan valmistelu ja tuonti
 
+Useista Shapefileistä koostuva maastotietokanta (purettu zip:stä) yhdistetään yhdeski GML-tiedostoksi:
+
+`> ogrmerge -o MML\M4211R.gml MML\M4211R.shp\*.shp`
+
+... ja rajataan:
+
+`> ogr2ogr -clipsrc rajaus.shp Kaitajarvi_mtk.gml MML\M4211R.gml`
+
+Lopputuloksena syntyvä `Kaitajarvi_mtk.gml` tuodaan OOM -karttaan. Maastotietokannan symbolit muutetaan OMAP -symboleiksi
+lataamalla github.com/jjojala/mapping/MTK-ISOM2017.crt -tiedostoa. Hyödyttömiä symboleita voi tässä vaiheessa poistaa tai
+piilotella.
+
+### Laserpistepilven valmistelu ja tuonti
+
+Jos pistepilvitiedostoja on useita, yhdistellään ne:
+
+`> las2las.exe -i MML\M4211E4.laz MML\M4211F3.laz -merged -o MML\M4211E4+F3.laz`
+
+... rajataan materiaali vain tarvittavaan alueeseen:
+
+`> lasclip.exe -i MML\M4211E4+F3.laz -o MML\Kaitajarvi.laz -poly rajaus.shp -v`
+
+... pelkistetään pistepilveä ja valitaan siihen vain "ground" (class 2) pisteet:
+
+`> lasthin.exe -i MML\Kaitajarvi.laz -o MML\Kaitajarvi_thinned_class2.laz -keep_class 2`
+
+... ja muutetaan lopputulos käyräviivaksi:
+
+`> las2iso.exe -i MML\Kaitajarvi_thinned_class2.laz -o Kaitajarvi.shp -iso_every 0.5 -keep_class 2 -clean 8 -simplify 4 -smooth 5`
+
+Lopuksi vähän magiaa:
+
+`> python contours.py ...`
