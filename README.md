@@ -1,4 +1,4 @@
-# Suunnistuskartan pohja-aineiston valmistelu avoimista aineistoista OOM:llä
+# Suunnistuskartan pohja-aineiston valmistelu avoimista aineistoista OOM:lle
 
 ## Ohjelmat
 
