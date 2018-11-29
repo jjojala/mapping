@@ -27,14 +27,14 @@ def get_driver_from_extension(filename):
 	:rtype: str
 	"""
 	
-    ext = os.path.splitext(filename)[-1].upper()
-    if ext == 'SHP':
-        return 'ESRI Shapefile'
-    elif ext == 'GML':
-        return 'GML'
-    elif ext in ('JSON', "GEOJSON'):
-        return 'GeoJSON'
-    return None
+	ext = os.path.splitext(filename)[-1].upper()
+	if ext == '.SHP':
+		return 'ESRI Shapefile'
+	elif ext == '.GML':
+		return 'GML'
+	elif ext in ('.JSON', '.GEOJSON'):
+		return 'GeoJSON'
+	return None
 
 def classify_contour(elev, contour_interval):
 	"""Classify a contour by elevation.
@@ -159,7 +159,8 @@ def tag(argv):
 	index_elev = 0.0
 	
 	if argv[0] == 'auto':
-		index_elev = define_index_elev(get_contour_distrib(src_filename), contour_interval)
+		index_elev = round(define_index_elev(get_contour_distrib(src_filename), contour_interval))
+		print index_elev
 	else:
 		index_elev = float(argv[0])
 
@@ -198,7 +199,7 @@ def tag(argv):
 				src_feature.GetField(i).Clone())
 		
 		elev = src_geometry.GetZ()
-		dst_feature.SetField(elev_field_defn.GetNameRef(), z)
+		dst_feature.SetField(elev_field_defn.GetNameRef(), elev)
 		dst_feature.SetField(class_field_defn.GetNameRef(), classify_contour(elev-index_elev, contour_interval))
 
 		dst_layer.CreateFeature(dst_feature)
