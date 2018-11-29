@@ -86,6 +86,7 @@ georeferointeineen ja karttapohjoisen asetuksineen (kts. pikakartan valmistusohj
 ### Ortoilmakuvien valmistelu
 
 Yhdistetään kuvat (jos useita):
+
 `> gdalwarp MML\M4211E.jp2 MML\M4211F.jp2 MML\M4211E+F.tif`
 
 ... ja rajataan kartoitettavaan alueeseen (kuten MapAnt -kartta):
