@@ -18,73 +18,158 @@ import os
 import sys
 from osgeo import ogr
 
+def get_driver_from_extension(filename):
+	"""Return name of the OGR -driver based on file extension.
+	
+	:param filename: pathname of file being examined
+	:type filename: str
+	:returns: None, if no corresponding GDAL driver found, or the name of the driver.
+	:rtype: str
+	"""
+	
+    ext = os.path.splitext(filename)[-1].upper()
+    if ext == 'SHP':
+        return 'ESRI Shapefile'
+    elif ext == 'GML':
+        return 'GML'
+    elif ext in ('JSON', "GEOJSON'):
+        return 'GeoJSON'
+    return None
+
 def info(argv):
+	"""Print summary and elevation distribution of the contours.
+	
+	:param argv: array of arguments so that argv[0] is expected to contain the filename
+	             of the contour -file.
+	:returns: 0 if things went smoothly, something else othervise
+	:rtype:	int
+	"""
+
 	if len(argv) != 1:
 		help()
-		return
-		
-	srcFileName = argv[0]
-	srcDriver = ogr.GetDriverByName("ESRI Shapefile")
-	srcDs = srcDriver.Open(srcFileName, 0)
-	srcLayer = srcDs.GetLayer()
+		return 1
 
-	max = -10000.0
-	min = 10000.0
-	elevDistrib = {}
-	for srcFeature in srcLayer:
-		srcPolyline = srcFeature.GetGeometryRef()	
-		z = srcPolyline.GetZ()
-		if z > max:
-			max = z
-	
-		if z < min:
-			min = z
-		
-		if z in elevDistrib:
-			count = elevDistrib[z]
-			elevDistrib[z] = count + 1
-		else:
-			elevDistrib[z] = 1
-
-	keys = elevDistrib.keys()
+	distrib = get_contour_distrib(argv[0])
+	keys = distrib.keys()
 	keys.sort()
+	max = keys[-1]
+	min = keys[0]
 
 	print "Elevation range: %0.2f - %0.2fm:\n" % (min, max)
 	print "\tElevation | count "
 	print "\t-----------------------"
 
 	for k in keys:
-		print "\t%5.2fm   | %4d" % (k, elevDistrib[k])
+		print "\t%5.2fm   | %4d" % (k, distrib[k])
+		 
+	return 0
 
-def classify(norm_z, contourInterval):
-	if norm_z % (contourInterval * 5.0) == 0:
+def classify_contour(elev, contour_interval):
+	"""Classify a contour by elevation.
+	
+	:param elev: elevation level
+	:type elev: float
+	:param contour_interval: contour interval to be used (usually 2.5 or 5.0)
+	:type contour_interval: float
+	:returns: Type of the contour
+	:rtype: str
+	"""
+
+	if elev % (contour_interval * 5.0) == 0:
 		return 'INDEX'
-	elif norm_z % contourInterval == 0:
+	elif elev % contour_interval == 0:
 		return 'CONTOUR'
-	elif contourInterval >= 5 and norm_z % (contourInterval / 2.0) == 0:
+	elif contour_interval >= 5 and elev % (contour_interval / 2.0) == 0:
 		return 'FORMLINE'
 		
 	return 'UTIL'
 
+def get_contour_distrib(filename):
+	"""Get dictionary of contour distribution in terms of elevation.
+	
+	:param filename: Filename of contours -file.
+	:type filename: str
+	:returns: dictionary of contour distribution so that key contains the elevation,
+	          and the value contains the number of gemetry occurrences at the given elevation.
+	:rtype: dict
+	"""
+
+	driver = ogr.GetDriverByName(get_driver_from_extension(filename))
+	ds = driver.Open(filename, 0)
+	layer = ds.GetLayer()
+
+	distrib = {}
+	for feature in layer:
+		geometry = feature.GetGeometryRef()	
+		z = geometry.GetZ()
+		
+		if z in distrib:
+			count = distrib[z]
+			distrib[z] = count + 1
+		else:
+			distrib[z] = 1
+
+	layer = None
+	ds = None
+	driver = None
+
+	return distrib
+
+def define_index_elev(distrib, contour_interval):
+	"""Define highest index contour elevation based on contour distribution.
+	
+	:param distrib: dictionary of contour distribution so, that key (float) is the
+			elevation and the value (int) is the number of geometries in the
+			particular elevation (as returned by get_contour_distrib())
+	:type distrib:	dict
+	:param contour_interval: contour interval (e.g. 2.5 or 5.0)
+	:type contour_interval: float
+	:returns: elevation of highest index contour
+	:rtype: float
+	"""
+
+	keys = distrib.keys()
+	keys.sort()
+	
+	min = keys[0]
+	max = keys[-1]
+	return max - (((max - min) % (contour_interval * 5)) / 2)
+
 def tag(argv):
+	"""Create new contour -file while tagging it with contour elevation ('ELEVATION') and
+	   contour class ('CLASS') -attributes.
+
+	:param argv: array of arguments so that:
+		argv[0] is expected to contain 'auto' or elevation of highest index contour (float)
+		argv[1] is expected to contain contour interval (usually 2.5 or 5.0)
+		argv[2] is expected to contain source contour -filename
+		argv[3] is expected to contain destination contour -filename
+	:type argv: array
+	:returns: 0 if things went smoothly or othervise something else
+	:rtype:	int
+	"""
+	
 	if len(argv) != 4:
 		help()
-		return
-		
-	indexElev = float(argv[0])
+		return 1
+	
 	contourInterval = float(argv[1])
 	srcFileName = argv[2]
 	dstFileName = argv[3]
+	
+	if argv[0] == 'auto':
+		indexElev = define_index_elev(get_contour_distrib(srcFileName), contourInterval)
+	else:
+		indexElev = float(argv[0])
 
-	srcDriver = ogr.GetDriverByName("ESRI Shapefile")
+	srcDriver = ogr.GetDriverByName(get_driver_from_extension(srcFileName))
 	srcDs = srcDriver.Open(srcFileName, 0)
 	srcLayer = srcDs.GetLayer()
 
-	dstDriver = ogr.GetDriverByName("GML")
-	
 	if os.path.exists(dstFileName):
 		dstDriver.DeleteDataSource(dstFileName)
 
+	dstDriver = ogr.GetDriverByName(get_driver_from_extension(dstFileName))
 	dstDs = dstDriver.CreateDataSource(dstFileName)
 	geometryType = srcLayer.GetGeomType()
 	dstLayer = dstDs.CreateLayer(srcLayer.GetName(), geom_type=geometryType)
@@ -113,27 +198,39 @@ def tag(argv):
 		
 		z = srcPolyline.GetZ()
 		dstFeature.SetField(zFieldDefn.GetNameRef(), z)
-		dstFeature.SetField(classFieldDefn.GetNameRef(), classify(z-indexElev, contourInterval))
+		dstFeature.SetField(classFieldDefn.GetNameRef(), classify_contour(z-indexElev, contourInterval))
 
 		dstLayer.CreateFeature(dstFeature)
 	
-	dstLayer.SyncToDisk()
+	dstLayer = None
+	srcLayer = None
+	dstDs = None
+	srcDs = None
+	dstDriver = None
+	srcDriver = None
+
+	return 0
 
 def help():
+	"""Print usage. """
 	app = sys.argv[0]
 	print "Usage: %s -help" % app
 	print "       %s -info <shp-file>" % app
 	print "       %s -tag <indexElev> <contourInterval> <shp-sourcefile> <gml-target-file>" % app
+	print "       %s -tag auto <contourInterval> <shp-sourcefile> <gml-target-file>" % app
 	
 def main():
+	"""Main app. See help() for usage."""
+
 	if len(sys.argv) > 1:
 		if sys.argv[1] == '-info':
-			info(sys.argv[2:])
+			sys.exit(info(sys.argv[2:]))
 		elif sys.argv[1] == '-tag':
-			tag(sys.argv[2:])
-	
+			sys.exit(tag(sys.argv[2:]))
 	else:
 		help()
+
+	sys.exit(1)
 	
 if __name__ == "__main__":
 	main()
