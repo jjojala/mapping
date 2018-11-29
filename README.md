@@ -6,15 +6,16 @@ Kaikki käytetyt ohjelmat ovat ilmaisia. Käyttöympäristönä on Windows.
 
 * _OpenOrienteering Mapper_, eli kotoisasti "OOM" (https://www.openorienteering.org/)
 * OSGeo4W (https://trac.osgeo.org/osgeo4w/) on Windows -ympäristöön koottu ohjelmistokokonaisuus kartta-aineiston käsittelyyn
-  * oikeasti paketista tarvitaan vain Python ja GDAL, mutta paketin mukana tulee paljon, paljon muutakin mahdollisesti myöhemmin käyttökelpoista
+  * oikeasti paketista tarvitaan vain Python ja GDAL, mutta paketin mukana tulee paljon, paljon muutakin mahdollisesti myöhemmin
+    käyttökelpoista ohjelmistoa
 * LASTools (https://rapidlasso.com/)
   * Käytettävä ilmaisversio mm. aiheuttaa pientä poikkeamaa laserpistepilven koordinaatteihin. Se on tästä huolimatta 
   riittävän tarkka tässä esitettyyn käyttötarkoitukseen. LAStools tulee jossakin muodossa myös OSGeo4W:n mukana, mutta
   ainakaan tätä kirjoitettaessa se ei toiminut odotetusti.
   
-Lisäksi tarvitset MML:n MTK --> ISOM2017 -translaatiotaulukon (https://github.com/jjojala/mapping/MTK-ISOM2017.crt) ja
+Lisäksi tarvitset MML:n MTK --> ISOM2017 -translaatiotaulukon (https://github.com/jjojala/mapping/blob/master/MTK-ISOM2017.crt) ja
 LASTools:n jäljiltä käyrät sisältävän Shapefile:n rikastamiseen ja käyrien luokitteluun tarkoitetun skriptinpätkän
-(https://github.com/jjojala/mapping/contours.py).
+(https://github.com/jjojala/mapping/blob/contours.py).
 
 Translaatiotaulu on sovitettu MML:n maastotietokannan (MTK) ja OOM:n ISOM2017 -symbolisetin kanssa toimivaksi. OCAD ei
 tietääkseni tue yhtä monipuolista translaatiomallia, eikä OCAD näin ollen voi suoraan niellä MTK:n kohteita yhtä kattavasti
@@ -22,6 +23,11 @@ kuin OOM. Toisaalta, kaikilta osin MTK ei ole suoraviivaisesti edes mäpättävi
 
 MML:n MTK:n symbolit, eli "kuvausohje" löytyy täältä:
 https://www.maanmittauslaitos.fi/kartat-ja-paikkatieto/asiantuntevalle-kayttajalle/tuotekuvaukset/maastotietokanta-0
+
+Laserkeilaus, eli LiDAR -aineistosta ("pistepilven") tuotettujen Käyrien rikastamiseen tarkoitettu `contours.py` perustuu (mm)
+OSGeo4W:n mukana tulevaan Python - ympäristöön terästettynä karttatiedon käsittelyyn tarkoitetulla kirjastolla (GDAL). Työkalu
+luokittelee käyrät korkeustason mukaan korkeuskäyriin, johtokäyriin, apukäyriin ja korkeuskuvauksen tekemistä kuvaaviin
+tukikäyriin ('UTIL').
 
 ## Aineistot
 
@@ -92,8 +98,7 @@ Useista Shapefileistä koostuva maastotietokanta (purettu zip:stä) yhdistetää
 `> ogr2ogr -clipsrc rajaus.shp Kaitajarvi_mtk.gml MML\M4211R.gml`
 
 Lopputuloksena syntyvä `Kaitajarvi_mtk.gml` tuodaan OOM -karttaan. Maastotietokannan symbolit muutetaan OMAP -symboleiksi
-lataamalla github.com/jjojala/mapping/MTK-ISOM2017.crt -tiedostoa. Hyödyttömiä symboleita voi tässä vaiheessa poistaa tai
-piilotella.
+lataamalla `MTK-ISOM2017.crt` -tiedosto. Hyödyttömiä symboleita voi tässä vaiheessa poistaa tai piilottaa.
 
 ### Laserpistepilven valmistelu ja tuonti
 
@@ -109,10 +114,41 @@ Jos pistepilvitiedostoja on useita, yhdistellään ne:
 
 `> lasthin.exe -i MML\Kaitajarvi.laz -o MML\Kaitajarvi_thinned_class2.laz -keep_class 2`
 
-... ja muutetaan lopputulos käyräviivaksi:
+... ja muutetaan lopputulos käyräviivaksi (puolen metrin käyrävälein):
 
 `> las2iso.exe -i MML\Kaitajarvi_thinned_class2.laz -o Kaitajarvi.shp -iso_every 0.5 -keep_class 2 -clean 8 -simplify 4 -smooth 5`
 
-Lopuksi vähän magiaa:
+Seuraavaksi onkin päätettävä kartassa käytettävä käyräväli ja johtokäyrien tasot. Komennolla:
 
-`> python contours.py ...`
+`> python contours.py -info Kaitajarvi.shp`
+
+... saat yhteenvedon korkeusvaihtelusta ja taulukon, jossa on kuvattu miten monta käyräsymbolia milläkin korkeustasolla esiintyy:
+
+`Elevation range: 107.50 - 155.00m:
+
+        Elevation | count
+        -----------------------
+        107.50m   |    3
+        108.75m   |    2
+        ...
+        ...
+        150.00m   |   17
+        151.25m   |   21
+        152.50m   |    9
+        153.75m   |    4
+        155.00m   |    1
+`
+Esimerkiksi tässä tapauksessa alueen korkeus vaihtelee välillä 107,5 - 155m ja on siis 47,5m. Jos (ja kun) käyräväliksi
+valitaan viisi metriä, johtokäyrätasoja mahtuu vaihteluvälille kaksi, ylemmän ollessa esimerkiksi tasolla 145m.
+
+Nyt, kun tiedetään käyräväli (5m) ja vähintään yksi käytetettävä johtokäyrän korkeustaso (145m), voidaan tehdä käyrien luokittelu:
+
+`> python contours.py -tag 145 5 Kaitajarvi.shp Kaitajarvi_contours05.gml`
+
+Lopputulos `Kaitajarvi_contours05.gml` voidaan lisätä OOM -karttaan "Tuo" -toiminnolla. Tuodut käyräsymbolit muutetaan
+OMAP -symboleiksi lataamalla `MTK-ISOM2017.crt` -tiedosto. Lopullisesta kartasta pois jäävät kartoituksen avuksi tarkoitetut
+tukikäyrät esitetään purppuralla oletussymbolilla, mutta niitä varten kannattaa käsin tehdä esim. 0,01mm leveä tumman vihreä
+käyräsymboli. Kokonaan niitä ei kannata poistaa, sillä tukikäyrät ovat mm. maastossa hyvin tarpeellisia.
+
+
+
