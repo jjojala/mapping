@@ -36,7 +36,9 @@ Tarvittavat avoimet aineistot saadaan seuraavista palveluista:
 * MapAnt (https://mapant.fi/)
 * OpenStreetMap (hptts://www.openstreetmap.org/)
 
-Lisäksi kartoitettava alue rajataan palvelulla geojson.io (https://geojson.io/)
+Lisäksi kartoitettava alue rajataan palvelulla geojson.io (https://geojson.io/):
+
+![geojson.io](images/geojsonio.png)
 
 ### Maanmittauslaitoksen (MML) avoimet aineistot
 
