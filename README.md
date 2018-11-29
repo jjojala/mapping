@@ -124,8 +124,8 @@ Seuraavaksi onkin päätettävä kartassa käytettävä käyräväli ja johtokä
 
 ... saat yhteenvedon korkeusvaihtelusta ja taulukon, jossa on kuvattu miten monta käyräsymbolia milläkin korkeustasolla esiintyy:
 
-`Elevation range: 107.50 - 155.00m:
-
+```
+Elevation range: 107.50 - 155.00m:
         Elevation | count
         -----------------------
         107.50m   |    3
@@ -137,7 +137,7 @@ Seuraavaksi onkin päätettävä kartassa käytettävä käyräväli ja johtokä
         152.50m   |    9
         153.75m   |    4
         155.00m   |    1
-`
+```
 Esimerkiksi tässä tapauksessa alueen korkeus vaihtelee välillä 107,5 - 155m ja on siis 47,5m. Jos (ja kun) käyräväliksi
 valitaan viisi metriä, johtokäyrätasoja mahtuu vaihteluvälille kaksi, ylemmän ollessa esimerkiksi tasolla 145m.
 
