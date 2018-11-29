@@ -36,34 +36,6 @@ def get_driver_from_extension(filename):
         return 'GeoJSON'
     return None
 
-def info(argv):
-	"""Print summary and elevation distribution of the contours.
-	
-	:param argv: array of arguments so that argv[0] is expected to contain the filename
-	             of the contour -file.
-	:returns: 0 if things went smoothly, something else othervise
-	:rtype:	int
-	"""
-
-	if len(argv) != 1:
-		help()
-		return 1
-
-	distrib = get_contour_distrib(argv[0])
-	keys = distrib.keys()
-	keys.sort()
-	max = keys[-1]
-	min = keys[0]
-
-	print "Elevation range: %0.2f - %0.2fm:\n" % (min, max)
-	print "\tElevation | count "
-	print "\t-----------------------"
-
-	for k in keys:
-		print "\t%5.2fm   | %4d" % (k, distrib[k])
-		 
-	return 0
-
 def classify_contour(elev, contour_interval):
 	"""Classify a contour by elevation.
 	
@@ -135,6 +107,34 @@ def define_index_elev(distrib, contour_interval):
 	max = keys[-1]
 	return max - (((max - min) % (contour_interval * 5)) / 2)
 
+def info(argv):
+	"""Print summary and elevation distribution of the contours.
+	
+	:param argv: array of arguments so that argv[0] is expected to contain the filename
+	             of the contour -file.
+	:returns: 0 if things went smoothly, something else othervise
+	:rtype:	int
+	"""
+
+	if len(argv) != 1:
+		help()
+		return 1
+
+	distrib = get_contour_distrib(argv[0])
+	keys = distrib.keys()
+	keys.sort()
+	max = keys[-1]
+	min = keys[0]
+
+	print "Elevation range: %0.2f - %0.2fm:\n" % (min, max)
+	print "\tElevation | count "
+	print "\t-----------------------"
+
+	for k in keys:
+		print "\t%5.2fm   | %4d" % (k, distrib[k])
+		 
+	return 0
+
 def tag(argv):
 	"""Create new contour -file while tagging it with contour elevation ('ELEVATION') and
 	   contour class ('CLASS') -attributes.
@@ -153,61 +153,62 @@ def tag(argv):
 		help()
 		return 1
 	
-	contourInterval = float(argv[1])
-	srcFileName = argv[2]
-	dstFileName = argv[3]
+	contour_interval = float(argv[1])
+	src_filename = argv[2]
+	dst_filename = argv[3]
+	index_elev = 0.0
 	
 	if argv[0] == 'auto':
-		indexElev = define_index_elev(get_contour_distrib(srcFileName), contourInterval)
+		index_elev = define_index_elev(get_contour_distrib(src_filename), contour_interval)
 	else:
-		indexElev = float(argv[0])
+		index_elev = float(argv[0])
 
-	srcDriver = ogr.GetDriverByName(get_driver_from_extension(srcFileName))
-	srcDs = srcDriver.Open(srcFileName, 0)
-	srcLayer = srcDs.GetLayer()
+	src_driver = ogr.GetDriverByName(get_driver_from_extension(src_filename))
+	src_ds = src_driver.Open(src_filename, 0)
+	src_layer = src_ds.GetLayer()
 
-	if os.path.exists(dstFileName):
-		dstDriver.DeleteDataSource(dstFileName)
+	dst_driver = ogr.GetDriverByName(get_driver_from_extension(dst_filename))
+	if os.path.exists(dst_filename):
+		dst_driver.DeleteDataSource(dst_filename)
 
-	dstDriver = ogr.GetDriverByName(get_driver_from_extension(dstFileName))
-	dstDs = dstDriver.CreateDataSource(dstFileName)
-	geometryType = srcLayer.GetGeomType()
-	dstLayer = dstDs.CreateLayer(srcLayer.GetName(), geom_type=geometryType)
+	dst_ds = dst_driver.CreateDataSource(dst_filename)
+	geometry_type = src_layer.GetGeomType()
+	dst_layer = dst_ds.CreateLayer(src_layer.GetName(), geom_type=geometry_type)
 
-	srcLayerDefn = srcLayer.GetLayerDefn()
-	for i in range(0, srcLayerDefn.GetFieldCount()):
-		srcFieldDfn = srcLayerDefn.GetFieldDefn(i)
-		dstLayer.CreateField(srcFieldDefn)
+	src_layer_defn = src_layer.GetLayerDefn()
+	for i in range(0, src_layer_defn.GetFieldCount()):
+		src_field_dfn = src_layer_defn.GetFieldDefn(i)
+		dst_layer.CreateField(src_field_defn)
 
-	zFieldDefn = ogr.FieldDefn("ELEVATION", ogr.OFTReal)
-	classFieldDefn = ogr.FieldDefn("CLASS", ogr.OFTString)
-	dstLayer.CreateField(zFieldDefn)
-	dstLayer.CreateField(classFieldDefn)
+	elev_field_defn = ogr.FieldDefn("ELEVATION", ogr.OFTReal)
+	class_field_defn = ogr.FieldDefn("CLASS", ogr.OFTString)
+	dst_layer.CreateField(elev_field_defn)
+	dst_layer.CreateField(class_field_defn)
 
-	dstLayerDefn = dstLayer.GetLayerDefn()
+	dst_layer_defn = dst_layer.GetLayerDefn()
 
-	for srcFeature in srcLayer:
-		srcPolyline = srcFeature.GetGeometryRef().Clone()	
-		dstFeature = ogr.Feature(dstLayerDefn)
+	for src_feature in src_layer:
+		src_geometry = src_feature.GetGeometryRef().Clone()	
+		dst_feature = ogr.Feature(dst_layer_defn)
 	
-		dstFeature.SetGeometry(srcPolyline)
-		for i in range(0, srcLayerDefn.GetFieldCount()):
-			fieldDefn = srcLayerDefn.GetFieldDefn(i)
-			dstFeature.SetField(fieldDefn.GetNameRef(),
-				srcFeature.GetField(i).Clone())
+		dst_feature.SetGeometry(src_geometry)
+		for i in range(0, src_layer_defn.GetFieldCount()):
+			field_defn = src_layer_defn.GetFieldDefn(i)
+			dst_feature.SetField(field_defn.GetNameRef(),
+				src_feature.GetField(i).Clone())
 		
-		z = srcPolyline.GetZ()
-		dstFeature.SetField(zFieldDefn.GetNameRef(), z)
-		dstFeature.SetField(classFieldDefn.GetNameRef(), classify_contour(z-indexElev, contourInterval))
+		elev = src_geometry.GetZ()
+		dst_feature.SetField(elev_field_defn.GetNameRef(), z)
+		dst_feature.SetField(class_field_defn.GetNameRef(), classify_contour(elev-index_elev, contour_interval))
 
-		dstLayer.CreateFeature(dstFeature)
+		dst_layer.CreateFeature(dst_feature)
 	
-	dstLayer = None
-	srcLayer = None
-	dstDs = None
-	srcDs = None
-	dstDriver = None
-	srcDriver = None
+	dst_layer = None
+	src_layer = None
+	dst_ds = None
+	src_ds = None
+	dst_driver = None
+	src_driver = None
 
 	return 0
 
