@@ -132,11 +132,11 @@ Jos pistepilvitiedostoja on useita, yhdistellään ne:
 
 ... ja muutetaan lopputulos käyräviivaksi (puolen metrin käyrävälein):
 
-`> las2iso.exe -i MML\Kaitajarvi_thinned_class2.laz -o Kaitajarvi.shp -iso_every 0.5 -keep_class 2 -clean 8 -simplify 4 -smooth 5`
+`> las2iso.exe -i MML\Kaitajarvi_thinned_class2.laz -o MML\Kaitajarvi_contours05.shp -iso_every 0.5 -keep_class 2 -clean 8 -simplify 4 -smooth 5`
 
 Seuraavaksi onkin päätettävä kartassa käytettävä käyräväli ja johtokäyrien tasot. Komennolla:
 
-`> python contours.py -info Kaitajarvi.shp`
+`> python contours.py -info MML\Kaitajarvi_contours05.shp`
 
 ... saat yhteenvedon korkeusvaihtelusta ja taulukon, jossa on kuvattu miten monta käyräsymbolia milläkin korkeustasolla esiintyy:
 
@@ -159,7 +159,7 @@ valitaan viisi metriä, johtokäyrätasoja mahtuu vaihteluvälille kaksi, ylemm�
 
 Nyt, kun tiedetään käyräväli (5m) ja vähintään yksi käytetettävä johtokäyrän korkeustaso (145m), voidaan tehdä käyrien luokittelu:
 
-`> python contours.py -tag 145 5 Kaitajarvi.shp Kaitajarvi_contours05.gml`
+`> python contours.py -tag 145 5 MML\Kaitajarvi_contours05.shp Kaitajarvi_contours05.gml`
 
 Lopputulos `Kaitajarvi_contours05.gml` voidaan lisätä OOM -karttaan "Tuo" -toiminnolla. Tuodut käyräsymbolit muutetaan
 OMAP -symboleiksi lataamalla `MTK-ISOM2017.crt` -tiedosto. Lopullisesta kartasta pois jäävät kartoituksen avuksi tarkoitetut
