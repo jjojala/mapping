@@ -1,27 +1,12 @@
 ###
-### ISOM2017 symbolit maastotietokannasta
+### CRT (Cross Reference Table) MTK --> ISOM2017
 ###
-### OOM:ia varten maastotietokanta voidaan valmistella MML:n materiaalista seuraavasti:
-### - pura maastotietokannan zip-paketit samaan valittuun kohdehakemistoon
-### - yhdistä kohdehakemistoon puretut ESRI Shapefilet (.shp) yhdeski GML-tiedostoksi:
-###     > ogrmerge -o M4211R_mtk.gml *.shp
-### - rajaa lopputulokseen tarvitsemasi alue:
-###     > ogr2ogr -cliparc Kaitajarvi_rajaus.shp \
-###           Kaitajarvi_mtk.gml M4211R_mtk.gml
+### Copyright (C) 2018 Jari Ojala (jari.ojala@iki.fi)
 ###
-### Korkeuskäyrien valmistelu LASTools avulla MML:n pistepilviaineistosta:
-### - yhdistä tarvittavat pistepilviaineistot:
-###     > las2las -i M4211E4.laz M4211F3.laz -merged -o M4211E4+F3.laz
-### - yksinkertaistetaan pistepilviaineistoa:
-###     > lasthin -i M42E4+F3.laz -o M42E4+F3_thinned_ground.laz -keep_class 2
-### - rajaa lopputulokseen tarvitsemasi alue:
-###     > lasclip -i M4211E4+F3_thinned_ground.laz -o Kaitajarvi.laz -poly 
-### - muuta rajatun ja alueen yksinkertaistettu pistpilvi korkeuskäyriksi:
-###     > las2iso -i Kaitajarvi.laz -o Kaitajarvi.shp \
-###           -iso-every 0.5 -clean 8 -simplify 4 -smooth 5
-### - tägää lopputulos korkeus- ja tyyppitiedolla:
-###     > python contours.py -tag 145 5 Kaitajarvi.shp Kaitajarvi.gml
-###
+
+### Tässä esitetty CRT -muoto vastaa OpenOrienteering Mapper:n CRT -muotoa
+### (https://www.openorienteering.org/mapper-manual/pages/crt_files.html)
+### Tiedosto ei ilman muokkausta toimine OCAD:n kanssa.
 
 ##
 ## Maastonmuodot
