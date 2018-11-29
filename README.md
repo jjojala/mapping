@@ -6,10 +6,22 @@ Kaikki käytetyt ohjelmat ovat ilmaisia. Käyttöympäristönä on Windows.
 
 * _OpenOrienteering Mapper_, eli kotoisasti "OOM" (https://www.openorienteering.org/)
 * OSGeo4W (https://trac.osgeo.org/osgeo4w/) on Windows -ympäristöön koottu ohjelmistokokonaisuus kartta-aineiston käsittelyyn
-  * oikeasti paketista tarvitaan vain Python ja GDAL, mutta paketin mukana tulee _paljon_ muutakin mahdollisesti myöhemmin käyttökelpoista
+  * oikeasti paketista tarvitaan vain Python ja GDAL, mutta paketin mukana tulee paljon, paljon muutakin mahdollisesti myöhemmin käyttökelpoista
 * LASTools (https://rapidlasso.com/)
   * Käytettävä ilmaisversio mm. aiheuttaa pientä poikkeamaa laserpistepilven koordinaatteihin. Se on tästä huolimatta 
-  riittävän tarkka tässä esitettyyn käyttötarkoitukseen.
+  riittävän tarkka tässä esitettyyn käyttötarkoitukseen. LAStools tulee jossakin muodossa myös OSGeo4W:n mukana, mutta
+  ainakaan tätä kirjoitettaessa se ei toiminut odotetusti.
+  
+Lisäksi tarvitset MML:n MTK --> ISOM2017 -translaatiotaulukon (https://github.com/jjojala/mapping/MTK-ISOM2017.crt) ja
+LASTools:n jäljiltä käyrät sisältävän Shapefile:n rikastamiseen ja käyrien luokitteluun tarkoitetun skriptinpätkän
+(https://github.com/jjojala/mapping/contours.py).
+
+Translaatiotaulu on sovitettu MML:n maastotietokannan (MTK) ja OOM:n ISOM2017 -symbolisetin kanssa toimivaksi. OCAD ei
+tietääkseni tue yhtä monipuolista translaatiomallia, eikä OCAD näin ollen voi suoraan niellä MTK:n kohteita yhtä kattavasti
+kuin OOM. Toisaalta, kaikilta osin MTK ei ole suoraviivaisesti edes mäpättävissä suunnistuskartan symboleihin.
+
+MML:n MTK:n symbolit, eli "kuvausohje" löytyy täältä:
+https://www.maanmittauslaitos.fi/kartat-ja-paikkatieto/asiantuntevalle-kayttajalle/tuotekuvaukset/maastotietokanta-0
 
 ## Aineistot
 
