@@ -160,7 +160,6 @@ def tag(argv):
 	
 	if argv[0] == 'auto':
 		index_elev = round(define_index_elev(get_contour_distrib(src_filename), contour_interval))
-		print index_elev
 	else:
 		index_elev = float(argv[0])
 
