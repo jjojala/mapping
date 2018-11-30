@@ -19,7 +19,7 @@ Sen sijaan **et** tarvitse ([koska...](Miksi_ei.md)):
 
 ## Alueen rajaus
 
-Aloitetaan alueen rajaamisella. Se onnistuu [geojson.io](https://geojson.io/) -palvelussa. Käyttääksesi palvelua
+Aloitetaan alueen rajaamisella. Se onnistuu esimerkiksi [geojson.io](https://geojson.io/) -palvelussa. Käyttääksesi palvelua
 et tarvitse käyttäjätunnusta.
 
 Valitse karttanäkymän oikeasta laidasta *Draw a polygon* -työkalu ja rajaa sillä kartoitettava alue. Tallenna alue
