@@ -210,3 +210,31 @@ käyräsymboli. Kokonaan niitä ei kannata poistaa, sillä tukikäyrät ovat mm.
 
 ![OOM](images/OOM.png)
 
+## Entä sitten?
+
+Ennen maastoon ryntäämistä voi, ja kannattaa pohja-aineiston kanssa vähän jumpata, esimerkiksi:
+
+* OSM -pohjista kannattaa tarkistaa mahdollisia kartalle kuvattavia kohteita. OSM-pohjissa on erityisesti taajamien liepeillä
+  MTK:ta kattavampaa tietoa esimerkiksi poluista.
+* Ortoilmakuvia kannattaa verrata kiinteistörajoihin. Jos ilmakuvasta näkyy hakkuu, joka näyttäisi rajautuvan kiinteistörajaan,
+  kyseessä on melkoisella varmuudella myös maastossa selvästi erottuva kuvioraja. Ilmakuvista voi näkyä myös muita
+  MTK-materiaalista puuttuvia kohteita.
+* Taajama- ja esimerkiksi mökkialueilla kiinteistörajojen perusteella voi kuvata tonttivihreät. Tässä on tosin huomattava, että
+  isoilla, metsäisillä tonteilla koko tontti ei ole välttämättä kiellettyä aluetta.
+* Korkeuskäyriä voi trimmailla melkein loputtomiin. Useimmat laserpohjista otetut käyrän mutkat eivät erotu maastossa, joten
+  yleensä on aika turvallista pelkistää ja suoristaa käyräviivoja jo ennen maastotyötä - tosin maastossa käynnin jälkeen
+  voi tulla yllätyksiäkin ja joskus jonkun muodon korostaminen maastokäynnin jälkeen tuntuu ilmeiseltä.
+
+On myös muita avoimia materiaaleja:
+* Esimerkiksi Bing, Google Maps -ilmakuvista voi toisinaan näkyä jotakin sellaista, joka ei MML:n ortoilmakuvista irtoa.
+  Kaikista palveluista kuvia ei saa georeferoituna, joten kohteiden todellisen sijainnin kanssa kannattaa olla tarkkana.
+  Toisinaan kuvat voivat olla myös huomattavan vanhoja. Myös esimerkiksi kunnilta saattaa irrota alueesta ilmakuvia.
+* Google Street View:n avulla voit tehdä virtuaalisia maastokäyntejä.
+* Kuntien kaavakartat.
+* [Vanhat painetut kartat](http://vanhatpainetutkartat.maanmittauslaitos.fi/) -palvelusta kannattaa kaivaa vanhoja karttoja.
+  Vanhat kartat eivät ole georeferoituja ja niissä on (ennen vuotta 2003) myös eri projektio. Tästä syystä ne kannattaa
+  asemoida aina kulloinkin käsiteltävän alueen perusteella paikalleen ennen käyttöä. Kun asemoinnin tekee huolella,
+  vanhoista kartoista irtoaa yllättävän hyvää tietoa. Esimerkiksi nykyisin maastossa kuviorajoina erottuvat jo vuosia sitten
+  paketoitujen peltojen reunat saa kätevästi poimittua vanhoista kartoista.
+
+Sitten vaan maastoon tarkistamaan pohjatyön tulosta, korjaamaan ja täydentämään.
