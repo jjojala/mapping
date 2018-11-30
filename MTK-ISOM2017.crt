@@ -16,9 +16,16 @@
 ###   limitations under the License.
 ###
 
-### Tässä esitetty CRT -muoto vastaa OpenOrienteering Mapper:n CRT -muotoa
+###
+### Tässä esitetty CRT -muoto vastaa OpenOrienteering Mapper:n ISOM2017 symbolistoa ja CRT -muotoa
 ### (https://www.openorienteering.org/mapper-manual/pages/crt_files.html)
-### Tiedosto ei ilman muokkausta toimine OCAD:n kanssa.
+### Tämä tiedosto ei toimi sellaisenaan OCAD:ssa tai OCAD:n käyttämän symbolisetin kanssa.
+###
+
+### 
+### Maanmittauslaitoksen (MML) maastotietokannan (MTK) kohteet kuvauksineen löytyy täältä:
+### https://www.maanmittauslaitos.fi/kartat-ja-paikkatieto/asiantuntevalle-kayttajalle/tuotekuvaukset/maastotietokanta-0
+###
 
 ##
 ## Maastonmuodot
