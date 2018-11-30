@@ -121,10 +121,16 @@ Lopputuloksena syntyvä `Kaitajarvi_kiinteistorajat.gml` voidaan tuoda _taustaka
 
 ### OpenStreetMap -kartan valmistelu ja tuonti
 
-Rajataan materiaali kartoitettavaan alueeseen:
+OSM -kartta ei käytä MML:n käyttämää koordinaattijärjestelmää, joten se pitää ensin muuttaa:
 
 ```
-> ogr2ogr -clipsrc rajaus.shp Kaitajarvi_osm.gml OSM\map.osm
+> ogr2ogr -t_srs EPSG:3067 OSM\map.gml OSM\map.osm
+```
+
+Muutoksen jälkseen rajataan materiaali kartoitettavaan alueeseen:
+
+```
+> ogr2ogr -clipsrc rajaus.shp Kaitajarvi_osm.gml OSM\map.gml
 ```
 
 Lopputuloksenä syntyvä `Kaitajarvi_osm.gml` on yleensä mielekästä avata taustakarttana. Tällöin taustakartan
