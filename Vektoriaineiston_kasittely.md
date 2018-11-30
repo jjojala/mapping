@@ -35,7 +35,6 @@ Komennossa *rajaava* muoto on annettu `-clipsrc rajaus.shp` -optiolla. `Kaitajar
 lopputulos ja `OSM\map.osm` on lähtöaineisto, jota halutaan rajata. Tässä on hyvä huomioida, että `ogr2ogr`
 osaa automaattisesti käsitellä tiedostojen tyypin, kunhan vakiintuneita tiedostojen tarkenteita käytetään.
 
-<a href="#vektoriaineistojen_yhdistely"/>
 ### Aineistojen yhdistely
 
 Joskus on tarvetta saada useita eri vektoriaineistoja yhdistettyä ja tämähän onnistuu tietenkin `ogrmerge` -komennolla.
