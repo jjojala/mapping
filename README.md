@@ -79,7 +79,9 @@ Pura ladattu tiedosto esimerkiksi hakemistoon `geojson.io`.
 
 Käynnistä OSGeo4W -komentotulkki ja muuta aluerajaus MML:n käyttämään koordinaatistoon:
 
-`> ogr2ogr -t_srs EPSG:3067 rajaus.shp geojson.io\layers\POLYGON.shp`
+```
+> ogr2ogr -t_srs EPSG:3067 rajaus.shp geojson.io\layers\POLYGON.shp
+```
 
 ### MapAnt -kartan valmistelu
 
@@ -97,7 +99,9 @@ georeferointeineen ja karttapohjoisen asetuksineen (kts. pikakartan valmistusohj
 
 Yhdistetään kuvat (jos useita):
 
-`> gdalwarp MML\M4211E.jp2 MML\M4211F.jp2 MML\M4211E+F.tif`
+```
+> gdalwarp MML\M4211E.jp2 MML\M4211F.jp2 MML\M4211E+F.tif
+```
 
 ... ja rajataan kartoitettavaan alueeseen (kuten MapAnt -kartta):
 
@@ -122,7 +126,9 @@ Lopputuloksena syntyvä `Kaitajarvi_kiinteistorajat.gml` voidaan tuoda _taustaka
 
 Rajataan materiaali alueellisesti:
 
-`> ogr2ogr -clipsrc rajaus.shp Kaitajarvi_osm.gml OSM\map.osm`
+```
+> ogr2ogr -clipsrc rajaus.shp Kaitajarvi_osm.gml OSM\map.osm
+```
 
 Lopputuloksenä syntyvä `Kaitajarvi_osm.gml` on yleensä mielekästä avata taustakarttana. Tällöin taustakartan
 avaulla piirretään taustakartan halutut kohteet myös OOM-karttaan.
@@ -135,11 +141,15 @@ mielekästä tuoda OSM-kartta OOM-karttaan sellaisenaan. Tuotuun karttaan sovell
 
 Useista Shapefileistä koostuva maastotietokanta (purettu zip:stä) yhdistetään yhdeski GML-tiedostoksi:
 
-`> ogrmerge -o MML\M4211R.gml MML\M4211R.shp\*.shp`
+```
+> ogrmerge -o MML\M4211R.gml MML\M4211R.shp\*.shp
+```
 
 ... ja rajataan:
 
-`> ogr2ogr -clipsrc rajaus.shp Kaitajarvi_mtk.gml MML\M4211R.gml`
+```
+> ogr2ogr -clipsrc rajaus.shp Kaitajarvi_mtk.gml MML\M4211R.gml
+```
 
 Lopputuloksena syntyvä `Kaitajarvi_mtk.gml` tuodaan OOM -karttaan. Maastotietokannan symbolit muutetaan OMAP -symboleiksi
 lataamalla `MTK-ISOM2017.crt` -tiedosto. Hyödyttömiä symboleita voi tässä vaiheessa poistaa tai piilottaa.
@@ -148,15 +158,21 @@ lataamalla `MTK-ISOM2017.crt` -tiedosto. Hyödyttömiä symboleita voi tässä v
 
 Jos pistepilvitiedostoja on useita, yhdistellään ne:
 
-`> las2las.exe -i MML\M4211E4.laz MML\M4211F3.laz -merged -o MML\M4211E4+F3.laz`
+```
+> las2las.exe -i MML\M4211E4.laz MML\M4211F3.laz -merged -o MML\M4211E4+F3.laz
+```
 
 ... rajataan materiaali vain tarvittavaan alueeseen:
 
-`> lasclip.exe -i MML\M4211E4+F3.laz -o MML\Kaitajarvi.laz -poly rajaus.shp -v`
+```
+> lasclip.exe -i MML\M4211E4+F3.laz -o MML\Kaitajarvi.laz -poly rajaus.shp -v
+```
 
 ... pelkistetään pistepilveä ja valitaan siihen vain "ground" (class 2) pisteet:
 
-`> lasthin.exe -i MML\Kaitajarvi.laz -o MML\Kaitajarvi_thinned_class2.laz -keep_class 2`
+```
+> lasthin.exe -i MML\Kaitajarvi.laz -o MML\Kaitajarvi_thinned_class2.laz -keep_class 2
+```
 
 ... ja muutetaan lopputulos käyräviivaksi (puolen metrin käyrävälein):
 
@@ -167,7 +183,9 @@ Jos pistepilvitiedostoja on useita, yhdistellään ne:
 
 Seuraavaksi onkin päätettävä kartassa käytettävä käyräväli ja johtokäyrien tasot. Komennolla:
 
-`> python contours.py -info MML\Kaitajarvi_contours05.shp`
+```
+> python contours.py -info MML\Kaitajarvi_contours05.shp
+```
 
 ... saat yhteenvedon korkeusvaihtelusta ja taulukon, jossa on kuvattu miten monta käyräsymbolia milläkin korkeustasolla esiintyy:
 
@@ -185,12 +203,15 @@ Elevation range: 107.50 - 155.00m:
         153.75m   |    4
         155.00m   |    1
 ```
+
 Esimerkiksi tässä tapauksessa alueen korkeus vaihtelee välillä 107,5 - 155m ja on siis 47,5m. Jos (ja kun) käyräväliksi
 valitaan viisi metriä, johtokäyrätasoja mahtuu vaihteluvälille kaksi, ylemmän ollessa esimerkiksi tasolla 145m.
 
 Nyt, kun tiedetään käyräväli (5m) ja vähintään yksi käytetettävä johtokäyrän korkeustaso (145m), voidaan tehdä käyrien luokittelu:
 
-`> python contours.py -tag 145 5 MML\Kaitajarvi_contours05.shp Kaitajarvi_contours05.gml`
+```
+> python contours.py -tag 145 5 MML\Kaitajarvi_contours05.shp Kaitajarvi_contours05.gml
+```
 
 Lopputulos `Kaitajarvi_contours05.gml` voidaan lisätä OOM -karttaan "Tuo" -toiminnolla. Tuodut käyräsymbolit muutetaan
 OMAP -symboleiksi lataamalla `MTK-ISOM2017.crt` -tiedosto. Lopullisesta kartasta pois jäävät kartoituksen avuksi tarkoitetut
@@ -198,5 +219,4 @@ tukikäyrät esitetään purppuralla oletussymbolilla, mutta niitä varten kanna
 käyräsymboli. Kokonaan niitä ei kannata poistaa, sillä tukikäyrät ovat mm. maastossa hyvin tarpeellisia.
 
 ![OOM](images/OOM.png)
-
 
