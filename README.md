@@ -35,6 +35,10 @@ avautuvasta kansiosta komento *OSGeo4W Shell*) ja muuta aluerajaus MML:n käytt�
 ```
 > ogr2ogr -t_srs EPSG:3067 rajaus.shp geojson.io\layers\POLYGON.shp
 ```
+
+Älä sulje *OSGeo4W shell*:iä käytön jälkeen (myöhemmin tässä ohjeessa suoritettavat komentorivikomennot ajetaan
+samasta ikkunasta).
+
 ## Aineistot
 
 Tarvittavat avoimet aineistot saadaan seuraavista palveluista:
