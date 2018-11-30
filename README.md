@@ -107,7 +107,7 @@ Yhdistetään kuvat (jos useita):
 ... ja rajataan kartoitettavaan alueeseen (kuten MapAnt -kartta):
 
 ```
-`> gdalwarp -cutline rajaus.shp -crop_to_cutline -dstalpha -s_srs EPSG:3067 ^
+> gdalwarp -cutline rajaus.shp -crop_to_cutline -dstalpha -s_srs EPSG:3067 ^
             -co COMPRESS=JPEG -co WORLDFILE=YES MML\M4211E+f.tif Kaitajarvi_Orto.tif
 ```
 
