@@ -6,12 +6,7 @@ Kaikki käytetyt ohjelmat ovat ilmaisia. Käyttöympäristönä on Windows.
 
 * [OpenOrienteering Mapper](https://www.openorienteering.org/), eli kotoisasti "OOM"
 * [OSGeo4W](https://trac.osgeo.org/osgeo4w/) on Windows -ympäristöön koottu ohjelmistokokonaisuus kartta-aineiston käsittelyyn
-  * oikeasti paketista tarvitaan vain Python ja GDAL, mutta paketin mukana tulee paljon, paljon muutakin mahdollisesti myöhemmin
-    käyttökelpoista ohjelmistoa
 * [LASTools](https://rapidlasso.com/)
-  * Käytettävä ilmaisversio mm. aiheuttaa pientä poikkeamaa laserpistepilven koordinaatteihin. Se on tästä huolimatta 
-  riittävän tarkka tässä esitettyyn käyttötarkoitukseen. LAStools tulee jossakin muodossa myös OSGeo4W:n mukana, mutta
-  ainakaan tätä kirjoitettaessa se ei toiminut odotetusti
   
 Lisäksi tarvitset:
 * MML:n MTK --> ISOM2017 -translaatiotaulukon [MTK-ISOM2017.crt](https://github.com/jjojala/mapping/raw/master/MTK-ISOM2017.crt)
@@ -22,63 +17,68 @@ Sen sijaan **et** tarvitse ([koska...](Miksi_ei.md)):
 * OCAD:ia, tai
 * Pullautinta
 
-## Aineistot
+## Alueen rajaus
 
-Tarvittavat avoimet aineistot saadaan seuraavista palveluista:
-* Maanmittauslaitoksen (MML) _avoimien aineistojen tiedostopalvelu_ (https://tiedostopalvelu.maanmittauslaitos.fi/tp/kartta)
-* MapAnt (https://mapant.fi/)
-* OpenStreetMap (hptts://www.openstreetmap.org/)
+Aloitetaan alueen rajaamisella. Se onnistuu [geojson.io](https://geojson.io/) -palvelussa. Käyttääksesi palvelua
+et tarvitse käyttäjätunnusta.
 
-Lisäksi kartoitettava alue rajataan palvelulla geojson.io (https://geojson.io/):
-
-### Maanmittauslaitoksen (MML) avoimet aineistot
-
-Aineistot voit ladata MML:n _avoimien aineistojen tiedostopalvelusta_:
-  https://tiedostopalvelu.maanmittauslaitos.fi/tp/kartta
-
-MML:n tiedostpalvelusta noudettavat materiaalit:
-* JPEG2000 -muotoiset ortoilmakuvat
-* laserkeilaus-, eli pistepilviaineisto (mielellään stereomalliluokiteltu)
-* kiinteistörekisterikartta, vektori, kaikki kohteet
-
-![MML](images/MML.png)
-
-Kopioi ladatut aineistot esimerkiksi hakemistoon `MML`. Pura zip -paketit vastaavan nimiseen hakemistoon,
-esim. `MML\M4211R.shp.zip` --> `MML\M4211R.shp`
-
-### MapAnt
-
-MapAnt -palvelusta (https://www.mapant.fi/) haetaan kartoitettavan alueen kattava karttapala
-"Export" -toiminnolla (Zoom=9, Format="Georeferenced PNG"):
-
-![MapAnt](images/mapant.png)
-
-### OpenStreetMap (OSM)
-
-OSM -palvelu löytyy osoitteesta https://openstreetmap.org/ Aineiston voi rajata ja tuoda karttanäkymästä "Export" -toiminnolla.
-Kopioi ladattu `map.osm` hakemistoon `OSM`.
-
-![OSM](images/OSM.png)
-
-## Aineiston alustava valmistelu
-
-### Alueen rajaus
-
-Kartoitettava alue rajataan palvelussa http://geojson.io/#map=2/20.0/0.0 Polygonina rajattu alue tallennetaan Shapefile -muodossa:
+Valitse karttanäkymän oikeasta laidasta *Draw a polygon* -työkalu ja rajaa sillä kartoitettava alue. Tallenna alue
+*Shapefile* -muodossa valikon *Save-->Shapefile* -toiminnolla.
 
 ![geojson.io](images/geojsonio.png)
 
-Pura ladattu tiedosto esimerkiksi hakemistoon `geojson.io`.
+Pura ladattu tiedosto esimerkiksi tekemääsi hakemistoon `geojson.io`.
 
 Käynnistä OSGeo4W -komentotulkki ja muuta aluerajaus MML:n käyttämään koordinaatistoon:
 
 ```
 > ogr2ogr -t_srs EPSG:3067 rajaus.shp geojson.io\layers\POLYGON.shp
 ```
+## Aineistot
+
+Tarvittavat avoimet aineistot saadaan seuraavista palveluista:
+* [Maanmittauslaitoksen (MML) avoimien aineistojen tiedostopalvelu](https://tiedostopalvelu.maanmittauslaitos.fi/tp/kartta)
+* [MapAnt](https://mapant.fi/)
+* [OpenStreetMap](hptts://www.openstreetmap.org/)
+
+### Maanmittauslaitoksen (MML) avoimet aineistot
+
+Lataa MML:n avoimet aineistot palvelusta:
+  https://tiedostopalvelu.maanmittauslaitos.fi/tp/kartta
+
+Valitse vasemmassa reunassa noudettavan materiaalin tyyppi yksi kerraallaan ja klikkaa sen jälkeen haluamaasi aluetta.
+Lista noudettavasta materiaalista muodostuu oikeaan reunaan. Noudettavia materiaaleja ovat:
+* JPEG2000 -muotoiset ortoilmakuvat
+* laserkeilaus-, eli pistepilviaineisto (mielellään stereomalliluokiteltu)
+* kiinteistörekisterikartta, vektori, kaikki kohteet
+
+![MML](images/MML.png)
+
+Tee lataustilaus ja odota, että saat sähköpostiisi latauslinkin. Lataa aineistot ja kopioi ne esimerkiksi tekemääsi
+hakemistoon `MML`. Pura zip -paketit vastaavan nimiseen hakemistoon, esim. `MML\M4211R.shp.zip` --> `MML\M4211R.shp`
+
+### MapAnt
+
+Hae MapAnt -kartta palvelusta https://www.mapant.fi/. Tuonti käynnistetään *Export* -toiminnolla, jonka jälkeen
+hiirellä rajataan kartalta noudettava suorakaiteenmuotoinen alue. Käytä tuonnissa tarkinta lähennystasoa (Zoom=9)
+ja muotona georeferoitua PNG:tä (Format="Georeferenced PNG"):
+
+![MapAnt](images/mapant.png)
+
+Pura ladattu zip-tiedosto esimerkiksi tekemääsi hakemistoon `MapAnt`.
+
+### OpenStreetMap (OSM)
+
+OSM -palvelu löytyy osoitteesta https://openstreetmap.org/. Aineiston voi rajata ja tuoda karttanäkymästä *Export* -toiminnolla.
+Kopioi ladattu `map.osm` hakemistoon `OSM`.
+
+![OSM](images/OSM.png)
+
+## Aineiston valmistelu
 
 ### MapAnt -kartan valmistelu
 
-Pura palvelusta tuotu MapAnt.zip esimerkiksi hakemistoon `MapAnt` ja rajaa siitä tarvitsemasi osa:
+Rajataan kartoitettava alue:
 
 ```
 > gdalwarp -cutline rajaus.shp -crop_to_cutline -dstalpha -s_srs EPSG:3067 ^
@@ -117,7 +117,7 @@ Lopputuloksena syntyvä `Kaitajarvi_kiinteistorajat.gml` voidaan tuoda _taustaka
 
 ### OpenStreetMap -kartan valmistelu ja tuonti
 
-Rajataan materiaali alueellisesti:
+Rajataan materiaali kartoitettavaan alueeseen:
 
 ```
 > ogr2ogr -clipsrc rajaus.shp Kaitajarvi_osm.gml OSM\map.osm
