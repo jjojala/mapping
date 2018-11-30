@@ -1,18 +1,30 @@
 #!/usr/bin/env python
 
-# Copyright (C) 2018 Jari Ojala (jari.ojala@iki.fi)
-#
-#   Licensed under the Apache License, Version 2.0 (the "License");
-#   you may not use this file except in compliance with the License.
-#   You may obtain a copy of the License at
-#
-#       http://www.apache.org/licenses/LICENSE-2.0
-#
-#   Unless required by applicable law or agreed to in writing, software
-#   distributed under the License is distributed on an "AS IS" BASIS,
-#   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-#   See the License for the specific language governing permissions and
-#   limitations under the License.
+"""
+Copyright (C) 2018 Jari Ojala (jari.ojala@iki.fi)
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+"""
+
+"""
+Laserkeilaus, eli LiDAR -aineistosta ("pistepilven") tuotettujen Käyrien rikastamiseen tarkoitettu työkalu.
+Perustuu (mm) OSGeo4W:n mukana GDAL/OGR -kirjastoon. Työkalu luokittelee käyrät korkeustason mukaan korkeuskäyriin,
+johtokäyriin, apukäyriin ja korkeuskuvauksen tekemistä kuvaaviin tukikäyriin ('UTIL').
+
+Käytästä saat ohjeet komennolla
+	> python contours.py -help
+
+"""
 
 import os
 import sys
@@ -228,9 +240,11 @@ def main():
 			sys.exit(info(sys.argv[2:]))
 		elif sys.argv[1] == '-tag':
 			sys.exit(tag(sys.argv[2:]))
-	else:
-		help()
+		elif sys.argv[1] == '-help':
+			help()
+			sys.exit(0)
 
+	help()
 	sys.exit(1)
 	
 if __name__ == "__main__":
