@@ -23,13 +23,14 @@ Aloitetaan alueen rajaamisella. Se onnistuu esimerkiksi [geojson.io](https://geo
 et tarvitse käyttäjätunnusta.
 
 Valitse karttanäkymän oikeasta laidasta *Draw a polygon* -työkalu ja rajaa sillä kartoitettava alue. Tallenna alue
-*Shapefile* -muodossa valikon *Save-->Shapefile* -toiminnolla.
+*Shapefile* -muodossa valikon *Save->Shapefile* -toiminnolla.
 
 ![geojson.io](images/geojsonio.png)
 
 Pura ladattu tiedosto esimerkiksi tekemääsi hakemistoon `geojson.io`.
 
-Käynnistä OSGeo4W -komentotulkki ja muuta aluerajaus MML:n käyttämään koordinaatistoon:
+Käynnistä OSGeo4W -komentotulkki (Windows: *Start->All Programs->OSGeo4W* ja
+avautuvasta kansiosta komento *OSGeo4W Shell*) ja muuta aluerajaus MML:n käyttämään koordinaatistoon:
 
 ```
 > ogr2ogr -t_srs EPSG:3067 rajaus.shp geojson.io\layers\POLYGON.shp
