@@ -19,3 +19,8 @@ toimii sen sijaan halvoissa Android -laitteissa ja esimerkiksi älypuhelimessa. 
 ääressä PC:llä.
 
 Hinta: Ominaisuuksiltaan vastaavan OCAD:n Orienteering -version lisenssi yhdelle käyttäjälle on maksaa lähes 150€/vuosi.
+
+## Käytetyn työkalusetin ominaisuudet
+
+Käytetyt työkalut tarjoavat valtavasti mahdollisuuksia muunteluun ja ohjelmointitaitoisille mahdollisuuden kehitellä
+omiin käyttötarpeisiin soveltuvia työkaluja.
