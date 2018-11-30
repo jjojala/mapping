@@ -14,9 +14,9 @@ Kaikki käytetyt ohjelmat ovat ilmaisia. Käyttöympäristönä on Windows.
   ainakaan tätä kirjoitettaessa se ei toiminut odotetusti.
   
 Lisäksi tarvitset MML:n MTK --> ISOM2017 -translaatiotaulukon
-([MTK-ISOM2017.crt https://github.com/jjojala/mapping/raw/master/MTK-ISOM2017.crt]) ja LASTools:n jäljiltä käyrät sisältävän
+([MTK-ISOM2017.crt](https://github.com/jjojala/mapping/raw/master/MTK-ISOM2017.crt)) ja LASTools:n jäljiltä käyrät sisältävän
 Shapefile:n rikastamiseen ja käyrien luokitteluun tarkoitetun skriptinpätkän
-([contours.py https://github.com/jjojala/mapping/raw/master/contours.py]).
+([contours.py](https://github.com/jjojala/mapping/raw/master/contours.py)).
 
 Translaatiotaulu on sovitettu MML:n maastotietokannan (MTK) ja OOM:n ISOM2017 -symbolisetin kanssa toimivaksi. OCAD ei
 tietääkseni tue yhtä monipuolista translaatiomallia, eikä OCAD näin ollen voi suoraan niellä MTK:n kohteita yhtä kattavasti
