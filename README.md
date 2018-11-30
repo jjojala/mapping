@@ -39,7 +39,7 @@ Käynnistä OSGeo4W -komentotulkki ja muuta aluerajaus MML:n käyttämään koor
 Tarvittavat avoimet aineistot saadaan seuraavista palveluista:
 * [Maanmittauslaitoksen (MML) avoimien aineistojen tiedostopalvelu](https://tiedostopalvelu.maanmittauslaitos.fi/tp/kartta)
 * [MapAnt](https://mapant.fi/)
-* [OpenStreetMap](hptts://www.openstreetmap.org/)
+* [OpenStreetMap](https://www.openstreetmap.org/)
 
 ### Maanmittauslaitoksen (MML) avoimet aineistot
 
