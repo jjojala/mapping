@@ -11,17 +11,13 @@ Kaikki käytetyt ohjelmat ovat ilmaisia. Käyttöympäristönä on Windows.
 * [LASTools](https://rapidlasso.com/)
   * Käytettävä ilmaisversio mm. aiheuttaa pientä poikkeamaa laserpistepilven koordinaatteihin. Se on tästä huolimatta 
   riittävän tarkka tässä esitettyyn käyttötarkoitukseen. LAStools tulee jossakin muodossa myös OSGeo4W:n mukana, mutta
-  ainakaan tätä kirjoitettaessa se ei toiminut odotetusti.
+  ainakaan tätä kirjoitettaessa se ei toiminut odotetusti
   
 Lisäksi tarvitset:
 * MML:n MTK --> ISOM2017 -translaatiotaulukon [MTK-ISOM2017.crt](https://github.com/jjojala/mapping/raw/master/MTK-ISOM2017.crt)
 * LASTools:n jäljiltä käyrät sisältävän Shapefile:n rikastamiseen ja käyrien luokitteluun tarkoitetun skriptinpätkän
-([contours.py](https://github.com/jjojala/mapping/raw/master/contours.py)).
+([contours.py](https://github.com/jjojala/mapping/raw/master/contours.py))
 
-Laserkeilaus, eli LiDAR -aineistosta ("pistepilven") tuotettujen Käyrien rikastamiseen tarkoitettu `contours.py` perustuu (mm)
-OSGeo4W:n mukana tulevaan Python - ympäristöön terästettynä karttatiedon käsittelyyn tarkoitetulla kirjastolla (GDAL). Työkalu
-luokittelee käyrät korkeustason mukaan korkeuskäyriin, johtokäyriin, apukäyriin ja korkeuskuvauksen tekemistä kuvaaviin
-tukikäyriin ('UTIL').
 
 ## Aineistot
 
