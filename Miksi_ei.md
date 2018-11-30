@@ -19,6 +19,7 @@ toimii sen sijaan halvoissa Android -laitteissa ja esimerkiksi älypuhelimessa. 
 ääressä PC:llä.
 
 Hinta: Ominaisuuksiltaan vastaavan OCAD:n Orienteering -version lisenssi yhdelle käyttäjälle on maksaa lähes 150€/vuosi.
+Se on 150€ vuodessa enemmän, kuin tässä näissä ohjeissa esitettyjen muiden ohjelmien kustannukset.
 
 Ratasuunnitteluun voi käyttää (ainakin minusta) OCAD:iä helppokäyttöisempää [Purple Pen](http://purplepen.golde.org/).
 Purple Pen toimii yhtä hyvin OCAD:n, OOM:n kuin myös esimerkiksi PDF-muodossa tuotettujen karttojen kanssa.
