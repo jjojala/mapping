@@ -229,7 +229,7 @@ On myös muita avoimia materiaaleja:
 * Esimerkiksi Bing, Google Maps -ilmakuvista voi toisinaan näkyä jotakin sellaista, joka ei MML:n ortoilmakuvista irtoa.
   Kaikista palveluista kuvia ei saa georeferoituna, joten kohteiden todellisen sijainnin kanssa kannattaa olla tarkkana.
   Toisinaan kuvat voivat olla myös huomattavan vanhoja. Myös esimerkiksi kunnilta saattaa irrota alueesta ilmakuvia.
-* Google Street View:n avulla voit tehdä virtuaalisia maastokäyntejä.
+* [Google Street View:n](https://mapstreetview.com/) avulla voit tehdä virtuaalisia maastokäyntejä ([esimerkki](images/GoogleStreetView.png))
 * Kuntien kaavakartat.
 * [Vanhat painetut kartat](http://vanhatpainetutkartat.maanmittauslaitos.fi/) -palvelusta kannattaa kaivaa vanhoja karttoja.
   Vanhat kartat eivät ole georeferoituja ja niissä on (ennen vuotta 2003) myös eri projektio. Tästä syystä ne kannattaa
