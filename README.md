@@ -18,6 +18,9 @@ Lisäksi tarvitset:
 * LASTools:n jäljiltä käyrät sisältävän Shapefile:n rikastamiseen ja käyrien luokitteluun tarkoitetun skriptinpätkän
 ([contours.py](https://github.com/jjojala/mapping/raw/master/contours.py))
 
+Sen sijaan **et** tarvitse:
+* OCAD:ia, tai
+* Pullautinta, [koska...](Miksi_ei.md)
 
 ## Aineistot
 
