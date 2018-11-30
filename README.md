@@ -4,7 +4,7 @@
 
 Kaikki käytetyt ohjelmat ovat ilmaisia. Käyttöympäristönä on Windows.
 
-* [_OpenOrienteering Mapper_](https://www.openorienteering.org/), eli kotoisasti "OOM"
+* [OpenOrienteering Mapper](https://www.openorienteering.org/), eli kotoisasti "OOM"
 * [OSGeo4W](https://trac.osgeo.org/osgeo4w/) on Windows -ympäristöön koottu ohjelmistokokonaisuus kartta-aineiston käsittelyyn
   * oikeasti paketista tarvitaan vain Python ja GDAL, mutta paketin mukana tulee paljon, paljon muutakin mahdollisesti myöhemmin
     käyttökelpoista ohjelmistoa
@@ -226,7 +226,7 @@ Ennen maastoon ryntäämistä voi, ja kannattaa pohja-aineiston kanssa vähän j
   voi tulla yllätyksiäkin ja joskus jonkun muodon korostaminen maastokäynnin jälkeen tuntuu ilmeiseltä.
 
 On myös muita avoimia materiaaleja:
-* Esimerkiksi Bing, Google Maps -ilmakuvista voi toisinaan näkyä jotakin sellaista, joka ei MML:n ortoilmakuvista irtoa.
+* Esimerkiksi [Bing Aerial](https://www.bing.com/maps/aerial), [Google Maps](https://www.google.com/maps/) -ilmakuvista voi toisinaan näkyä jotakin sellaista, joka ei MML:n ortoilmakuvista irtoa.
   Kaikista palveluista kuvia ei saa georeferoituna, joten kohteiden todellisen sijainnin kanssa kannattaa olla tarkkana.
   Toisinaan kuvat voivat olla myös huomattavan vanhoja. Myös esimerkiksi kunnilta saattaa irrota alueesta ilmakuvia.
 * [Google Street View:n](https://mapstreetview.com/) avulla voit tehdä virtuaalisia maastokäyntejä ([esimerkki](images/GoogleStreetView.png))
