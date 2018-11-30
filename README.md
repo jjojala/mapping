@@ -64,7 +64,7 @@ Kopioi ladattu `map.osm` hakemistoon `OSM`.
 
 ### Alueen rajaus
 
-Kartoitettava alue rajataan palvelussa http://geojson.io/#map=2/20.0/0.0 Polygonina raj ttu alue tallennetaan Shapefile -muodossa:
+Kartoitettava alue rajataan palvelussa http://geojson.io/#map=2/20.0/0.0 Polygonina rajattu alue tallennetaan Shapefile -muodossa:
 
 ![geojson.io](images/geojsonio.png)
 
