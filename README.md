@@ -29,14 +29,14 @@ Valitse karttanäkymän oikeasta laidasta *Draw a polygon* -työkalu ja rajaa si
 
 Pura ladattu tiedosto esimerkiksi tekemääsi hakemistoon `geojson.io`.
 
-Käynnistä OSGeo4W -komentotulkki (Windows: *Start->All Programs->OSGeo4W* ja
+Käynnistä OSGeo4W Shell (komentotulkki) (Windows: *Start->All Programs->OSGeo4W* ja
 avautuvasta kansiosta komento *OSGeo4W Shell*) ja muuta aluerajaus MML:n käyttämään koordinaatistoon:
 
 ```
 > ogr2ogr -t_srs EPSG:3067 rajaus.shp geojson.io\layers\POLYGON.shp
 ```
 
-Älä sulje *OSGeo4W shell*:iä käytön jälkeen (myöhemmin tässä ohjeessa suoritettavat komentorivikomennot ajetaan
+Älä sulje *OSGeo4W shell*:iä komennon jälkeen (myöhemmin tässä ohjeessa suoritettavat komennot ajetaan
 samasta ikkunasta).
 
 ## Aineistot
