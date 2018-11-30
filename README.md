@@ -44,7 +44,7 @@ Aineistot voit ladata MML:n _avoimien aineistojen tiedostopalvelusta_:
   https://tiedostopalvelu.maanmittauslaitos.fi/tp/kartta
 
 MML:n tiedostpalvelusta noudettavat materiaalit:
-* JPG2000 -muotoiset ortoilmakuvat
+* JPEG2000 -muotoiset ortoilmakuvat
 * laserkeilaus-, eli pistepilviaineisto (mielellään stereomalliluokiteltu)
 * kiinteistörekisterikartta, vektori, kaikki kohteet
 
@@ -59,6 +59,13 @@ MapAnt -palvelusta (https://www.mapant.fi/) haetaan kartoitettavan alueen kattav
 "Export" -toiminnolla (Zoom=9, Format="Georeferenced PNG"):
 
 ![MapAnt](images/mapant.png)
+
+### OpenStreetMap (OSM)
+
+OSM -palvelu löytyy osoitteesta https://openstreetmap.org/ Aineiston voi rajata ja tuoda karttanäkymästä "Export" -toiminnolla.
+Kopioi ladattu `map.osm` hakemistoon `OSM`.
+
+![OSM](images/OSM.png)
 
 ## Aineiston alustava valmistelu
 
@@ -78,7 +85,8 @@ Käynnistä OSGeo4W -komentotulkki ja muuta aluerajaus MML:n käyttämään koor
 
 Pura palvelusta tuotu MapAnt.zip esimerkiksi hakemistoon `MapAnt` ja rajaa siitä tarvitsemasi osa:
 
-`> gdalwarp -cutline rajaus.shp -crop_to_cutline -dstalpha -s_srs EPSG:3067 -co COMPRESS=JPEG -co WORLDFILE=YES MapAnt\MapAnt.png Kaitajarvi_MapAnt.tif`
+`> gdalwarp -cutline rajaus.shp -crop_to_cutline -dstalpha -s_srs EPSG:3067 ^
+            -co COMPRESS=JPEG -co WORLDFILE=YES MapAnt\MapAnt.png Kaitajarvi_MapAnt.tif`
 
 Tässä vaiheessa on luontevaa luoda OOM -kartta ja tuoda sinne edellä synnytetty `Kaitajarvi_MapAnt.tif` taustakartaksi
 georeferointeineen ja karttapohjoisen asetuksineen (kts. pikakartan valmistusohjetta).
@@ -91,7 +99,8 @@ Yhdistetään kuvat (jos useita):
 
 ... ja rajataan kartoitettavaan alueeseen (kuten MapAnt -kartta):
 
-`> gdalwarp -cutline rajaus.shp -crop_to_cutline -dstalpha -s_srs EPSG:3067 -co COMPRESS=JPEG -co WORLDFILE=YES MML\M4211E+f.tif Kaitajarvi_Orto.tif`
+`> gdalwarp -cutline rajaus.shp -crop_to_cutline -dstalpha -s_srs EPSG:3067 ^
+            -co COMPRESS=JPEG -co WORLDFILE=YES MML\M4211E+f.tif Kaitajarvi_Orto.tif`
 
 Tässä vaiheessa on jälleen hyvä avata syntynyt `Kaitajarvi_Orto.tif` luotavan kartan taustakartaksi.
 
@@ -102,6 +111,19 @@ Rajataan kiinteistötiedot:
 `> ogr2ogr -clipsrc rajaus.shp Kaitajarvi_kiinteistorajat.gml MML\M4211E\M4211E_kiinteistoraja.shp`
 
 Lopputuloksena syntyvä `Kaitajarvi_kiinteistorajat.gml` voidaan tuoda _taustakarttana_ OMAP-karttaan.
+
+### OpenStreetMap -kartan valmistelu ja tuonti
+
+Rajataan materiaali alueellisesti:
+
+`> ogr2ogr -clipsrc rajaus.shp Kaitajarvi_osm.gml OSM\map.osm`
+
+Lopputuloksenä syntyvä `Kaitajarvi_osm.gml` on yleensä mielekästä avata taustakarttana. Tällöin taustakartan
+avaulla piirretään taustakartan halutut kohteet myös OOM-karttaan.
+
+Jos OSM-kartta sisältää huomattavan paljon kartalle sellaisenaan tuotavia kohteita (esimerkiksi polkuja), voi olla
+mielekästä tuoda OSM-kartta OOM-karttaan sellaisenaan. Tuotuun karttaan sovelletaan sellaisenaan `OSM-ISOM2017.crt`
+-translaaatiotaulua.
 
 ### Maastotietokannan valmistelu ja tuonti
 
@@ -132,7 +154,8 @@ Jos pistepilvitiedostoja on useita, yhdistellään ne:
 
 ... ja muutetaan lopputulos käyräviivaksi (puolen metrin käyrävälein):
 
-`> las2iso.exe -i MML\Kaitajarvi_thinned_class2.laz -o MML\Kaitajarvi_contours05.shp -iso_every 0.5 -keep_class 2 -clean 8 -simplify 4 -smooth 5`
+`> las2iso.exe -i MML\Kaitajarvi_thinned_class2.laz -o MML\Kaitajarvi_contours05.shp ^
+               -iso_every 0.5 -keep_class 2 -clean 8 -simplify 4 -smooth 5`
 
 Seuraavaksi onkin päätettävä kartassa käytettävä käyräväli ja johtokäyrien tasot. Komennolla:
 
