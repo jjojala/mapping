@@ -21,6 +21,10 @@ geojson.io -palvelusta saatu koordinaattijärjestelmä pitää muuttaa EPSG:3067
 , jossa `-t_srs EPSG:3067` määrittää, että *kohdetiedoston* koordinaattijärjestelmä tulee olemaan EPSG:3067.
 `rajaus.shp` on tulostiedosto ja `geojson.io\layers\POLYGON.shp` on lähdetiedosto.
 
+Useimmat vektoriaineiston tiedostomuodot sisältävät tiedon käytetystä koordinaattijärjestelmästä. Tästä syystä
+sitä ei tarvitse yleensä erikseen antaa. Tarvittaessa se voidaan antaa `-s_srs` -optiolla. Muutoksen yhteydessä
+kohdetiedostoa ei lähtötilanteessa ole, jonka vuoksi se annetaan erikseen.
+
 ### Alueen rajaaminen toisella alueella
 
 Kartta-aineistot sisältää paljon tietoa ja vie siksi paljon tilaa ja on hidas käsitellä. Siksi ylimääräinen
