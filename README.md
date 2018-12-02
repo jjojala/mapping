@@ -162,7 +162,7 @@ lataamalla `MTK-ISOM2017.crt` -tiedosto. Hyödyttömiä symboleita voi tässä v
 Jos pistepilvitiedostoja on useita, yhdistellään ne:
 
 ```
-> las2las.exe -i MML\M4211E4.laz MML\M4211F3.laz -merged -o MML\M4211E4+F3.laz
+> las2las.exe -i MML\M4211E4.laz MML\M4211F3.laz -merged -keep_class 2 -o MML\M4211E4+F3.laz
 ```
 
 ... rajataan materiaali vain tarvittavaan alueeseen:
@@ -174,14 +174,14 @@ Jos pistepilvitiedostoja on useita, yhdistellään ne:
 ... pelkistetään pistepilveä ja valitaan siihen vain "ground" (class 2) pisteet:
 
 ```
-> lasthin.exe -i MML\Kaitajarvi.laz -o MML\Kaitajarvi_thinned_class2.laz -keep_class 2
+> lasthin.exe -i MML\Kaitajarvi.laz -o MML\Kaitajarvi_thinned_class2.laz
 ```
 
 ... ja muutetaan lopputulos käyräviivaksi (puolen metrin käyrävälein):
 
 ```
 > las2iso.exe -i MML\Kaitajarvi_thinned_class2.laz -o MML\Kaitajarvi_contours05.shp ^
-               -iso_every 0.5 -keep_class 2 -clean 8 -simplify 4 -smooth 5
+               -iso_every 0.5 -clean 8 -simplify 4 -smooth 5
 ```
 
 Seuraavaksi onkin päätettävä kartassa käytettävä käyräväli ja johtokäyrien tasot. Komennolla:
