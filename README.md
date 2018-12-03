@@ -19,20 +19,20 @@ Sen sijaan **et** tarvitse ([koska...](Miksi_ei.md)):
 
 ## Alueen rajaus
 
-Aloitetaan alueen rajaamisella. Se onnistuu esimerkiksi [geojson.io](https://geojson.io/) -palvelussa. Käyttääksesi palvelua
+Aloitetaan alueen rajaamisella. Se onnistuu esimerkiksi [geojson.net](https://geojson.net/) -palvelussa. Käyttääksesi palvelua
 et tarvitse käyttäjätunnusta.
 
 Valitse karttanäkymän oikeasta laidasta *Draw a polygon* -työkalu ja rajaa sillä kartoitettava alue. Tallenna alue
 *Shapefile* -muodossa valikon *Save->Shapefile* -toiminnolla.
 
-![geojson.io](images/geojsonio.png)
+![geojson.net](images/geojsonio.png)
 
-Pura ladattu tiedosto esimerkiksi tekemääsi hakemistoon `geojson.io`.
+Pura ladattu tiedosto esimerkiksi tekemääsi hakemistoon `geojson.net`.
 
 Käynnistä OSGeo4W Shell (komentotulkki) esimerkiksi Windows:n *Start* -valikon kautta ja muuta aluerajaus MML:n käyttämään koordinaatistoon:
 
 ```
-> ogr2ogr -t_srs EPSG:3067 rajaus.shp geojson.io\layers\POLYGON.shp
+> ogr2ogr -t_srs EPSG:3067 rajaus.shp geojson.net\layers\POLYGON.shp
 ```
 
 Älä sulje *OSGeo4W shell*:iä komennon jälkeen (myöhemmin tässä ohjeessa suoritettavat komennot ajetaan
