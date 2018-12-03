@@ -105,25 +105,38 @@ ei tarvitse välittää.
 
 ## LiDAR-, eli pistepilvi- tai laserkeilausaineiston käsittely
 
-### Pistepilviaineiston yhdistäminen
+Laserkeilausaineiston käsittely on mahdollista esimerkiksi [LAStools](https://rapidlasso.com/lastools/) -paketin työkaluilla,
+joiden käyttö ei-kaupalliseen käyttöön on ilmaista. 
+
+Laserkeilausaineisto koostuu laserkeilauksessa mitatuista pisteistä (tästä nimitys pistepilvi), jossa kukin piste
+sisältää erinäistä tietoa, josta tärkeimpiä ovat:
+* pisteen maantieteelliset koordinaatit (MML:n materiaalissa käytetään aina ETRS-TM35FIN, eli EPSG:3067 koordinaattijärjestelmää),
+* Z-koordinaatin, eli pisteen korkaus merenpinnasta (metrejä, desimaaliluku) ja
+* pisteen luokka, joita tärkein on maanpintaa (ground) kuvaava luokka 2.
+
+Maanmittauslaitoksen laserkeilausaineiston tarkempi kuvaus on 
+[täällä](https://www.maanmittauslaitos.fi/kartat-ja-paikkatieto/asiantuntevalle-kayttajalle/tuotekuvaukset/laserkeilausaineisto). 
+
+### Laserkeilausaineiston yhdistäminen
 
 Aineistojen yhdistäminen on erityisesti tarpeen, jos siitä aiotaan tehdä käyrämuotoista. Yhdistämisen myötä käyriin
 ei synny erillisten aineistojen rajoille katkoa. Yhdistäminen tapahtuu `las2las` -komennolla:
 
 ```
-> las2las.exe -i MML\M4211E4.laz MML\M4211F3.laz -merged -o MML\M4211E4+F3.laz
+> las2las.exe -i MML\M4211E4.laz MML\M4211F3.laz -merged -keep_class 2 -o MML\M4211E4+F3_ground.laz
 ```
 
 Option `-i` jälkeen voidaan luetella syötteen tiedostot. Optio `-merged` kertoo, että tiedostot on tarkoitus yhdistää.
-Lopuksi optiolla `-o` kerrotaan, että yhdistämisen lopputulos kirjoitetaan tiedostoon `MML\M4211E4+F3.laz`.
+Optiolla `-keep_class 2` ilmaistaan, että lopputulokseen poimitaan vain maanpinnaksi (ground, luokka 2) luokitellut
+pisteet. Lopuksi optiolla `-o` kerrotaan, että yhdistämisen lopputulos kirjoitetaan tiedostoon `MML\M4211E4+F3_ground.laz`.
 
-### Pistepilviaineiston leikkaaminen alueella
+### Laserkeilausaineiston leikkaaminen alueella
 
-Kuten kartta-aineistossa, myös pistpilviaineistossa haluamme yleensä keskittyä vain kartoitettavaa aluetta
+Kuten kartta-aineistossa, myös laserkeilausaineistossa haluamme yleensä keskittyä vain kartoitettavaa aluetta
 kattavaan aineistoon. Rajaus onnistuu komennolla `lasclip`:
 
 ```
-> lasclip.exe -i MML\M4211E4+F3.laz -o MML\Kaitajarvi.laz -poly rajaus.shp -v
+> lasclip.exe -i MML\M4211E4+F3_ground.laz -o MML\Kaitajarvi_ground.laz -poly rajaus.shp -v
 ```
 
 Optiolla `-i` ja `-o` kerrotaan syöte- ja tulostiedostot. Optiolla `-poly rajaus.shp` taas kertoo, että rajaukseen
@@ -133,7 +146,7 @@ ETRS-TM35FIN, eli EPSG:3067.
 
 Optio `-v` antaa suorituksen aikana tavallista enemmän tietoa suorituksen etenemisestä.
 
-### Pistepilviaineiston yksinkertaistaminen
+### Laserkeilausaineiston yksinkertaistaminen
 
 Yksinkertaistamista voidaan tehdä useilla eri tavoilla. Tässä käytetään "thin" -menetelmää, jossa aineiston kattama
 alue jaetaan oletusarvoisesti neliömetrin kokoisiin ruutuihin. Kustakin ruudusta valitaan vain se piste, jonka
@@ -141,27 +154,25 @@ korkeus (Z-attribuutti) on alin. Jos siis neliömetrin kokoiselta alueelta on us
 vain matalimmasta.
 
 ```
-> lasthin.exe -i MML\Kaitajarvi.laz -o MML\Kaitajarvi_thinned_class2.laz -keep_class 2
+> lasthin.exe -i MML\Kaitajarvi_ground.laz -o MML\Kaitajarvi_ground_thinned.laz
 ```
-
-Lisäksi komento suodattaa aineistosta kaikki muut pisteet, paitsi ne, joiden luokka on 2. Luokka 2 viittaa
-"maapisteisiin" (ground). Esimerkiksi kasvillisuudelleen on oma luokka, mutta niistä ei olla tässä kiinostuneita.
 
 Yksinkertaistamisen etuna on se, että lopputuloksesta suodattuu pois merkityksettömät pienet korkeusvaihtelut.
 Suodatetusta aineistosta tuotettu korkeuskäyrä on siten siistimpi ja vastaa paremmin suunnistuskartan valmistuksen
 tarpeita.
 
-Eri parametreillä ja optioilla voi olla runsaastikin vaikutusta lopputulosken laatuun ja sopivuuteen kartoitustyöhön.
-Aihealuetta lienee syytä tutkailla lisää...
+MML:n laserkeilausaineistolla `lasthin` -komennolla tehtävä yksinkertaistaminen - ainakaan oletusarvoilla - ei tunnu
+vaikuttavan kovin merkittävästi lopputulokseen. Seikka saattaa johtua siitä, että MML:n aineistossa pisteiden tiheys
+ei ole kovin suuri (keskimäärin 0,5 pistettä/m2, joista kaikki eivät ole maapisteitä).
 
-### Pistepilviaineiston muuttaminen käyräviivaksi
+### Laserkeilausaineiston muuttaminen käyräviivaksi
 
-(Melkein) viimeinen vaihe ennen pistepilvitiedon siirtymistä OOM:ään kartoituksen pohjaksi on muuttaa se käyräviivaksi.
+(Melkein) viimeinen vaihe ennen laserkeilausaineiston siirtymistä OOM:ään kartoituksen pohjaksi on muuttaa se käyräviivaksi.
 Homma hoituu `las2iso.exe` -komennolla:
 
 ```
-> las2iso.exe -i MML\Kaitajarvi_thinned_class2.laz -o MML\Kaitajarvi_contours05.shp ^
-              -iso_every 0.5 -keep_class 2 -clean 8 -simplify 4 -smooth 5
+> las2iso.exe -i MML\Kaitajarvi_ground_thinned.laz -o MML\Kaitajarvi_contours05.shp ^
+              -iso_every 0.5 -clean 8 -simplify 4 -smooth 5
 ```
 
 Syöte- ja tulostiedostot kuvataan yleisillä `-i` ja `-o` -optioilla. Optiolla `-iso_every 0.5` kerrotaan, että
@@ -169,17 +180,14 @@ käyräväli halutaan 0,5:n *yksikön* välein. Yksi yksikkö on pistepilven kor
 riippuu aineistosta. MML:n tapauksessa se on johdonmukaisesti yksi metri. Tuumajärjestelmää käyttävissä maissa
 se voisi olla esimerkiksi jalka.
 
-Optio `-keep_class 2` kertoo, että tulostiedostoon jätetään vain luokan 2 pisteitä. Pistepilviaineistossa pisteet
-luokitellaan. Luokka 2 on "maapiste" (muita ovat esim. kasvillisuus).
-
 `-clean 8` kertoo, että alle 8 *segmenttiä* pitkät käyrät jätetään pois lopputuloksesta. Yhden segmentin käyrä
 on sellainen, joka koostuu kahdesta pisteestä ja niitä yhdistävästä käyräviivasta. Kahden segmentin käyrä koostuu
-kolmesta pisteestä ja niitä yhdistävästä viivasta jne. Keskimäärin MML:n aineistossa pistetiheys on 1,4 pistettä/m2,
-joten pyöreästi n. alle 6m pitkät käyrät pudotetaan pois. Periaatteessa tällaisia käyriä ei esiinny kuin kumpareissa,
-jolloin halkaisijaltaan noin alle parimetriset kumpareet jäävät pois.
+kolmesta pisteestä ja niitä yhdistävästä viivasta jne. MML:n aineistossa keskimääräinen pisteiden välinen etäisyys on 1,4m,
+joten pyöreästi n. alle 11m pitkät käyrät pudotetaan pois. Periaatteessa tällaisia käyriä ei esiinny kuin kumpareissa,
+jolloin halkaisijaltaan noin alle nelimetriset kumpareet jäävät pois.
 
 `-simplify 4` tarkoittaa, että käyräviivalla toisistaan neljän tai alle neljän *yksikön* päässä olevat pisteet pelkistetään
 yhdeksi pisteeksi. Yksikkö mielletään samoin, kuin `-iso_every` -option yhteydessä. MML:n materiaalilla kyse on siis
-alle neljän metrin etäisyydellä toisistaan olevista pisteistä. 
+alle seitsemän metrin etäisyydellä toisistaan olevista pisteistä. 
 
 `-smooth 5` on huonosti dokumentoitu optio. ...
