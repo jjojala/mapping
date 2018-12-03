@@ -242,12 +242,13 @@ On myös muita avoimia materiaaleja:
 * Esimerkiksi [Bing Aerial](https://www.bing.com/maps/aerial), [Google Maps](https://www.google.com/maps/) -ilmakuvista voi toisinaan näkyä jotakin sellaista, joka ei MML:n ortoilmakuvista irtoa.
   Kaikista palveluista kuvia ei saa georeferoituna, joten kohteiden todellisen sijainnin kanssa kannattaa olla tarkkana.
   Toisinaan kuvat voivat olla myös huomattavan vanhoja. Myös esimerkiksi kunnilta saattaa irrota alueesta ilmakuvia.
-* [Google Street View:n](https://mapstreetview.com/) avulla voit tehdä virtuaalisia maastokäyntejä ([esimerkki](images/GoogleStreetView.png))
+* [Google Street View:n](https://mapstreetview.com/) avulla voit tsekkailla tien reunat ([esimerkki](images/GoogleStreetView.png) ja sama [livenä](https://mapstreetview.com/#10ksus_e4fmr_3n.a_0g42))
 * Kuntien kaavakartat.
 * [Vanhat painetut kartat](http://vanhatpainetutkartat.maanmittauslaitos.fi/) -palvelusta kannattaa kaivaa vanhoja karttoja.
   Vanhat kartat eivät ole georeferoituja ja niissä on (ennen vuotta 2003) myös eri projektio. Tästä syystä ne kannattaa
   asemoida aina kulloinkin käsiteltävän alueen perusteella paikalleen ennen käyttöä. Kun asemoinnin tekee huolella,
   vanhoista kartoista irtoaa yllättävän hyvää tietoa. Esimerkiksi nykyisin maastossa kuviorajoina erottuvat jo vuosia sitten
   paketoitujen peltojen reunat saa kätevästi poimittua vanhoista kartoista.
+* Aiemmat suunnistuskartat, luonnollisesti.
 
 Sitten vaan maastoon tarkistamaan pohjatyön tulosta, korjaamaan ja täydentämään.
