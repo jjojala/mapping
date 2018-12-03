@@ -103,18 +103,22 @@ tässä tapuksessa sisätää jos itsessään koordinaattitiedon. Optiota on kui
 kuvaa georeferoituna, ellei world-fileä ole. Option käytöstä tulee komennon ajon aikana virheilmoitus, mutta siitä
 ei tarvitse välittää.
 
-## LiDAR-, eli pistepilvi- tai laserkeilausaineiston käsittely
+## Laserkeilausaineiston käsittely
+
+Laserkeilaus-, eli [LiDAR](https://fi.wikipedia.org/wiki/Lidar) -aineisto koostuu pisteistä (tästä nimitys pistepilvi).
+Kukin piste sisältää erinäistä tietoa, josta tärkeimmät ovat:
+* pisteen maantieteelliset koordinaatit (MML:n materiaalissa käytetään aina ETRS-TM35FIN, eli EPSG:3067 koordinaattijärjestelmää),
+* Z-koordinaatin, eli pisteen korkaus merenpinnasta (metrejä, desimaaliluku) ja
+* pisteen *luokka*, joista tärkein on maanpintaa (ground) kuvaava luokka 2.
 
 Laserkeilausaineiston käsittely on mahdollista esimerkiksi [LAStools](https://rapidlasso.com/lastools/) -paketin työkaluilla,
 joiden käyttö ei-kaupalliseen käyttöön on ilmaista. 
 
-Laserkeilausaineisto koostuu laserkeilauksessa mitatuista pisteistä (tästä nimitys pistepilvi), jossa kukin piste
-sisältää erinäistä tietoa, josta tärkeimpiä ovat:
-* pisteen maantieteelliset koordinaatit (MML:n materiaalissa käytetään aina ETRS-TM35FIN, eli EPSG:3067 koordinaattijärjestelmää),
-* Z-koordinaatin, eli pisteen korkaus merenpinnasta (metrejä, desimaaliluku) ja
-* pisteen luokka, joita tärkein on maanpintaa (ground) kuvaava luokka 2.
-
-Maanmittauslaitoksen laserkeilausaineiston tarkempi kuvaus on 
+Maanmittauslaitos luokittelee pisteet (*luokka*) ensin automaattisesti (automaattiluokiteltu aineisto) ja myöhemmin
+stereomallin avulla (stereomalliluokiteltu). Jälkimmäinen on täsmällisempi, mutta se ei ole yhtä nopeasti saatavilla
+kuin automaattiluokiteltu aineisto. Jos (ja kun) laserkeilausaineistoa käytetään nimenomaan korkeuskuvauksen tuottamiseen,
+stereomalliluokiteltu lienee lähes aina parempi vaihtoehto. Maanmpinnan muodot kun eivät jatkuvasti vaihtele. Maanmittaulaitoksen
+laserkeilausaineiston tarkempi kuvaus on saatavilla 
 [täällä](https://www.maanmittauslaitos.fi/kartat-ja-paikkatieto/asiantuntevalle-kayttajalle/tuotekuvaukset/laserkeilausaineisto). 
 
 ### Laserkeilausaineiston yhdistäminen
