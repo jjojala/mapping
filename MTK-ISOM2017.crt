@@ -298,8 +298,10 @@
 504	LUOKKA=12316
 
 # 505	Polku
-#	MML:12313	Polku
-505	LUOKKA=12313
+#	MTK:12313	Polku
+#	MTK:45111	Pistolaituri, alle 5m
+#	MTK:45112	Pistolaituri, vähintään 5m
+505	LUOKKA=12313 OR LUOKKA=45111 OR LUOKKA=45112
 
 # 506	Pieni polku
 
@@ -597,8 +599,6 @@
 # MTK:44100	Aallonmurtaja
 # MTK:44300	Allas - viiva
 # MTK:44500	Ilmarata
-# MTK:45111	Pistolaituri, alle 5m
-# MTK:45112	Pistolaituri, vähintään 5m
 # MTK:12302	Kulkuväylän selite
 # MTK:16102	Turvalaitteen selite
 # MTK:26202	Vedenottamon selite
