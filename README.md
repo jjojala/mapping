@@ -246,7 +246,7 @@ On myös muita avoimia materiaaleja:
   joten kohteiden todellisen sijainnin kanssa kannattaa olla tarkkana. Toisinaan kuvat voivat olla myös huomattavan vanhoja.
   Myös esimerkiksi kunnilta saattaa saada alueesta ilmakuvia.
 * [Google Street View:n](https://mapstreetview.com/) avulla voit tsekkailla tien reunat
-  ([esimerkki](jjojala/mapping/raw/master/images/GoogleStreetView.png)
+  ([esimerkki](https://github.com/jjojala/mapping/raw/master/images/GoogleStreetView.png)
   ja sama [livenä](https://mapstreetview.com/#10ksus_e4fmr_3n.a_0g42))
 * Kuntien kaavakartat.
 * [Vanhat painetut kartat](http://vanhatpainetutkartat.maanmittauslaitos.fi/) -palvelusta kannattaa kaivaa vanhoja karttoja.
