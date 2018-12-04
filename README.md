@@ -245,7 +245,7 @@ On myös muita avoimia materiaaleja:
   voi toisinaan näkyä jotakin sellaista, joka ei MML:n ortoilmakuvista irtoa. Kaikista palveluista kuvia ei saa georeferoituna,
   joten kohteiden todellisen sijainnin kanssa kannattaa olla tarkkana. Toisinaan kuvat voivat olla myös huomattavan vanhoja.
   Myös esimerkiksi kunnilta saattaa saada alueesta ilmakuvia.
-* [Google Street View:n](https://mapstreetview.com/) avulla voit tsekkailla tien reunat ([esimerkki](images/GoogleStreetView.png)
+* [Google Street View:n](https://mapstreetview.com/) avulla voit tsekkailla tien reunat ([esimerkki](raw/images/GoogleStreetView.png)
   ja sama [livenä](https://mapstreetview.com/#10ksus_e4fmr_3n.a_0g42))
 * Kuntien kaavakartat.
 * [Vanhat painetut kartat](http://vanhatpainetutkartat.maanmittauslaitos.fi/) -palvelusta kannattaa kaivaa vanhoja karttoja.
