@@ -19,11 +19,18 @@ limitations under the License.
 """
 Laserkeilaus, eli LiDAR -aineistosta ("pistepilven") tuotettujen Käyrien rikastamiseen tarkoitettu työkalu.
 Perustuu (mm) OSGeo4W:n mukana GDAL/OGR -kirjastoon. Työkalu luokittelee käyrät korkeustason mukaan korkeuskäyriin,
-johtokäyriin, apukäyriin ja korkeuskuvauksen tekemistä kuvaaviin tukikäyriin ('UTIL').
+johtokäyriin, apukäyriin ja korkeuskuvauksen tekemistä kuvaaviin tukikäyriin ('UTIL'), sekä lisää käyräsymboleihin
+korkeustason.
 
-Käytästä saat ohjeet komennolla
+Kohdetiedostoon tuotetut attribuutit:
+	CLASS=INDEX	# johtokäyrä
+	CLASS=CONTOUR	# korkeuskäyrä
+	CLASS=FORMLINE	# apukäyrä
+	CLASS=UTIL	# lopullisessa kartassa näkymätön tukikäyrä
+	ELEVATION=m.nn	# korkeuskäyrän korkeustaso (metriä merenpinnasta)
+
+Käytöstä saat ohjeet komennolla
 	> python contours.py -help
-
 """
 
 import os
@@ -228,9 +235,9 @@ def help():
 	"""Print usage. """
 	app = sys.argv[0]
 	print "Usage: %s -help" % app
-	print "       %s -info <shp-file>" % app
-	print "       %s -tag <indexElev> <contourInterval> <shp-sourcefile> <gml-target-file>" % app
-	print "       %s -tag auto <contourInterval> <shp-sourcefile> <gml-target-file>" % app
+	print "       %s -info <source_file>" % app
+	print "       %s -tag <index_elevation> <contour_interval> <source_file> <target_file>" % app
+	print "       %s -tag auto <contour_interval> <source_file> <target_file>" % app
 	
 def main():
 	"""Main app. See help() for usage."""
