@@ -209,7 +209,8 @@ Elevation range: 107.50 - 155.00m:
 
 Esimerkiksi tässä tapauksessa alueen korkeus vaihtelee välillä 107,5 - 155m ja on siis 47,5m. Jos (ja kun) käyräväliksi
 valitaan viisi metriä, johtokäyrätasoja mahtuu vaihteluvälille kaksi (koska joka viides korkeuskäyrä on johtokäyrä), 
-ylemmän ollessa esimerkiksi tasolla 145m.
+ylemmän ollessa esimerkiksi tasolla 145m. ISOM 2017 suosittelee johtokäyrätason valinnaksi "*merkittävimpien rinteiden
+keskitason*".
 
 Nyt, kun tiedetään käyräväli (5m) ja vähintään yksi käytetettävä johtokäyrän korkeustaso (145m), voidaan tehdä käyrien luokittelu:
 
