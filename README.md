@@ -232,6 +232,8 @@ Ennen maastoon ryntäämistä voi, ja kannattaa pohja-aineiston kanssa vähän j
 * Ortoilmakuvia kannattaa verrata kiinteistörajoihin. Jos ilmakuvasta näkyy hakkuu, joka näyttäisi rajautuvan kiinteistörajaan,
   kyseessä on melkoisella varmuudella myös maastossa selvästi erottuva kuvioraja. Ilmakuvista voi näkyä myös muita
   MTK-materiaalista puuttuvia kohteita.
+* Myös MapAnt -karttaa kannattaa verrata kiinteistörajoihin. Jos MapAnt -kartassa aukko tai tiheikkö rajautuu kiinteistörajaan,
+  kyseessä todennäköisesti on maastossa selvästi erottuva kuvioraja - erityisesti jos sama raja erottuu vielä ortoilmakuvassakin.
 * Taajama- ja esimerkiksi mökkialueilla kiinteistörajojen perusteella voi kuvata tonttivihreät. Tässä on tosin huomattava, että
   isoilla, metsäisillä tonteilla koko tontti ei ole välttämättä kiellettyä aluetta.
 * Korkeuskäyriä voi trimmailla melkein loputtomiin. Useimmat laserpohjista otetut käyrän mutkat eivät erotu maastossa, joten
@@ -239,10 +241,12 @@ Ennen maastoon ryntäämistä voi, ja kannattaa pohja-aineiston kanssa vähän j
   voi tulla yllätyksiäkin ja joskus jonkun muodon korostaminen maastokäynnin jälkeen tuntuu ilmeiseltä.
 
 On myös muita avoimia materiaaleja:
-* Esimerkiksi [Bing Aerial](https://www.bing.com/maps/aerial), [Google Maps](https://www.google.com/maps/) -ilmakuvista voi toisinaan näkyä jotakin sellaista, joka ei MML:n ortoilmakuvista irtoa.
-  Kaikista palveluista kuvia ei saa georeferoituna, joten kohteiden todellisen sijainnin kanssa kannattaa olla tarkkana.
-  Toisinaan kuvat voivat olla myös huomattavan vanhoja. Myös esimerkiksi kunnilta saattaa irrota alueesta ilmakuvia.
-* [Google Street View:n](https://mapstreetview.com/) avulla voit tsekkailla tien reunat ([esimerkki](images/GoogleStreetView.png) ja sama [livenä](https://mapstreetview.com/#10ksus_e4fmr_3n.a_0g42))
+* Esimerkiksi [Bing Aerial](https://www.bing.com/maps/aerial), [Google Maps](https://www.google.com/maps/) -ilmakuvista
+  voi toisinaan näkyä jotakin sellaista, joka ei MML:n ortoilmakuvista irtoa. Kaikista palveluista kuvia ei saa georeferoituna,
+  joten kohteiden todellisen sijainnin kanssa kannattaa olla tarkkana. Toisinaan kuvat voivat olla myös huomattavan vanhoja.
+  Myös esimerkiksi kunnilta saattaa saada alueesta ilmakuvia.
+* [Google Street View:n](https://mapstreetview.com/) avulla voit tsekkailla tien reunat ([esimerkki](images/GoogleStreetView.png)
+  ja sama [livenä](https://mapstreetview.com/#10ksus_e4fmr_3n.a_0g42))
 * Kuntien kaavakartat.
 * [Vanhat painetut kartat](http://vanhatpainetutkartat.maanmittauslaitos.fi/) -palvelusta kannattaa kaivaa vanhoja karttoja.
   Vanhat kartat eivät ole georeferoituja ja niissä on (ennen vuotta 2003) myös eri projektio. Tästä syystä ne kannattaa
