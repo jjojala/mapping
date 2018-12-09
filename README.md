@@ -226,7 +226,7 @@ käyräsymboli. Kokonaan niitä ei kannata poistaa, sillä tukikäyrät ovat mm.
 ![OOM](images/OOM.png)
 
 ... ja koko kartta edellä kuvattujen mekaanisten vaiheiden jälkeen:
-![Kaitajarvi](images/Kaitajarvi.png)
+![Kaitajarvi](images/Kaitajarvi_raw.pdf)
 
 ## Entä sitten?
 
