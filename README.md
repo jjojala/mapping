@@ -262,5 +262,5 @@ On myös muita avoimia materiaaleja:
 * Aiemmat suunnistuskartat, luonnollisesti.
 
 Työpöydän ääressä valmisteltu kartta voi näyttää esimerkiksi 
-[tältä (https://github.com/jjojala/mapping/raw/master/images/Kaitajarvi.pdf). 
+[tältä](https://github.com/jjojala/mapping/raw/master/images/Kaitajarvi.pdf). 
 Sitten vaan maastoon tarkistamaan pohjatyön tulosta, korjaamaan ja täydentämään...
