@@ -225,6 +225,9 @@ käyräsymboli. Kokonaan niitä ei kannata poistaa, sillä tukikäyrät ovat mm.
 
 ![OOM](images/OOM.png)
 
+... ja koko kartta edellä kuvattujen mekaanisten vaiheiden jälkeen:
+![Kaitajarvi](images/Kaitajarvi.png)
+
 ## Entä sitten?
 
 Ennen maastoon ryntäämistä voi, ja kannattaa pohja-aineiston kanssa vähän jumpata, esimerkiksi:
