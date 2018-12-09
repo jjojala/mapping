@@ -225,8 +225,8 @@ käyräsymboli. Kokonaan niitä ei kannata poistaa, sillä tukikäyrät ovat mm.
 
 ![OOM](images/OOM.png)
 
-... ja koko kartta edellä kuvattujen mekaanisten vaiheiden jälkeen:
-![Kaitajarvi](images/Kaitajarvi_raw.pdf)
+... ja koko kartta edellä kuvattujen mekaanisten vaiheiden jäljiltä:
+![Kaitajarvi](https://github.com/jjojala/mapping/raw/master/images/Kaitajarvi_raw.pdf)
 
 ## Entä sitten?
 
@@ -261,4 +261,5 @@ On myös muita avoimia materiaaleja:
   paketoitujen peltojen reunat saa kätevästi poimittua vanhoista kartoista.
 * Aiemmat suunnistuskartat, luonnollisesti.
 
-Sitten vaan maastoon tarkistamaan pohjatyön tulosta, korjaamaan ja täydentämään.
+Sitten vaan maastoon tarkistamaan pohjatyön tulosta, korjaamaan ja täydentämään. Lopputulos voi näyttää esimerkiksi
+[tältä](https://github.com/jjojala/mapping/raw/master/images/Kaitajarvi.pdf).
