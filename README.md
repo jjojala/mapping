@@ -160,28 +160,29 @@ lataamalla `MTK-ISOM2017.crt` -tiedosto. Hyödyttömiä symboleita voi tässä v
 
 ### Laserpistepilven valmistelu ja tuonti
 
-Jos pistepilvitiedostoja on useita, yhdistellään ne:
+Jos pistepilvitiedostoja on useita, yhdistellään ne ja poistetaan samalla muut, kuin 
+maanpintaa kuvaavat "ground"/class 2 -pisteet (pistepilvessä on myös esim. kasvillisuutta kuvaavia pisteitä):
 
 ```
-> las2las.exe -i MML\M4211E4.laz MML\M4211F3.laz -merged -keep_class 2 -o MML\M4211E4+F3.laz
+> las2las.exe -i MML\M4211E4.laz MML\M4211F3.laz -merged -keep_class 2 -o MML\M4211E4+F3_ground.laz
 ```
 
 ... rajataan materiaali vain tarvittavaan alueeseen:
 
 ```
-> lasclip.exe -i MML\M4211E4+F3.laz -o MML\Kaitajarvi.laz -poly rajaus.shp -v
+> lasclip.exe -i MML\M4211E4+F3_ground.laz -o MML\Kaitajarvi_ground.laz -poly rajaus.shp -v
 ```
 
-... pelkistetään pistepilveä ja valitaan siihen vain "ground" (class 2) pisteet:
+... pelkistetään pistepilveä:
 
 ```
-> lasthin.exe -i MML\Kaitajarvi.laz -o MML\Kaitajarvi_thinned_class2.laz
+> lasthin.exe -i MML\Kaitajarvi_ground.laz -o MML\Kaitajarvi_ground_thinned.laz
 ```
 
 ... ja muutetaan lopputulos käyräviivaksi (puolen metrin käyrävälein):
 
 ```
-> las2iso.exe -i MML\Kaitajarvi_thinned_class2.laz -o MML\Kaitajarvi_contours05.shp ^
+> las2iso.exe -i MML\Kaitajarvi_ground_thinned.laz -o MML\Kaitajarvi_contours05.shp ^
                -iso_every 0.5 -clean 8 -simplify 4 -smooth 5
 ```
 
