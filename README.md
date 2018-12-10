@@ -54,6 +54,7 @@ Valitse vasemmassa reunassa noudettavan materiaalin tyyppi yksi kerraallaan ja k
 Lista noudettavasta materiaalista muodostuu oikeaan reunaan. Noudettavia materiaaleja ovat:
 * JPEG2000 -muotoiset ortoilmakuvat
 * laserkeilaus-, eli pistepilviaineisto (mielellään stereomalliluokiteltu)
+* Maastotietokanta, kaikki kohteet
 * kiinteistörekisterikartta, vektori, kaikki kohteet
 
 ![MML](images/MML.png)
