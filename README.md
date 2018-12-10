@@ -54,6 +54,7 @@ Valitse vasemmassa reunassa noudettavan materiaalin tyyppi yksi kerraallaan ja k
 Lista noudettavasta materiaalista muodostuu oikeaan reunaan. Noudettavia materiaaleja ovat:
 * JPEG2000 -muotoiset ortoilmakuvat
 * laserkeilaus-, eli pistepilviaineisto (mielellään stereomalliluokiteltu)
+* Maastotietokanta, kaikki kohteet
 * kiinteistörekisterikartta, vektori, kaikki kohteet
 
 ![MML](images/MML.png)
@@ -159,28 +160,29 @@ lataamalla `MTK-ISOM2017.crt` -tiedosto. Hyödyttömiä symboleita voi tässä v
 
 ### Laserpistepilven valmistelu ja tuonti
 
-Jos pistepilvitiedostoja on useita, yhdistellään ne:
+Jos pistepilvitiedostoja on useita, yhdistellään ne ja poistetaan samalla muut, kuin 
+maanpintaa kuvaavat "ground"/class 2 -pisteet (pistepilvessä on myös esim. kasvillisuutta kuvaavia pisteitä):
 
 ```
-> las2las.exe -i MML\M4211E4.laz MML\M4211F3.laz -merged -keep_class 2 -o MML\M4211E4+F3.laz
+> las2las.exe -i MML\M4211E4.laz MML\M4211F3.laz -merged -keep_class 2 -o MML\M4211E4+F3_ground.laz
 ```
 
 ... rajataan materiaali vain tarvittavaan alueeseen:
 
 ```
-> lasclip.exe -i MML\M4211E4+F3.laz -o MML\Kaitajarvi.laz -poly rajaus.shp -v
+> lasclip.exe -i MML\M4211E4+F3_ground.laz -o MML\Kaitajarvi_ground.laz -poly rajaus.shp -v
 ```
 
-... pelkistetään pistepilveä ja valitaan siihen vain "ground" (class 2) pisteet:
+... pelkistetään pistepilveä:
 
 ```
-> lasthin.exe -i MML\Kaitajarvi.laz -o MML\Kaitajarvi_thinned_class2.laz
+> lasthin.exe -i MML\Kaitajarvi_ground.laz -o MML\Kaitajarvi_ground_thinned.laz
 ```
 
 ... ja muutetaan lopputulos käyräviivaksi (puolen metrin käyrävälein):
 
 ```
-> las2iso.exe -i MML\Kaitajarvi_thinned_class2.laz -o MML\Kaitajarvi_contours05.shp ^
+> las2iso.exe -i MML\Kaitajarvi_ground_thinned.laz -o MML\Kaitajarvi_contours05.shp ^
                -iso_every 0.5 -clean 8 -simplify 4 -smooth 5
 ```
 
@@ -226,7 +228,7 @@ käyräsymboli. Kokonaan niitä ei kannata poistaa, sillä tukikäyrät ovat mm.
 ![OOM](images/OOM.png)
 
 ... ja koko kartta edellä kuvattujen mekaanisten vaiheiden jäljiltä:
-![Kaitajarvi](https://github.com/jjojala/mapping/raw/master/images/Kaitajarvi_raw.pdf)
+[Kaitajarvi](https://github.com/jjojala/mapping/raw/master/images/Kaitajarvi_raw.pdf)
 
 ## Entä sitten?
 
@@ -238,7 +240,7 @@ Ennen maastoon ryntäämistä voi, ja kannattaa pohja-aineiston kanssa vähän j
   kyseessä on melkoisella varmuudella myös maastossa selvästi erottuva kuvioraja. Ilmakuvista voi näkyä myös muita
   MTK-materiaalista puuttuvia kohteita.
 * Myös MapAnt -karttaa kannattaa verrata kiinteistörajoihin. Jos MapAnt -kartassa aukko tai tiheikkö rajautuu kiinteistörajaan,
-  kyseessä todennäköisesti on maastossa selvästi erottuva kuvioraja - erityisesti jos sama raja erottuu vielä ortoilmakuvassakin.
+  kyseessä todennäköisesti on maastossa selvästi erottuva kuvioraja - erityisesti jos sama raja erottuuT vielä ortoilmakuvassakin.
 * Taajama- ja esimerkiksi mökkialueilla kiinteistörajojen perusteella voi kuvata tonttivihreät. Tässä on tosin huomattava, että
   isoilla, metsäisillä tonteilla koko tontti ei ole välttämättä kiellettyä aluetta.
 * Korkeuskäyriä voi trimmailla melkein loputtomiin. Useimmat laserpohjista otetut käyrän mutkat eivät erotu maastossa, joten
@@ -261,5 +263,9 @@ On myös muita avoimia materiaaleja:
   paketoitujen peltojen reunat saa kätevästi poimittua vanhoista kartoista.
 * Aiemmat suunnistuskartat, luonnollisesti.
 
-Sitten vaan maastoon tarkistamaan pohjatyön tulosta, korjaamaan ja täydentämään. Lopputulos voi näyttää esimerkiksi
-[tältä](https://github.com/jjojala/mapping/raw/master/images/Kaitajarvi.pdf).
+Työpöydän ääressä valmisteltu kartta voi näyttää esimerkiksi 
+[tältä](https://github.com/jjojala/mapping/raw/master/images/Kaitajarvi.pdf). 
+Sitten vaan maastoon tarkistamaan pohjatyön tulosta, korjaamaan ja täydentämään...
+
+(Vertailun vuoksi kartta vuodelta 1993 löytyy [täältä](https://github.com/jjojala/mapping/raw/master/images/Kaitajarvi_1993.png),
+Copyright 1993 (C) Tampereen Yritys).
