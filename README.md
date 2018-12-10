@@ -266,3 +266,6 @@ On myös muita avoimia materiaaleja:
 Työpöydän ääressä valmisteltu kartta voi näyttää esimerkiksi 
 [tältä](https://github.com/jjojala/mapping/raw/master/images/Kaitajarvi.pdf). 
 Sitten vaan maastoon tarkistamaan pohjatyön tulosta, korjaamaan ja täydentämään...
+
+(Vertailun vuoksi kartta vuodelta 1993 löytyy [täältä](https://github.com/jjojala/mapping/raw/master/images/Kaitajarvi_1993.png),
+Copyright 1993 (C) Tampereen Yritys).
