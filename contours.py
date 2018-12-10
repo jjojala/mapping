@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+# -*- coding: utf-8 -*-
 
 """
 Copyright (C) 2018 Jari Ojala (jari.ojala@iki.fi)
@@ -18,9 +19,9 @@ limitations under the License.
 
 """
 Laserkeilaus, eli LiDAR -aineistosta ("pistepilven") tuotettujen Käyrien rikastamiseen tarkoitettu työkalu.
-Perustuu (mm) OSGeo4W:n mukana GDAL/OGR -kirjastoon. Työkalu luokittelee käyrät korkeustason mukaan korkeuskäyriin,
-johtokäyriin, apukäyriin ja korkeuskuvauksen tekemistä kuvaaviin tukikäyriin ('UTIL'), sekä lisää käyräsymboleihin
-korkeustason.
+Perustuu (mm) OSGeo4W:n mukana tulevaan GDAL/OGR -kirjastoon. Työkalu luokittelee käyrät korkeustason mukaan
+korkeuskäyriin, johtokäyriin, apukäyriin ja korkeuskuvauksen tekemistä kuvaaviin tukikäyriin ('UTIL'), sekä
+lisää käyräsymboleihin korkeustason.
 
 Kohdetiedostoon tuotetut attribuutit:
 	CLASS=INDEX	# johtokäyrä
