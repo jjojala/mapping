@@ -261,6 +261,8 @@ On myös muita avoimia materiaaleja:
   asemoida aina kulloinkin käsiteltävän alueen perusteella paikalleen ennen käyttöä. Kun asemoinnin tekee huolella,
   vanhoista kartoista irtoaa yllättävän hyvää tietoa. Esimerkiksi nykyisin maastossa kuviorajoina erottuvat jo vuosia sitten
   paketoitujen peltojen reunat saa kätevästi poimittua vanhoista kartoista.
+* [Strava Global Heatmap](https://www.strava.com/heatmap) -palvelusta voi nähdä Strava -käyttäjien yleisimmin käyttämiä
+  GPS-jälkiä. Jäljistä on mahdollista piirtää esimerkiksi yleisesti käytetyt ulkoilureitit.
 * Aiemmat suunnistuskartat, luonnollisesti.
 
 Työpöydän ääressä valmisteltu kartta voi näyttää esimerkiksi 
