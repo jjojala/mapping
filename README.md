@@ -143,7 +143,7 @@ mielekästä tuoda OSM-kartta OOM-karttaan sellaisenaan. Tuotuun karttaan sovell
 
 ### Maastotietokannan valmistelu ja tuonti
 
-Useista Shapefileistä koostuva maastotietokanta (purettu zip:stä) yhdistetään yhdeski GML-tiedostoksi:
+Useista Shapefileistä koostuva maastotietokanta (purettu zip:stä) yhdistetään yhdeksi GML-tiedostoksi:
 
 ```
 > ogrmerge -o MML\M4211R.gml MML\M4211R.shp\*.shp
