@@ -167,6 +167,9 @@ maanpintaa kuvaavat "ground"/class 2 -pisteet (pistepilvessä on myös esim. kas
 > las2las.exe -i MML\M4211E4.laz MML\M4211F3.laz -merged -keep_class 2 -o MML\M4211E4+F3_ground.laz
 ```
 
+(jos aineisto koostuu vain yhdestä laz-tiedostosta, voidaan '-merged' -optio jättää antamatta, jolloin komento ainoastaan suodattaa
+maanpintaa kuvaavat pisteet.)
+
 ... rajataan materiaali vain tarvittavaan alueeseen:
 
 ```
