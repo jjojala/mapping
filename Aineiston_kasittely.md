@@ -27,8 +27,8 @@ kohdetiedostoa ei lähtötilanteessa ole, jonka vuoksi se annetaan erikseen.
 
 ### Alueen rajaaminen toisella alueella
 
-Kartta-aineistot sisältää paljon tietoa ja vie siksi paljon tilaa ja on hidas käsitellä. Siksi ylimääräinen
-aieneisto on hyvä leikata pois jo käsittelyn alkuvaiheessa. Vektoriaineiston osalta homma hoituu `ogr2ogr`
+Kartta-aineisto sisältää paljon tietoa ja siitä johtuen kuluttaa paljon tilaa ja on hidas käsitellä. Näin ollen epäkiinnostavat
+alueet kannattaa leikata pois jo käsittelyn alkuvaiheessa. Vektoriaineiston osalta homma hoituu `ogr2ogr`
 -komennolla:
 
 ```
@@ -52,9 +52,10 @@ Komento on aika itsestään selvä, `-o MML\M4211R.gml` on yhdistämisen lopputu
 `MML\M4211R.shp\*.shp` taas sisältää kaikki "shp-tiedostot", joita ko. hakemistossa on.
 
 Yhdistämisessä on syytä huomioida kohdetiedoston muoto. Esimerkiksi *ESRI Shapefile* (shp-tiedosto) edellyttää,
-että kaikissa yhdistettävissä tiedostoissa esitettävä *geometria* on sama, ja niihin liittyvät attribuutit ovat
-samat. MML:n tapauksessa attribuutit ovat (käytännössä) samat, mutta muotoja on erilaisia (alueita, pisteitä,
-polygoneja). Näin ollen kohdetiedosto ei voi maastotietokannan tapauksessa olla Shapefile.
+että kaikissa yhdistettävissä tiedostoissa olevien karttaobjektien *geometriatyyppi* (piste, polygon tai alue) on sama,
+ja objekteihin liittyvien *attribuuttien* nimet ja tyypit ovat samat. MML:n tapauksessa attribuutit ovat (käytännössä)
+samat, mutta geometriamuotoja on erilaisia (alueita, pisteitä, polygoneja). Näin ollen kohdetiedosto ei voi
+maastotietokannan tapauksessa olla Shapefile.
 
 Edelleen, esimerkiksi DXF-tiedosto ei tue yleisesti maastotietokannassa käytettyjä käyttäjän määrittelemiä
 attribuutteja. Siksi myöskään DXF -muotoinen kohdetiedosto ei ole sopiva, ellei voida hyväksyä attribuuttien
@@ -67,7 +68,11 @@ näissä ohjeissa on melko yleisesti päädytty käyttämään GML-muotoa.
 ## Rasteriaineiston käsittely
 
 Rasteriaineistoihin lasketaan kaikenlaiset kuvat. Muoto voi olla esimerkiksi TIF, JPG, PNG. Tässä ohjeessa
-yleensä aina georeferoidussa, eli maantieteelliseen sijaintiin sidotussa muodossa.
+yleensä aina georeferoidussa, eli maantieteelliseen sijaintiin sidotussa muodossa. Useimmissa rasteriaineistoissa
+georeferointi, eli käytännössä kuvan kulmapisteiden maantieteelliset sijainnit, esitetään erillisessä
+ns. *World -tiedostossa*. World-tiedoston nimi on yleensä johdettu kuvatiedoston nimestä: jos kuvatiedosto
+on `Kaitajarvi_Orto.jpg`, voi world -tiedoston nimi olla `Kaitajarvi_Orto.wld`. Joissakin rasteriaineistoissa
+georeferointi voi olla upotettuna kuvatiedoston sisään. Näin on esimerkiksi ns. GeoTIF -muotoisessa TIFF -tiedostossa.
 
 ### Rasteriaineiston yhdistäminen
 
@@ -94,13 +99,13 @@ Se onnistuu `gdalwarp` -komennolla:
 Optio `-cutline rajaus.shp` sisältää rajauksessa käytettävän alueen. Optio `-crop_to_cutline` ohjaa komentoa 
 heittämään pois rajauksen ulkopuolisen aineiston. `-dstalpha` tekee poistetusta osasta läpinäkyvän (ilman sitä
 ulkopuolinen alue näkyy mustana). Optio `-s_srs EPSG:3067` kertoo, että lähdetiedostossa käytetty koordinaatisto
-on EPSG:3067, kuten MML:n aineistossa aina. `-co` -optiot kertovat, että lopputulos pakataan käyttäen JPEG -pakkausta
-ja että kohdetiedoston lisäksi luodaan "World-file". Lopuksi kerrotaan, että lopputuloksena syntyvä rajattu kuva
+on EPSG:3067, kuten MML:n aineistossa aina on. `-co` -optiot kertovat, että lopputulos pakataan käyttäen JPEG -pakkausta
+ja että kohdetiedoston lisäksi luodaan World -tiedosto. Lopuksi kerrotaan, että lopputuloksena syntyvä rajattu kuva
 kirjoitetaan tiedostoon `Kaitajarvi_Orto.tif`.
 
-World-file sisältää kuvan kulmien maantieteelliset koordinaatit. Tämä on kuitenkin periaatteessa turhaa, koska TIFF 
-tässä tapuksessa sisätää jos itsessään koordinaattitiedon. Optiota on kuitenkin käytetty, koska OOM ei ymmärrä lukea
-kuvaa georeferoituna, ellei world-fileä ole. Option käytöstä tulee komennon ajon aikana virheilmoitus, mutta siitä
+World -tiedosto sisältää kuvan kulmien maantieteelliset koordinaatit. Tämä on kuitenkin tässä tapauksessa turhaa, koska
+syntyvä `Kaitajarvi_Orto.tif` sisältää jo itsessään koordinaattitiedon. Optiota on kuitenkin käytetty, koska OOM ei ymmärrä lukea
+kuvaa georeferoituna, ellei world -tiedostoa ole. Option käytöstä tulee komennon ajon aikana virheilmoitus, mutta siitä
 ei tarvitse välittää.
 
 ## Laserkeilausaineiston käsittely
@@ -112,7 +117,9 @@ Kukin piste sisältää erinäistä tietoa, josta tärkeimmät ovat:
 * pisteen *luokka*, joista tärkein on maanpintaa (ground) kuvaava luokka 2.
 
 Laserkeilausaineiston käsittely on mahdollista esimerkiksi [LAStools](https://rapidlasso.com/lastools/) -paketin työkaluilla,
-joiden käyttö ei-kaupalliseen käyttöön on ilmaista. 
+joiden käyttö ei-kaupalliseen käyttöön on ilmaista. Isoilla aineistoilla osa LASTools:n työkaluista lisää tuottamaansa
+aineistoon virhekohinaa, jonka ei käytännössä ole havaittu vaikuttavan kartoitustyöhön. Hankkimalla LASTools:n lisenssin,
+pääsee virhekohinasta eroon. 
 
 Maanmittauslaitos luokittelee pisteet (*luokka*) ensin automaattisesti (automaattiluokiteltu aineisto) ja myöhemmin
 stereomallin avulla (stereomalliluokiteltu). Jälkimmäinen on täsmällisempi, mutta se ei ole yhtä nopeasti saatavilla
