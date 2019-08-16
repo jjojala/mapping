@@ -2,20 +2,15 @@
 
 ## Ohjelmat
 
-Kaikki käytetyt ohjelmat ovat ilmaisia. Käyttöympäristönä on Windows.
+Kaikki käytetyt ohjelmat ovat ilmaisia. Käyttöympäristönä näissä ohjeissa on Windows, mutta tarvittavat ohjelmat
+toimivat useissa eri ympäristöissä.
 
 * [OpenOrienteering Mapper](https://www.openorienteering.org/), eli kotoisasti "OOM"
-* [OSGeo4W](https://trac.osgeo.org/osgeo4w/) on Windows -ympäristöön koottu ohjelmistokokonaisuus kartta-aineiston käsittelyyn
-* [LASTools](https://rapidlasso.com/)
+* [OSGeo4W](https://trac.osgeo.org/osgeo4w/) on Windows -ympäristöön koottu ohjelmistokokonaisuus kartta-aineiston käsittelyyn. OSGeo4W:stä tarvitaan ainoastaan paketit `gdal`, `gdal-python`, `pdal`, `shell` (, `setup`, 'gdal203dll`) ja ne
+automaattisesti asentuvat paketit, joista em. ovat riippuvaisia.
   
 Lisäksi tarvitset:
 * MML:n MTK --> ISOM2017 -translaatiotaulukon [MTK-ISOM2017.crt](https://github.com/jjojala/mapping/raw/master/MTK-ISOM2017.crt)
-* LASTools:n jäljiltä käyrät sisältävän Shapefile:n rikastamiseen ja käyrien luokitteluun tarkoitetun skriptinpätkän
-([contours.py](https://github.com/jjojala/mapping/raw/master/contours.py))
-
-Sen sijaan **et** tarvitse ([koska...](Miksi_ei.md)):
-* OCAD:ia, tai
-* Pullautinta
 
 ## Alueen rajaus
 
@@ -23,16 +18,20 @@ Aloitetaan alueen rajaamisella. Se onnistuu esimerkiksi [geojson.net](https://ge
 et tarvitse käyttäjätunnusta.
 
 Valitse karttanäkymän oikeasta laidasta *Draw a polygon* -työkalu ja rajaa sillä kartoitettava alue. Tallenna alue
-*Shapefile* -muodossa valikon *Save->Shapefile* -toiminnolla.
+*Shapefile* (ESRi Shapefile) -muodossa valikon *Save->Shapefile* -toiminnolla.
 
 ![geojson.net](images/geojsonio.png)
 
 Pura ladattu tiedosto esimerkiksi tekemääsi hakemistoon `geojson.net`.
 
+geojson.net -palvelu käyttää WGS-84, eli EPSG:4326 -koordinaattijärjestelmää. Sen sijaan maanmittauslaitos käyttää
+kaikissa aineistoissaa ETRS-TM35FIN, eli EPSG:3067 -koordinaattijärjestelmää. Jäljempänä oletetaan, että rajaus
+annetaan ETRS-TM35FIN -muodossa, joten rajaus on tarpeen muuttaa ETRS-TM35FIN -muotoon.
+
 Käynnistä OSGeo4W Shell (komentotulkki) esimerkiksi Windows:n *Start* -valikon kautta ja muuta aluerajaus MML:n käyttämään koordinaatistoon:
 
 ```
-> ogr2ogr -t_srs EPSG:3067 rajaus.shp geojson.net\layers\POLYGON.shp
+> ogr2ogr -t_srs EPSG:3067 Kaitajärvi_rajaus.shp geojson.net\layers\POLYGON.shp
 ```
 
 Älä sulje *OSGeo4W shell*:iä komennon jälkeen (myöhemmin tässä ohjeessa suoritettavat komennot ajetaan
@@ -105,7 +104,7 @@ Yhdistetään kuvat (jos useita):
 
 ```
 > gdalwarp -cutline rajaus.shp -crop_to_cutline -dstalpha -s_srs EPSG:3067 ^
-            -co COMPRESS=JPEG -co WORLDFILE=YES MML\M4211E+f.tif Kaitajarvi_Orto.tif
+            -co COMPRESS=JPEG -co WORLDFILE=YES MML\M4211E+F.tif Kaitajarvi_Orto.tif
 ```
 
 Tässä vaiheessa on jälleen hyvä avata syntynyt `Kaitajarvi_Orto.tif` luotavan kartan taustakartaksi.
@@ -160,36 +159,54 @@ lataamalla `MTK-ISOM2017.crt` -tiedosto. Hyödyttömiä symboleita voi tässä v
 
 ### Laserpistepilven valmistelu ja tuonti
 
-Jos pistepilvitiedostoja on useita, yhdistellään ne ja poistetaan samalla muut, kuin 
-maanpintaa kuvaavat "ground"/class 2 -pisteet (pistepilvessä on myös esim. kasvillisuutta kuvaavia pisteitä):
+Jos pistepilvitiedostoja on useita, yhdistetään ne:
 
 ```
-> las2las.exe -i MML\M4211E4.laz MML\M4211F3.laz -merged -keep_class 2 -o MML\M4211E4+F3_ground.laz
+> pdal merge MML\M4211E4.laz MML\M4211F3.laz MML\M4211E4+F3.laz
 ```
 
-(jos aineisto koostuu vain yhdestä laz-tiedostosta, voidaan '-merged' -optio jättää antamatta, jolloin komento ainoastaan suodattaa
-maanpintaa kuvaavat pisteet.)
-
-... rajataan materiaali vain tarvittavaan alueeseen:
+Kartan korkeuskuvauksen kannalta vain maanpintaa kuvaavat "ground", eli "class 2" -pisteet
+tarvitaan. Muut, esimerkiksi kasvillisuutta tai vesistöjä kuvaavat pisteet suodatetaan pois:
 
 ```
-> lasclip.exe -i MML\M4211E4+F3_ground.laz -o MML\Kaitajarvi_ground.laz -poly rajaus.shp -v
+> pdal translate -i MML\M4211E4+F3.laz -o MML\M4211E4+F3_ground.laz ^
+			-f range --filters.range.limits="Classification[2:2]"
 ```
 
-... pelkistetään pistepilveä:
+Pistepilviaineiston rajaaminen kattamaan vain tarvittava alue edellyttää rajausta 
+*WKT* (Well Known Text) -muodossa:
 
 ```
-> lasthin.exe -i MML\Kaitajarvi_ground.laz -o MML\Kaitajarvi_ground_thinned.laz
+> ogrinfo rajaus.shp rajaus -fid 0 -q -nomod | findstr POLYGON > rajaus.wkt
+> set /p rajaus=<rajaus.wkt
+```
+(Rajauksen pitää olla alle 1024 merkkiä!)
+ 
+Tämän jälkeen tarvittava materiaali voidaan rajata:
+
+```
+> pdal translate -i MML\M4211E4+F3_ground.laz -o MML\Kaitajarvi_ground.laz ^
+			-f crop --filters.crop.polygon="%rajaus%"
+```
+(pdal ei salli skandimerkistön käyttöä tiedoston nimissä!)
+
+Seuraavaksi rajausta, maanpitaa kuvaavasta pistepilvestä tehdään *DTM* (Digital Terrain Model):
+
+```
+> pdal translate -i MML\Kaitajarvi_ground.laz -o MML\Kaitajarvi_dem.tif ^
+			-w gdal --writers.gdal.resolution=2.0 --writers.gdal.output_type="mean"
+```
+(Digital Elevation Model, DEM on yleisnimi erilaisille pintamalleille. DTM on eräs DTM:n muoto.)
+
+Lopuksi muutetaan lopputulos käyräviivaksi (puolen metrin käyrävälein):
+
+```
+> gdal_contour -i 0.5 -a "elev" MML\Kaitajarvi_dem.tif Kaitajarvi_contours05.shp
 ```
 
-... ja muutetaan lopputulos käyräviivaksi (puolen metrin käyrävälein):
+Syntynyt `Kaitajarvi_contours05.shp` sisältää korkeuskäyrät puolen metrin käyrävälillä.
 
-```
-> las2iso.exe -i MML\Kaitajarvi_ground_thinned.laz -o MML\Kaitajarvi_contours05.shp ^
-               -iso_every 0.5 -clean 8 -simplify 4 -smooth 5
-```
-
-Seuraavaksi onkin päätettävä kartassa käytettävä käyräväli ja johtokäyrien tasot. Komennolla:
+Seuraavaksi onkin päätettävä kartassa käytettävä käyräväli ja johtokäyrien ta* sot. Komennolla:
 
 ```
 > python contours.py -info MML\Kaitajarvi_contours05.shp
