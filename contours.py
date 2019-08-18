@@ -89,11 +89,22 @@ def get_contour_distrib(filename):
 	driver = ogr.GetDriverByName(get_driver_from_extension(filename))
 	ds = driver.Open(filename, 0)
 	layer = ds.GetLayer()
+	layer_defn = layer.GetLayerDefn()
+	elev_field_i = -1
+
+	for i in range(0, layer_defn.GetFieldCount()):
+		field_defn = layer_defn.GetFieldDefn(i)
+		if field_defn.GetNameRef() == "elev":
+			elev_field_i = i
+			break
 
 	distrib = {}
 	for feature in layer:
 		geometry = feature.GetGeometryRef()	
-		z = geometry.GetZ()
+		if elev_field_i == -1:
+			z = geometry.GetZ()
+		else:
+			z = feature.GetField(elev_field_i)
 		
 		if z in distrib:
 			count = distrib[z]
@@ -106,6 +117,7 @@ def get_contour_distrib(filename):
 	driver = None
 
 	return distrib
+
 
 def define_index_elev(distrib, contour_interval):
 	"""Define highest index contour elevation based on contour distribution.
@@ -197,7 +209,7 @@ def tag(argv):
 
 	src_layer_defn = src_layer.GetLayerDefn()
 	for i in range(0, src_layer_defn.GetFieldCount()):
-		src_field_dfn = src_layer_defn.GetFieldDefn(i)
+		src_field_defn = src_layer_defn.GetFieldDefn(i)
 		dst_layer.CreateField(src_field_defn)
 
 	elev_field_defn = ogr.FieldDefn("ELEVATION", ogr.OFTReal)
@@ -210,14 +222,16 @@ def tag(argv):
 	for src_feature in src_layer:
 		src_geometry = src_feature.GetGeometryRef().Clone()	
 		dst_feature = ogr.Feature(dst_layer_defn)
+		elev = src_geometry.GetZ()
 	
 		dst_feature.SetGeometry(src_geometry)
 		for i in range(0, src_layer_defn.GetFieldCount()):
 			field_defn = src_layer_defn.GetFieldDefn(i)
 			dst_feature.SetField(field_defn.GetNameRef(),
-				src_feature.GetField(i).Clone())
-		
-		elev = src_geometry.GetZ()
+				src_feature.GetField(i))
+			if field_defn.GetNameRef() == "elev":
+				elev = src_feature.GetField(i)
+
 		dst_feature.SetField(elev_field_defn.GetNameRef(), elev)
 		dst_feature.SetField(class_field_defn.GetNameRef(), classify_contour(elev-index_elev, contour_interval))
 
