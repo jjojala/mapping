@@ -6,19 +6,25 @@ Kaikki käytetyt ohjelmat ovat ilmaisia. Käyttöympäristönä näissä ohjeiss
 toimivat useissa eri ympäristöissä.
 
 * [OpenOrienteering Mapper](https://www.openorienteering.org/), eli kotoisasti "OOM"
-* [OSGeo4W](https://trac.osgeo.org/osgeo4w/) on Windows -ympäristöön koottu ohjelmistokokonaisuus kartta-aineiston käsittelyyn. OSGeo4W:stä tarvitaan ainoastaan paketit `gdal`, `gdal-python`, `pdal`, `shell` (, `setup`, 'gdal203dll`) ja ne
+* [OSGeo4W](https://trac.osgeo.org/osgeo4w/) on Windows -ympäristöön koottu  ilmainen 
+ohjelmistokokonaisuus kartta-aineiston käsittelyyn. OSGeo4W:stä sisältää todella monipuoliset 
+työkalut, mutta tässä ohjeessa tarvitaan ainoastaan paketit `gdal`, `gdal-python`, `pdal` sekä 
+`gdal203dll`, `shell` (ja ohjelmistopäivitysten myöhempään ylläpitoon `setup`) ja lisäksi ne
 automaattisesti asentuvat paketit, joista em. ovat riippuvaisia.
   
 Lisäksi tarvitset:
-* MML:n MTK --> ISOM2017 -translaatiotaulukon [MTK-ISOM2017.crt](https://github.com/jjojala/mapping/raw/master/MTK-ISOM2017.crt)
+* MML:n MTK --> ISOM2017 -translaatiotaulukon [MTK-ISOM2017.crt](https://github.com/jjojala/mapping/raw/master/MTK-ISOM2017.crt), sekä
+* Korkeuskäyrien luokitteluun tarkoitetun [`contours.py` -komennon](contours.py)
 
 ## Alueen rajaus
 
-Aloitetaan alueen rajaamisella. Se onnistuu esimerkiksi [geojson.net](https://geojson.net/) -palvelussa. Käyttääksesi palvelua
-et tarvitse käyttäjätunnusta.
+Aloitetaan alueen rajaamisella. Se onnistuu esimerkiksi 
+[geojson.net](https://geojson.net/) -palvelussa. Käyttääksesi palvelua et tarvitse 
+käyttäjätunnusta.
 
-Valitse karttanäkymän oikeasta laidasta *Draw a polygon* -työkalu ja rajaa sillä kartoitettava alue. Tallenna alue
-*Shapefile* (ESRi Shapefile) -muodossa valikon *Save->Shapefile* -toiminnolla.
+Valitse karttanäkymän oikeasta laidasta *Draw a polygon* -työkalu ja rajaa sillä kartoitettava 
+alue. Tallenna alue *Shapefile* (ESRi Shapefile) -muodossa valikon *Save->Shapefile* 
+-toiminnolla.
 
 ![geojson.net](images/geojsonio.png)
 
@@ -177,10 +183,10 @@ Pistepilviaineiston rajaaminen kattamaan vain tarvittava alue edellyttää rajau
 *WKT* (Well Known Text) -muodossa:
 
 ```
-> ogrinfo rajaus.shp rajaus -fid 0 -q -nomod | findstr POLYGON > rajaus.wkt
+> ogrinfo rajaus.shp rajaus -fid 0 -q -nomd | findstr POLYGON > rajaus.wkt
 > set /p rajaus=<rajaus.wkt
 ```
-(Rajauksen pitää olla alle 1024 merkkiä!)
+(Rajauksen pitää olla alle 1024 merkkiä! Rajaukseen käytetyn tason nimi on tässä `rajaus`. Nimi on johdettu *Shapefile* tiedoston nimestä.)
  
 Tämän jälkeen tarvittava materiaali voidaan rajata:
 
@@ -196,7 +202,8 @@ Seuraavaksi rajausta, maanpitaa kuvaavasta pistepilvestä tehdään *DTM* (Digit
 > pdal translate -i MML\Kaitajarvi_ground.laz -o MML\Kaitajarvi_dem.tif ^
 			-w gdal --writers.gdal.resolution=2.0 --writers.gdal.output_type="mean"
 ```
-(Digital Elevation Model, DEM on yleisnimi erilaisille pintamalleille. DTM on eräs DTM:n muoto.)
+(Digital Elevation Model, DEM on yleisnimi erilaisille pintamalleille. Maanpinnan pinnanmuotoja
+kuvaava DTM on eräs DEM:n muoto.)
 
 Lopuksi muutetaan lopputulos käyräviivaksi (puolen metrin käyrävälein):
 
@@ -206,7 +213,7 @@ Lopuksi muutetaan lopputulos käyräviivaksi (puolen metrin käyrävälein):
 
 Syntynyt `Kaitajarvi_contours05.shp` sisältää korkeuskäyrät puolen metrin käyrävälillä.
 
-Seuraavaksi onkin päätettävä kartassa käytettävä käyräväli ja johtokäyrien ta* sot. Komennolla:
+Seuraavaksi onkin päätettävä kartassa käytettävä käyräväli ja johtokäyrien tasot. Komennolla:
 
 ```
 > python contours.py -info MML\Kaitajarvi_contours05.shp
