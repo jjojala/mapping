@@ -96,7 +96,7 @@ Rajataan kartoitettava alue:
 ```
 
 Tässä vaiheessa on luontevaa luoda OOM -kartta ja tuoda sinne edellä synnytetty `Kaitajarvi_MapAnt.tif` taustakartaksi
-georeferointeineen ja karttapohjoisen asetuksineen (kts. pikakartan valmistusohjetta).
+georeferointeineen ja erannon asetuksineen (kts. pikakartan valmistusohjetta). Maanmittauslaitos tuottaa Ilmatieteenlaitoksen erantomittausten pohjalta [erantokarttaa](https://www.maanmittauslaitos.fi/kartat-ja-paikkatieto/kartat/erantokartta), jonka mukaan eranto kannattaa OOM:ssä asettaa.
 
 ### Ortoilmakuvien valmistelu
 
