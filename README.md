@@ -19,7 +19,7 @@ Lisäksi tarvitset:
 ## Alueen rajaus
 
 Aloitetaan alueen rajaamisella. Se onnistuu esimerkiksi 
-[geojson.net](https://geojson.net/) -palvelussa. Käyttääksesi palvelua et tarvitse 
+[geojson.io](https://geojson.io/) -palvelussa. Käyttääksesi palvelua et tarvitse 
 käyttäjätunnusta.
 
 Valitse karttanäkymän oikeasta laidasta *Draw a polygon* -työkalu ja rajaa sillä kartoitettava 
