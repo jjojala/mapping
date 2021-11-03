@@ -270,11 +270,6 @@ On myös muita avoimia materiaaleja:
 * Esimerkiksi [Bing Aerial](https://www.bing.com/maps/aerial), [Google Maps](https://www.google.com/maps/) -ilmakuvista voi toisinaan näkyä jotakin sellaista, joka ei MML:n ortoilmakuvista irtoa. Kaikista palveluista kuvia ei saa georeferoituna, joten kohteiden todellisen sijainnin kanssa kannattaa olla tarkkana. Toisinaan kuvat voivat olla myös huomattavan vanhoja. Myös esimerkiksi kunnilta saattaa saada alueesta ilmakuvia.
 * [Google Street View:n](https://mapstreetview.com/) avulla voit tsekkailla tien reunat ([esimerkki](https://github.com/jjojala/mapping/raw/master/images/GoogleStreetView.png) ja sama [livenä](https://mapstreetview.com/#10ksus_e4fmr_3n.a_0g42))
 * Kuntien kaavakartat.
-<<<<<<< HEAD
-* [Vanhat painetut kartat](http://vanhatpainetutkartat.maanmittauslaitos.fi/) -palvelusta kannattaa kaivaa vanhoja karttoja. Vanhat kartat eivät ole georeferoituja ja niissä on (ennen vuotta 2003) myös eri projektio. Tästä syystä ne kannattaa asemoida aina kulloinkin käsiteltävän alueen perusteella paikalleen ennen käyttöä. Kun asemoinnin tekee huolella, vanhoista kartoista irtoaa yllättävän hyvää tietoa. Esimerkiksi nykyisin maastossa kuviorajoina erottuvat jo vuosia sitten paketoitujen peltojen reunat saa kätevästi poimittua vanhoista kartoista.
-* [Strava Global Heatmap](https://www.strava.com/heatmap) -palvelusta voi nähdä Strava -käyttäjien yleisimmin käyttämiä GPS-jälkiä. Jäljistä on mahdollista piirtää esimerkiksi yleisesti käytetyt ulkoilureitit.
-* Metsäkeskuksen metsänkäyttöilmoitukset. Kannattaa tutustua jo ennalta: [Metsäkeskuksen karttapalvelut](https://www.metsaan.fi/karttapalvelut)
-=======
 * [Vanhat painetut kartat](http://vanhatpainetutkartat.maanmittauslaitos.fi/) -palvelusta kannattaa kaivaa vanhoja karttoja.
   Vanhat kartat eivät ole georeferoituja ja niissä on (ennen vuotta 2003) myös eri projektio. Tästä syystä ne kannattaa
   asemoida aina kulloinkin käsiteltävän alueen perusteella paikalleen ennen käyttöä. Kun asemoinnin tekee huolella,
@@ -283,7 +278,6 @@ On myös muita avoimia materiaaleja:
 * [Strava Global Heatmap](https://www.strava.com/heatmap) -palvelusta voi nähdä Strava -käyttäjien yleisimmin käyttämiä
   GPS-jälkiä. Jäljistä on mahdollista piirtää esimerkiksi yleisesti käytetyt ulkoilureitit.
 * Metsäkeskuksen metsänkäyttöilmoitukset. Kannattaa tutustua jo ennalta: [Metsäkeskuksen karttapalvelut](https://www.metsaan.fi/karttapalvelut) ja [Metsänkäyttöilmoitukset](https://www.arcgis.com/apps/MapSeries/index.html?appid=e8c03f73165b44aa8edb276e11ca2d2c)
->>>>>>> master
 * Aiemmat suunnistuskartat, luonnollisesti.
 
 Työpöydän ääressä valmisteltu kartta voi näyttää esimerkiksi [tältä](https://github.com/jjojala/mapping/raw/master/images/Kaitajarvi.pdf). Sitten vaan maastoon tarkistamaan pohjatyön tulosta, korjaamaan ja täydentämään...
