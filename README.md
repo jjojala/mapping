@@ -6,24 +6,25 @@ Kaikki käytetyt ohjelmat ovat ilmaisia. Käyttöympäristönä näissä ohjeiss
 toimivat useissa eri ympäristöissä.
 
 * [OpenOrienteering Mapper](https://www.openorienteering.org/), eli kotoisasti "OOM"
-* [OSGeo4W](https://trac.osgeo.org/osgeo4w/) on Windows -ympäristöön koottu  ilmainen 
-ohjelmistokokonaisuus kartta-aineiston käsittelyyn. OSGeo4W:stä sisältää todella monipuoliset 
-työkalut, mutta tässä ohjeessa tarvitaan ainoastaan paketit `gdal`, `gdal-python`, `pdal` sekä 
+* [OSGeo4W](https://trac.osgeo.org/osgeo4w/) on Windows -ympäristöön koottu  ilmainen
+ohjelmistokokonaisuus kartta-aineiston käsittelyyn. OSGeo4W:stä sisältää todella monipuoliset
+työkalut, mutta tässä ohjeessa tarvitaan ainoastaan paketit `gdal`, `gdal-python`, `pdal` sekä
 `gdal203dll`, `shell` (ja ohjelmistopäivitysten myöhempään ylläpitoon `setup`) ja lisäksi ne
 automaattisesti asentuvat paketit, joista em. ovat riippuvaisia.
   
 Lisäksi tarvitset:
+
 * MML:n MTK --> ISOM2017 -translaatiotaulukon [MTK-ISOM2017.crt](https://github.com/jjojala/mapping/raw/master/MTK-ISOM2017.crt), sekä
 * Korkeuskäyrien luokitteluun tarkoitetun [`contours.py` -komennon](contours.py)
 
 ## Alueen rajaus
 
-Aloitetaan alueen rajaamisella. Se onnistuu esimerkiksi 
-[geojson.net](https://geojson.net/) -palvelussa. Käyttääksesi palvelua et tarvitse 
+Aloitetaan alueen rajaamisella. Se onnistuu esimerkiksi
+[geojson.net](https://geojson.net/) -palvelussa. Käyttääksesi palvelua et tarvitse
 käyttäjätunnusta.
 
-Valitse karttanäkymän oikeasta laidasta *Draw a polygon* -työkalu ja rajaa sillä kartoitettava 
-alue. Tallenna alue *Shapefile* (ESRi Shapefile) -muodossa valikon *Save->Shapefile* 
+Valitse karttanäkymän oikeasta laidasta *Draw a polygon* -työkalu ja rajaa sillä kartoitettava
+alue. Tallenna alue *Shapefile* (ESRi Shapefile) -muodossa valikon *Save->Shapefile*
 -toiminnolla.
 
 ![geojson.net](images/geojsonio.png)
@@ -36,7 +37,7 @@ annetaan ETRS-TM35FIN -muodossa, joten rajaus on tarpeen muuttaa ETRS-TM35FIN -m
 
 Käynnistä OSGeo4W Shell (komentotulkki) esimerkiksi Windows:n *Start* -valikon kautta ja muuta aluerajaus MML:n käyttämään koordinaatistoon:
 
-```
+```none
 > ogr2ogr -t_srs EPSG:3067 Kaitajärvi_rajaus.shp geojson.net\layers\POLYGON.shp
 ```
 
@@ -46,6 +47,7 @@ samasta ikkunasta).
 ## Aineistot
 
 Tarvittavat avoimet aineistot saadaan seuraavista palveluista:
+
 * [Maanmittauslaitoksen (MML) avoimien aineistojen tiedostopalvelu](https://tiedostopalvelu.maanmittauslaitos.fi/tp/kartta)
 * [MapAnt](https://mapant.fi/)
 * [OpenStreetMap](https://www.openstreetmap.org/)
@@ -53,10 +55,11 @@ Tarvittavat avoimet aineistot saadaan seuraavista palveluista:
 ### Maanmittauslaitoksen (MML) avoimet aineistot
 
 Lataa MML:n avoimet aineistot palvelusta:
-  https://tiedostopalvelu.maanmittauslaitos.fi/tp/kartta
+  <https://tiedostopalvelu.maanmittauslaitos.fi/tp/kartta>
 
 Valitse vasemmassa reunassa noudettavan materiaalin tyyppi yksi kerraallaan ja klikkaa sen jälkeen haluamaasi aluetta.
 Lista noudettavasta materiaalista muodostuu oikeaan reunaan. Noudettavia materiaaleja ovat:
+
 * JPEG2000 -muotoiset ortoilmakuvat
 * laserkeilaus-, eli pistepilviaineisto (mielellään stereomalliluokiteltu)
 * Maastotietokanta, kaikki kohteet
@@ -69,7 +72,7 @@ hakemistoon `MML`. Pura zip -paketit vastaavan nimiseen hakemistoon, esim. `MML\
 
 ### MapAnt
 
-Hae MapAnt -kartta palvelusta https://www.mapant.fi/. Tuonti käynnistetään *Export* -toiminnolla, jonka jälkeen
+Hae MapAnt -kartta palvelusta <https://www.mapant.fi/>. Tuonti käynnistetään *Export* -toiminnolla, jonka jälkeen
 hiirellä rajataan kartalta noudettava suorakaiteenmuotoinen alue. Käytä tuonnissa tarkinta lähennystasoa (Zoom=9)
 ja muotona georeferoitua PNG:tä (Format="Georeferenced PNG"):
 
@@ -79,7 +82,7 @@ Pura ladattu zip-tiedosto esimerkiksi tekemääsi hakemistoon `MapAnt`.
 
 ### OpenStreetMap (OSM)
 
-OSM -palvelu löytyy osoitteesta https://openstreetmap.org/. Aineiston voi rajata ja tuoda karttanäkymästä *Export* -toiminnolla.
+OSM -palvelu löytyy osoitteesta <https://openstreetmap.org/>. Aineiston voi rajata ja tuoda karttanäkymästä *Export* -toiminnolla.
 Kopioi ladattu `map.osm` hakemistoon `OSM`.
 
 ![OSM](images/OSM.png)
@@ -90,7 +93,7 @@ Kopioi ladattu `map.osm` hakemistoon `OSM`.
 
 Rajataan kartoitettava alue:
 
-```
+```none
 > gdalwarp -cutline rajaus.shp -crop_to_cutline -dstalpha -s_srs EPSG:3067 ^
             -co COMPRESS=JPEG -co WORLDFILE=YES MapAnt\MapAnt.png Kaitajarvi_MapAnt.tif
 ```
@@ -102,13 +105,13 @@ georeferointeineen ja karttapohjoisen asetuksineen (kts. pikakartan valmistusohj
 
 Yhdistetään kuvat (jos useita):
 
-```
+```none
 > gdalwarp MML\M4211E.jp2 MML\M4211F.jp2 MML\M4211E+F.tif
 ```
 
 ... ja rajataan kartoitettavaan alueeseen (kuten MapAnt -kartta):
 
-```
+```none
 > gdalwarp -cutline rajaus.shp -crop_to_cutline -dstalpha -s_srs EPSG:3067 ^
             -co COMPRESS=JPEG -co WORLDFILE=YES MML\M4211E+F.tif Kaitajarvi_Orto.tif
 ```
@@ -119,7 +122,7 @@ Tässä vaiheessa on jälleen hyvä avata syntynyt `Kaitajarvi_Orto.tif` luotava
 
 Rajataan kiinteistötiedot:
 
-```
+```none
 > ogr2ogr -clipsrc rajaus.shp Kaitajarvi_kiinteistorajat.gml MML\M4211E\M4211E_kiinteistoraja.shp
 ```
 
@@ -129,13 +132,13 @@ Lopputuloksena syntyvä `Kaitajarvi_kiinteistorajat.gml` voidaan tuoda _taustaka
 
 OSM -kartta ei käytä MML:n käyttämää koordinaattijärjestelmää, joten se pitää ensin muuttaa:
 
-```
+```none
 > ogr2ogr -t_srs EPSG:3067 OSM\map.gml OSM\map.osm
 ```
 
 Muutoksen jälkseen rajataan materiaali kartoitettavaan alueeseen:
 
-```
+```none
 > ogr2ogr -clipsrc rajaus.shp Kaitajarvi_osm.gml OSM\map.gml
 ```
 
@@ -150,13 +153,13 @@ mielekästä tuoda OSM-kartta OOM-karttaan sellaisenaan. Tuotuun karttaan sovell
 
 Useista Shapefileistä koostuva maastotietokanta (purettu zip:stä) yhdistetään yhdeksi GML-tiedostoksi:
 
-```
+```none
 > ogrmerge -o MML\M4211R.gml MML\M4211R.shp\*.shp
 ```
 
 ... ja rajataan:
 
-```
+```none
 > ogr2ogr -clipsrc rajaus.shp Kaitajarvi_mtk.gml MML\M4211R.gml
 ```
 
@@ -167,48 +170,49 @@ lataamalla `MTK-ISOM2017.crt` -tiedosto. Hyödyttömiä symboleita voi tässä v
 
 Jos pistepilvitiedostoja on useita, yhdistetään ne:
 
-```
+```none
 > pdal merge MML\M4211E4.laz MML\M4211F3.laz MML\M4211E4+F3.laz
 ```
 
 Kartan korkeuskuvauksen kannalta vain maanpintaa kuvaavat "ground", eli "class 2" -pisteet
 tarvitaan. Muut, esimerkiksi kasvillisuutta tai vesistöjä kuvaavat pisteet suodatetaan pois:
 
-```
+```none
 > pdal translate -i MML\M4211E4+F3.laz -o MML\M4211E4+F3_ground.laz ^
-			-f range --filters.range.limits="Classification[2:2]"
+      -f range --filters.range.limits="Classification[2:2]"
 ```
 
-Pistepilviaineiston rajaaminen kattamaan vain tarvittava alue edellyttää rajausta 
-*WKT* (Well Known Text) -muodossa:
+Pistepilviaineiston rajaaminen kattamaan vain tarvittava alue edellyttää rajausta *WKT* (Well Known Text) -muodossa:
 
-```
+```none
 > ogrinfo rajaus.shp rajaus -fid 0 -q -nomd | findstr POLYGON > rajaus.wkt
 > set /p rajaus=<rajaus.wkt
 ```
+
 (Rajauksen pitää olla alle 1024 merkkiä! Rajaukseen käytetyn tason nimi on tässä `rajaus`. Nimi on johdettu *Shapefile* tiedoston nimestä.)
- 
+
 Tämän jälkeen tarvittava materiaali voidaan rajata:
 
-```
+```none
 > pdal translate -i MML\M4211E4+F3_ground.laz -o MML\Kaitajarvi_ground.laz ^
-			-f crop --filters.crop.polygon="%rajaus%"
+      -f crop --filters.crop.polygon="%rajaus%"
 ```
+
 (pdal ei salli skandimerkistön käyttöä tiedoston nimissä!)
 
 Seuraavaksi rajausta, maanpitaa kuvaavasta pistepilvestä tehdään *DTM* (Digital Terrain Model):
 
-```
+```none
 > pdal translate -i MML\Kaitajarvi_ground.laz -o MML\Kaitajarvi_dem.tif ^
-			-w gdal --writers.gdal.resolution=2.0 --writers.gdal.radius=10 ^
-			--writers.gdal.window_size=1 --writers.gdal.output_type="idw"
+      -w gdal --writers.gdal.resolution=2.0 --writers.gdal.radius=10 ^
+      --writers.gdal.window_size=1 --writers.gdal.output_type="idw"
 ```
-(Digital Elevation Model, DEM on yleisnimi erilaisille pintamalleille. Maanpinnan pinnanmuotoja
-kuvaava DTM on eräs DEM:n muoto.)
+
+(Digital Elevation Model, DEM on yleisnimi erilaisille pintamalleille. _Maanpinnan_ pinnanmuotoja kuvaava DTM on eräs DEM:n muoto.)
 
 Lopuksi muutetaan lopputulos käyräviivaksi (puolen metrin käyrävälein):
 
-```
+```none
 > gdal_contour -i 0.5 -a "elev" MML\Kaitajarvi_dem.tif Kaitajarvi_contours05.shp
 ```
 
@@ -216,13 +220,13 @@ Syntynyt `Kaitajarvi_contours05.shp` sisältää korkeuskäyrät puolen metrin k
 
 Seuraavaksi onkin päätettävä kartassa käytettävä käyräväli ja johtokäyrien tasot. Komennolla:
 
-```
+```none
 > python contours.py -info MML\Kaitajarvi_contours05.shp
 ```
 
 ... saat yhteenvedon korkeusvaihtelusta ja taulukon, jossa on kuvattu miten monta käyräsymbolia milläkin korkeustasolla esiintyy:
 
-```
+```none
 Elevation range: 107.50 - 155.00m:
         Elevation | count
         -----------------------
@@ -237,21 +241,15 @@ Elevation range: 107.50 - 155.00m:
         155.00m   |    1
 ```
 
-Esimerkiksi tässä tapauksessa alueen korkeus vaihtelee välillä 107,5 - 155m ja on siis 47,5m. Jos (ja kun) käyräväliksi
-valitaan viisi metriä, johtokäyrätasoja mahtuu vaihteluvälille kaksi (koska joka viides korkeuskäyrä on johtokäyrä), 
-ylemmän ollessa esimerkiksi tasolla 145m. ISOM 2017 suosittelee johtokäyrätason valinnaksi "*merkittävimpien rinteiden
-keskitason*".
+Esimerkiksi tässä tapauksessa alueen korkeus vaihtelee välillä 107,5 - 155m ja on siis 47,5m. Jos (ja kun) käyräväliksi valitaan viisi metriä, johtokäyrätasoja mahtuu vaihteluvälille kaksi (koska joka viides korkeuskäyrä on johtokäyrä), ylemmän ollessa esimerkiksi tasolla 145m. ISOM 2017 suosittelee johtokäyrätason valinnaksi "*merkittävimpien rinteiden keskitason*".
 
 Nyt, kun tiedetään käyräväli (5m) ja vähintään yksi käytetettävä johtokäyrän korkeustaso (145m), voidaan tehdä käyrien luokittelu:
 
-```
+```none
 > python contours.py -tag 145 5 MML\Kaitajarvi_contours05.shp Kaitajarvi_contours05.gml
 ```
 
-Lopputulos `Kaitajarvi_contours05.gml` voidaan lisätä OOM -karttaan "Tuo" -toiminnolla. Tuodut käyräsymbolit muutetaan
-OMAP -symboleiksi lataamalla `MTK-ISOM2017.crt` -tiedosto. Lopullisesta kartasta pois jäävät kartoituksen avuksi tarkoitetut
-tukikäyrät esitetään purppuralla oletussymbolilla, mutta niitä varten kannattaa käsin tehdä esim. 0,03mm leveä tumman vihreä
-käyräsymboli. Kokonaan niitä ei kannata poistaa, sillä tukikäyrät ovat mm. maastossa hyvin tarpeellisia.
+Lopputulos `Kaitajarvi_contours05.gml` voidaan lisätä OOM -karttaan "Tuo" -toiminnolla. Tuodut käyräsymbolit muutetaan OMAP -symboleiksi lataamalla `MTK-ISOM2017.crt` -tiedosto. Lopullisesta kartasta pois jäävät kartoituksen avuksi tarkoitetut tukikäyrät esitetään purppuralla oletussymbolilla, mutta niitä varten kannattaa käsin tehdä esim. 0,03mm leveä tumman vihreä käyräsymboli. Kokonaan niitä ei kannata poistaa, sillä tukikäyrät ovat mm. maastossa hyvin tarpeellisia.
 
 ![OOM](images/OOM.png)
 
@@ -262,41 +260,22 @@ käyräsymboli. Kokonaan niitä ei kannata poistaa, sillä tukikäyrät ovat mm.
 
 Ennen maastoon ryntäämistä voi, ja kannattaa pohja-aineiston kanssa vähän jumpata, esimerkiksi:
 
-* OSM -pohjista kannattaa tarkistaa mahdollisia kartalle kuvattavia kohteita. OSM-pohjissa on erityisesti taajamien liepeillä
-  MTK:ta kattavampaa tietoa esimerkiksi poluista.
-* Ortoilmakuvia kannattaa verrata kiinteistörajoihin. Jos ilmakuvasta näkyy hakkuu, joka näyttäisi rajautuvan kiinteistörajaan,
-  kyseessä on melkoisella varmuudella myös maastossa selvästi erottuva kuvioraja. Ilmakuvista voi näkyä myös muita
-  MTK-materiaalista puuttuvia kohteita.
-* Myös MapAnt -karttaa kannattaa verrata kiinteistörajoihin. Jos MapAnt -kartassa aukko tai tiheikkö rajautuu kiinteistörajaan,
-  kyseessä todennäköisesti on maastossa selvästi erottuva kuvioraja - erityisesti jos sama raja erottuu vielä ortoilmakuvassakin.
-* Taajama- ja esimerkiksi mökkialueilla kiinteistörajojen perusteella voi kuvata tonttivihreät. Tässä on tosin huomattava, että
-  isoilla, metsäisillä tonteilla koko tontti ei ole välttämättä kiellettyä aluetta.
-* Korkeuskäyriä voi trimmailla melkein loputtomiin. Useimmat laserpohjista otetut käyrän mutkat eivät erotu maastossa, joten
-  yleensä on aika turvallista pelkistää ja suoristaa käyräviivoja jo ennen maastotyötä - tosin maastossa käynnin jälkeen
-  voi tulla yllätyksiäkin ja joskus jonkun muodon korostaminen maastokäynnin jälkeen tuntuu ilmeiseltä.
+* OSM -pohjista kannattaa tarkistaa mahdollisia kartalle kuvattavia kohteita. OSM-pohjissa on erityisesti taajamien liepeillä MTK:ta kattavampaa tietoa esimerkiksi poluista.
+* Ortoilmakuvia kannattaa verrata kiinteistörajoihin. Jos ilmakuvasta näkyy hakkuu, joka näyttäisi rajautuvan kiinteistörajaan, kyseessä on melkoisella varmuudella myös maastossa selvästi erottuva kuvioraja. Ilmakuvista voi näkyä myös muita MTK-materiaalista puuttuvia kohteita.
+* Myös MapAnt -karttaa kannattaa verrata kiinteistörajoihin. Jos MapAnt -kartassa aukko tai tiheikkö rajautuu kiinteistörajaan, kyseessä todennäköisesti on maastossa selvästi erottuva kuvioraja - erityisesti jos sama raja erottuu vielä ortoilmakuvassakin.
+* Taajama- ja esimerkiksi mökkialueilla kiinteistörajojen perusteella voi kuvata tonttivihreät. Tässä on tosin huomattava, että isoilla, metsäisillä tonteilla koko tontti ei ole välttämättä kiellettyä aluetta.
+* Korkeuskäyriä voi trimmailla melkein loputtomiin. Useimmat laserpohjista otetut käyrän mutkat eivät erotu maastossa, joten yleensä on aika turvallista pelkistää ja suoristaa käyräviivoja jo ennen maastotyötä - tosin maastossa käynnin jälkeen voi tulla yllätyksiäkin ja joskus jonkun muodon korostaminen maastokäynnin jälkeen tuntuu ilmeiseltä.
 
 On myös muita avoimia materiaaleja:
-* Esimerkiksi [Bing Aerial](https://www.bing.com/maps/aerial), [Google Maps](https://www.google.com/maps/) -ilmakuvista
-  voi toisinaan näkyä jotakin sellaista, joka ei MML:n ortoilmakuvista irtoa. Kaikista palveluista kuvia ei saa georeferoituna,
-  joten kohteiden todellisen sijainnin kanssa kannattaa olla tarkkana. Toisinaan kuvat voivat olla myös huomattavan vanhoja.
-  Myös esimerkiksi kunnilta saattaa saada alueesta ilmakuvia.
-* [Google Street View:n](https://mapstreetview.com/) avulla voit tsekkailla tien reunat
-  ([esimerkki](https://github.com/jjojala/mapping/raw/master/images/GoogleStreetView.png)
-  ja sama [livenä](https://mapstreetview.com/#10ksus_e4fmr_3n.a_0g42))
+
+* Esimerkiksi [Bing Aerial](https://www.bing.com/maps/aerial), [Google Maps](https://www.google.com/maps/) -ilmakuvista voi toisinaan näkyä jotakin sellaista, joka ei MML:n ortoilmakuvista irtoa. Kaikista palveluista kuvia ei saa georeferoituna, joten kohteiden todellisen sijainnin kanssa kannattaa olla tarkkana. Toisinaan kuvat voivat olla myös huomattavan vanhoja. Myös esimerkiksi kunnilta saattaa saada alueesta ilmakuvia.
+* [Google Street View:n](https://mapstreetview.com/) avulla voit tsekkailla tien reunat ([esimerkki](https://github.com/jjojala/mapping/raw/master/images/GoogleStreetView.png) ja sama [livenä](https://mapstreetview.com/#10ksus_e4fmr_3n.a_0g42))
 * Kuntien kaavakartat.
-* [Vanhat painetut kartat](http://vanhatpainetutkartat.maanmittauslaitos.fi/) -palvelusta kannattaa kaivaa vanhoja karttoja.
-  Vanhat kartat eivät ole georeferoituja ja niissä on (ennen vuotta 2003) myös eri projektio. Tästä syystä ne kannattaa
-  asemoida aina kulloinkin käsiteltävän alueen perusteella paikalleen ennen käyttöä. Kun asemoinnin tekee huolella,
-  vanhoista kartoista irtoaa yllättävän hyvää tietoa. Esimerkiksi nykyisin maastossa kuviorajoina erottuvat jo vuosia sitten
-  paketoitujen peltojen reunat saa kätevästi poimittua vanhoista kartoista.
-* [Strava Global Heatmap](https://www.strava.com/heatmap) -palvelusta voi nähdä Strava -käyttäjien yleisimmin käyttämiä
-  GPS-jälkiä. Jäljistä on mahdollista piirtää esimerkiksi yleisesti käytetyt ulkoilureitit.
+* [Vanhat painetut kartat](http://vanhatpainetutkartat.maanmittauslaitos.fi/) -palvelusta kannattaa kaivaa vanhoja karttoja. Vanhat kartat eivät ole georeferoituja ja niissä on (ennen vuotta 2003) myös eri projektio. Tästä syystä ne kannattaa asemoida aina kulloinkin käsiteltävän alueen perusteella paikalleen ennen käyttöä. Kun asemoinnin tekee huolella, vanhoista kartoista irtoaa yllättävän hyvää tietoa. Esimerkiksi nykyisin maastossa kuviorajoina erottuvat jo vuosia sitten paketoitujen peltojen reunat saa kätevästi poimittua vanhoista kartoista.
+* [Strava Global Heatmap](https://www.strava.com/heatmap) -palvelusta voi nähdä Strava -käyttäjien yleisimmin käyttämiä GPS-jälkiä. Jäljistä on mahdollista piirtää esimerkiksi yleisesti käytetyt ulkoilureitit.
 * Metsäkeskuksen metsänkäyttöilmoitukset. Kannattaa tutustua jo ennalta: [Metsäkeskuksen karttapalvelut](https://www.metsaan.fi/karttapalvelut)
 * Aiemmat suunnistuskartat, luonnollisesti.
 
-Työpöydän ääressä valmisteltu kartta voi näyttää esimerkiksi 
-[tältä](https://github.com/jjojala/mapping/raw/master/images/Kaitajarvi.pdf). 
-Sitten vaan maastoon tarkistamaan pohjatyön tulosta, korjaamaan ja täydentämään...
+Työpöydän ääressä valmisteltu kartta voi näyttää esimerkiksi [tältä](https://github.com/jjojala/mapping/raw/master/images/Kaitajarvi.pdf). Sitten vaan maastoon tarkistamaan pohjatyön tulosta, korjaamaan ja täydentämään...
 
-(Vertailun vuoksi kartta vuodelta 1993 löytyy [täältä](https://github.com/jjojala/mapping/raw/master/images/Kaitajarvi_1993.png),
-Copyright 1993 (C) Tampereen Yritys).
+(Vertailun vuoksi kartta vuodelta 1993 löytyy [täältä](https://github.com/jjojala/mapping/raw/master/images/Kaitajarvi_1993.png), Copyright 1993 (C) Tampereen Yritys).

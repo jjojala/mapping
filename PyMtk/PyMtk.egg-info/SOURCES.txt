@@ -1,0 +1,7 @@
+PyMtk.py
+setup.py
+PyMtk.egg-info/PKG-INFO
+PyMtk.egg-info/SOURCES.txt
+PyMtk.egg-info/dependency_links.txt
+PyMtk.egg-info/requires.txt
+PyMtk.egg-info/top_level.txt
