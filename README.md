@@ -200,7 +200,7 @@ Seuraavaksi rajausta, maanpitaa kuvaavasta pistepilvestä tehdään *DTM* (Digit
 
 ```
 > pdal translate -i MML\Kaitajarvi_ground.laz -o MML\Kaitajarvi_dem.tif ^
-			-w gdal --writers.gdal.resolution=2.0 --writers.gdal.radius=10 ^
+			-w gdal --writers.gdal.resolution=0.2 --writers.gdal.radius=2 ^
 			--writers.gdal.window_size=1 --writers.gdal.output_type="idw"
 ```
 (Digital Elevation Model, DEM on yleisnimi erilaisille pintamalleille. Maanpinnan pinnanmuotoja
