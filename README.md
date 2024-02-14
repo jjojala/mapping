@@ -206,6 +206,13 @@ Seuraavaksi rajausta, maanpitaa kuvaavasta pistepilvestä tehdään *DTM* (Digit
 (Digital Elevation Model, DEM on yleisnimi erilaisille pintamalleille. Maanpinnan pinnanmuotoja
 kuvaava DTM on eräs DEM:n muoto.)
 
+> [!TIP]
+> MML:n uudella 5p/m<sup>2</sup> -materiaalilla voi olla mielekästä tehdä kaksi DEM-mallia: toinen kartalle
+> tulevien käyrien piirtämiseen (kts. ohjeet jatkossa), jolloin resoluutio voi olla kenties hieman
+> karkeampi, esim. 0.5 ... 1.0 (muiden parametrien säilyessä ennallaan). Toista mallia käytetään
+> pohja-aineistona esim. kivien ja jyrkänteiden tunnistamiseen. Tällöin resoluutio voi olla 0.2,
+> radius 1.0 ja window_size=0 (ei välttämättä pyritä yhtenäiseen viivaan).
+
 Lopuksi muutetaan lopputulos käyräviivaksi (puolen metrin käyrävälein):
 
 ```
