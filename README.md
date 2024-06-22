@@ -211,7 +211,20 @@ kuvaava DTM on eräs DEM:n muoto.)
 > tulevien käyrien piirtämiseen (kts. ohjeet jatkossa), jolloin resoluutio voi olla kenties hieman
 > karkeampi, esim. 0.5 ... 1.0 (muiden parametrien säilyessä ennallaan). Toista mallia käytetään
 > pohja-aineistona esim. kivien ja jyrkänteiden tunnistamiseen. Tällöin resoluutio voi olla 0.2,
-> radius 1.0 ja window_size=0 (ei välttämättä pyritä yhtenäiseen viivaan).
+> radius 1.0 ja window_size=0 (ei välttämättä pyritä yhtenäiseen viivaan). Tarkka käyrästö vie paljon tilaa,
+> joten voi olla mielekästä muuttaa se OOM:llä jpg-muotoon.
+>
+> Tarkemmasta DEM-mallista voi tuottaa myös rinnevarjostuskuvan:
+> ```
+> >gdaldem dem.tif hillshade.jpg -co worldfile=yes
+> ```
+> ja niin ikään hyödyllisen TRI (Terrain Roughiness Index) -kuvan:
+> ```
+> >gdaldem TRI dem.tif tri.tif -co worldfile=yes
+> ```
+>
+> Em. tri.tif ei ole nykyisellään luettavissa OOM:ään. Asian voi korjata konvertoimalla tiedoston
+> jpg-muotoon esim. ilmaisella Paint.Net -ohjelmalla.
 
 Lopuksi muutetaan lopputulos käyräviivaksi (puolen metrin käyrävälein):
 
