@@ -214,9 +214,9 @@ kuvaava DTM on eräs DEM:n muoto.)
 > radius 1.0 ja window_size=0 (ei välttämättä pyritä yhtenäiseen viivaan). Tarkka käyrästö vie paljon tilaa,
 > joten voi olla mielekästä muuttaa se OOM:llä jpg-muotoon.
 >
-> Tarkemmasta DEM-mallista voi tuottaa myös rinnevarjostuskuvan:
+> Tarkemmasta DEM-mallista voi tuottaa myös rinnevarjostuskuvan (multidirectional - varjostus useasta suunnasta):
 > ```
-> > gdaldem hillshade dem.tif hillshade.tif -co COMPRESS=JPEG
+> > gdaldem hillshade dem.tif hillshade.tif -multidirectional -co COMPRESS=JPEG
 > ```
 > ja niin ikään hyödyllisen TRI (Terrain Roughiness Index) -kuvan:
 > ```
