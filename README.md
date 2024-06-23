@@ -216,11 +216,11 @@ kuvaava DTM on eräs DEM:n muoto.)
 >
 > Tarkemmasta DEM-mallista voi tuottaa myös rinnevarjostuskuvan:
 > ```
-> >gdaldem dem.tif hillshade.jpg -co worldfile=yes
+> > gdaldem dem.tif hillshade.jpg -co worldfile=yes
 > ```
 > ja niin ikään hyödyllisen TRI (Terrain Roughiness Index) -kuvan:
 > ```
-> >gdaldem TRI dem.tif tri.tif -co worldfile=yes
+> > gdaldem TRI dem.tif tri.tif -co worldfile=yes
 > ```
 >
 > Em. tri.tif ei ole nykyisellään luettavissa OOM:ään. Asian voi korjata konvertoimalla tiedoston
