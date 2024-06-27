@@ -216,15 +216,13 @@ kuvaava DTM on eräs DEM:n muoto.)
 >
 > Tarkemmasta DEM-mallista voi tuottaa myös rinnevarjostuskuvan (multidirectional - varjostus useasta suunnasta):
 > ```
-> > gdaldem hillshade dem.tif hillshade.tif -multidirectional -co COMPRESS=JPEG
+> > gdaldem hillshade dem.tif hillshade.tif -multidirectional -co compress=JPEG
 > ```
 > ja niin ikään hyödyllisen TRI (Terrain Roughiness Index) -kuvan:
 > ```
-> > gdaldem TRI dem.tif tri.tif -co worldfile=yes
+> > gdaldem TRI dem.tif tri-data.tif -co compress=DEFLATE -co predictor=2
+> > gdal_translate -scale 0 0.4 -ot Byte tri-data.tif tri.tif -co compress=JPEG
 > ```
->
-> Em. tri.tif ei ole nykyisellään luettavissa OOM:ään. Asian voi korjata konvertoimalla tiedoston
-> jpg-muotoon esim. ilmaisella Paint.Net -ohjelmalla.
 
 Lopuksi muutetaan lopputulos käyräviivaksi (puolen metrin käyrävälein):
 
