@@ -230,6 +230,13 @@ Lopuksi muutetaan lopputulos käyräviivaksi (puolen metrin käyrävälein):
 > gdal_contour -i 0.5 -a "elev" MML\Kaitajarvi_dem.tif Kaitajarvi_contours05.shp
 ```
 
+> [!TIP]
+> Varsinkin MML:n tarkemmalla laseraineistolla voi kannattaa tehdä myös käyristä tarkempi
+> kuvatiedosto, jota voi käyttää tausta-aineistona:
+> ```
+> > gdal_rasterize -a elev -tr 0.5 0.5  -ot Byte Kaitajarvi_contours05.shp Kaitajarvi_contours05.tif -co compress=JPEG
+> ```
+
 Syntynyt `Kaitajarvi_contours05.shp` sisältää korkeuskäyrät puolen metrin käyrävälillä.
 
 Seuraavaksi onkin päätettävä kartassa käytettävä käyräväli ja johtokäyrien tasot. Komennolla:
