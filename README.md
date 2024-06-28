@@ -119,7 +119,8 @@ Tässä vaiheessa on jälleen hyvä avata syntynyt `Kaitajarvi_Orto.tif` luotava
 Ydistetään (tarvittaessa) ja rajataan kiinteistörajat:
 
 ```
-> ogrmerge -single -nln kiinteistoraja -o kiinteistörajat-all.vrt MML\M4211E\M4211E_kiinteistoraja.shp MML\M4211F_kiinteistoraja.shp
+> ogrmerge -single -nln kiinteistoraja -o kiinteistörajat-all.vrt ^
+            MML\M4211E\M4211E_kiinteistoraja.shp MML\M4211F_kiinteistoraja.shp
 > ogr2ogr -clipsrc rajaus.gpkg Kaitajarvi_kiinteistorajat.gpkg kiinteistorajat-all.vrt
 ```
 
@@ -127,16 +128,10 @@ Lopputuloksena syntyvä `Kaitajarvi_kiinteistorajat.gpkg` voidaan tuoda _taustak
 
 ### OpenStreetMap -kartan valmistelu ja tuonti
 
-OSM -kartta ei käytä MML:n käyttämää koordinaattijärjestelmää, joten se pitää ensin muuttaa:
+OSM -kartta ei käytä MML:n käyttämää koordinaattijärjestelmää, joten se pitää muuttaa samalla kun rajataan alue:
 
 ```
-> ogr2ogr -t_srs EPSG:3067 OSM\map.gpkg OSM\map.osm
-```
-
-Muutoksen jälkseen rajataan materiaali kartoitettavaan alueeseen:
-
-```
-> ogr2ogr -clipsrc rajaus.gpkg Kaitajarvi_osm.gpkg OSM\map.gpkg
+> ogr2ogr -t_srs EPSG:3067 -clipsrc rajaus.gpkg Kaitajarvi_osm.gpkg OSM\map.osm
 ```
 
 Lopputuloksenä syntyvä `Kaitajarvi_osm.gpkg` on yleensä mielekästä avata taustakarttana. Tällöin taustakartan
