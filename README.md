@@ -37,9 +37,8 @@ annetaan ETRS-TM35FIN -muodossa, joten rajaus on tarpeen muuttaa ETRS-TM35FIN -m
 Käynnistä OSGeo4W Shell (komentotulkki) esimerkiksi Windows:n *Start* -valikon kautta ja muuta aluerajaus MML:n käyttämään koordinaatistoon:
 
 ```
-> ogr2ogr -t_srs EPSG:3067 Kaitajärvi_rajaus.shp geojson.net\layers\POLYGON.shp
+> ogr2ogr -t_srs EPSG:3067 rajaus.gpkg geojson.net\layers\POLYGON.shp
 ```
-
 Älä sulje *OSGeo4W shell*:iä komennon jälkeen (myöhemmin tässä ohjeessa suoritettavat komennot ajetaan
 samasta ikkunasta).
 
@@ -57,7 +56,7 @@ Lataa MML:n avoimet aineistot palvelusta:
 
 Valitse vasemmassa reunassa noudettavan materiaalin tyyppi yksi kerraallaan ja klikkaa sen jälkeen haluamaasi aluetta.
 Lista noudettavasta materiaalista muodostuu oikeaan reunaan. Noudettavia materiaaleja ovat:
-* JPEG2000 -muotoiset ortoilmakuvat
+* orto- ja vääräväri-kuvat
 * laserkeilaus-, eli pistepilviaineisto (mielellään stereomalliluokiteltu)
 * Maastotietokanta, kaikki kohteet
 * kiinteistörekisterikartta, vektori, kaikki kohteet
@@ -91,8 +90,8 @@ Kopioi ladattu `map.osm` hakemistoon `OSM`.
 Rajataan kartoitettava alue:
 
 ```
-> gdalwarp -cutline rajaus.shp -crop_to_cutline -dstalpha -s_srs EPSG:3067 ^
-            -co COMPRESS=JPEG -co WORLDFILE=YES MapAnt\MapAnt.png Kaitajarvi_MapAnt.tif
+> gdalwarp -cutline rajaus.gpkg -crop_to_cutline -dstalpha -s_srs EPSG:3067 ^
+            -co COMPRESS=JPEG -MapAnt\MapAnt.png Kaitajarvi_MapAnt.tif
 ```
 
 Tässä vaiheessa on luontevaa luoda OOM -kartta ja tuoda sinne edellä synnytetty `Kaitajarvi_MapAnt.tif` taustakartaksi
@@ -100,46 +99,46 @@ georeferointeineen ja erannon asetuksineen (kts. pikakartan valmistusohjetta). M
 
 ### Ortoilmakuvien valmistelu
 
-Yhdistetään kuvat (jos useita):
+Yhdistetään ja rajataan kuvat:
 
 ```
-> gdalwarp MML\M4211E.jp2 MML\M4211F.jp2 MML\M4211E+F.tif
+> gdalbuildvrt merged.vrt MML\M4211E.jp2 MML\M4211F.jp2
+> gdalwarp -cutline rajaus.gpkg -crop_to_cutline -dstalpha -s_srs EPSG:3067 ^
+           -co compress=JPEG merged.vrt Kaitajarvi_Orto.tif
 ```
-
-... ja rajataan kartoitettavaan alueeseen (kuten MapAnt -kartta):
-
-```
-> gdalwarp -cutline rajaus.shp -crop_to_cutline -dstalpha -s_srs EPSG:3067 ^
-            -co COMPRESS=JPEG -co WORLDFILE=YES MML\M4211E+F.tif Kaitajarvi_Orto.tif
-```
+> [!TIP]
+> Pieniä rasteritiedostoja voi yhdistää myös komennolla `gdal_warp`:
+> ```
+> > gdalwarp MML\M4211E.jp2 MML\M4211F.jp2 merged.tif
+> ```
 
 Tässä vaiheessa on jälleen hyvä avata syntynyt `Kaitajarvi_Orto.tif` luotavan kartan taustakartaksi.
 
 ### Kiinteistörajojen valmistelu ja tuonti
 
-Rajataan kiinteistötiedot:
+Rajataan kiinteistörajat:
 
 ```
-> ogr2ogr -clipsrc rajaus.shp Kaitajarvi_kiinteistorajat.gml MML\M4211E\M4211E_kiinteistoraja.shp
+> ogr2ogr -clipsrc rajaus.gpkg Kaitajarvi_kiinteistorajat.gpkg MML\M4211E\M4211E_kiinteistoraja.shp
 ```
 
-Lopputuloksena syntyvä `Kaitajarvi_kiinteistorajat.gml` voidaan tuoda _taustakarttana_ OMAP-karttaan.
+Lopputuloksena syntyvä `Kaitajarvi_kiinteistorajat.gpkg` voidaan tuoda _taustakarttana_ OMAP-karttaan.
 
 ### OpenStreetMap -kartan valmistelu ja tuonti
 
 OSM -kartta ei käytä MML:n käyttämää koordinaattijärjestelmää, joten se pitää ensin muuttaa:
 
 ```
-> ogr2ogr -t_srs EPSG:3067 OSM\map.gml OSM\map.osm
+> ogr2ogr -t_srs EPSG:3067 OSM\map.gpkg OSM\map.osm
 ```
 
 Muutoksen jälkseen rajataan materiaali kartoitettavaan alueeseen:
 
 ```
-> ogr2ogr -clipsrc rajaus.shp Kaitajarvi_osm.gml OSM\map.gml
+> ogr2ogr -clipsrc rajaus.gpkg Kaitajarvi_osm.gpkg OSM\map.gpkg
 ```
 
-Lopputuloksenä syntyvä `Kaitajarvi_osm.gml` on yleensä mielekästä avata taustakarttana. Tällöin taustakartan
+Lopputuloksenä syntyvä `Kaitajarvi_osm.gpkg` on yleensä mielekästä avata taustakarttana. Tällöin taustakartan
 avaulla piirretään taustakartan halutut kohteet myös OOM-karttaan.
 
 Jos OSM-kartta sisältää huomattavan paljon kartalle sellaisenaan tuotavia kohteita (esimerkiksi polkuja), voi olla
@@ -151,16 +150,16 @@ mielekästä tuoda OSM-kartta OOM-karttaan sellaisenaan. Tuotuun karttaan sovell
 Useista Shapefileistä koostuva maastotietokanta (purettu zip:stä) yhdistetään yhdeksi GML-tiedostoksi:
 
 ```
-> ogrmerge -o MML\M4211R.gml MML\M4211R.shp\*.shp
+> ogrmerge -o MML\M4211R.gpkg MML\M4211R.shp\*.shp
 ```
 
 ... ja rajataan:
 
 ```
-> ogr2ogr -clipsrc rajaus.shp Kaitajarvi_mtk.gml MML\M4211R.gml
+> ogr2ogr -clipsrc rajaus.gpkg Kaitajarvi_mtk.gpkg MML\M4211R.gpkg
 ```
 
-Lopputuloksena syntyvä `Kaitajarvi_mtk.gml` tuodaan OOM -karttaan. Maastotietokannan symbolit muutetaan OMAP -symboleiksi
+Lopputuloksena syntyvä `Kaitajarvi_mtk.gpkg` tuodaan OOM -karttaan. Maastotietokannan symbolit muutetaan OMAP -symboleiksi
 lataamalla `MTK-ISOM2017.crt` -tiedosto. Hyödyttömiä symboleita voi tässä vaiheessa poistaa tai piilottaa.
 
 ### Laserpistepilven valmistelu ja tuonti
@@ -183,7 +182,7 @@ Pistepilviaineiston rajaaminen kattamaan vain tarvittava alue edellyttää rajau
 *WKT* (Well Known Text) -muodossa:
 
 ```
-> ogrinfo rajaus.shp rajaus -fid 0 -q -nomd | findstr POLYGON > rajaus.wkt
+> ogrinfo rajaus.gpkg rajaus -fid 0 -q -nomd | findstr POLYGON > rajaus.wkt
 > set /p rajaus=<rajaus.wkt
 ```
 (Rajauksen pitää olla alle 1024 merkkiä! Rajaukseen käytetyn tason nimi on tässä `rajaus`. Nimi on johdettu *Shapefile* tiedoston nimestä.)
