@@ -116,10 +116,11 @@ Tässä vaiheessa on jälleen hyvä avata syntynyt `Kaitajarvi_Orto.tif` luotava
 
 ### Kiinteistörajojen valmistelu ja tuonti
 
-Rajataan kiinteistörajat:
+Ydistetään (tarvittaessa) ja rajataan kiinteistörajat:
 
 ```
-> ogr2ogr -clipsrc rajaus.gpkg Kaitajarvi_kiinteistorajat.gpkg MML\M4211E\M4211E_kiinteistoraja.shp
+> ogrmerge -single -nln kiinteistoraja -o kiinteistörajat-all.vrt MML\M4211E\M4211E_kiinteistoraja.shp MML\M4211F_kiinteistoraja.shp
+> ogr2ogr -clipsrc rajaus.gpkg Kaitajarvi_kiinteistorajat.gpkg kiinteistorajat-all.vrt
 ```
 
 Lopputuloksena syntyvä `Kaitajarvi_kiinteistorajat.gpkg` voidaan tuoda _taustakarttana_ OMAP-karttaan.
