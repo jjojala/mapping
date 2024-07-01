@@ -311,7 +311,7 @@ On myös muita avoimia materiaaleja:
   paketoitujen peltojen reunat saa kätevästi poimittua vanhoista kartoista.
 * [Strava Global Heatmap](https://www.strava.com/heatmap) -palvelusta voi nähdä Strava -käyttäjien yleisimmin käyttämiä
   GPS-jälkiä. Jäljistä on mahdollista piirtää esimerkiksi yleisesti käytetyt ulkoilureitit.
-* Metsäkeskuksen metsänkäyttöilmoitukset. Kannattaa tutustua jo ennalta: [Metsäkeskuksen karttapalvelut](https://www.metsaan.fi/karttapalvelut) ja [Metsänkäyttöilmoitukset](https://www.arcgis.com/apps/MapSeries/index.html?appid=e8c03f73165b44aa8edb276e11ca2d2c)
+* Metsäkeskuksen metsänkäyttöilmoitukset. Kannattaa tutustua jo ennalta: [Metsäkeskuksen karttapalvelut](https://www.metsaan.fi/karttapalvelut) ja [Metsänkäyttöilmoitukset](https://metsakeskus.maps.arcgis.com/apps/MapSeries/index.html?appid=e8c03f73165b44aa8edb276e11ca2d2c)
 * Aiemmat suunnistuskartat, luonnollisesti.
 
 Työpöydän ääressä valmisteltu kartta voi näyttää esimerkiksi 
