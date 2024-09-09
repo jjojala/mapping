@@ -178,7 +178,7 @@ Pistepilviaineiston rajaaminen kattamaan vain tarvittava alue edellyttää rajau
 *WKT* (Well Known Text) -muodossa:
 
 ```
-> ogrinfo rajaus.gpkg rajaus -fid 0 -q -nomd | findstr POLYGON > rajaus.wkt
+> ogrinfo rajaus.gpkg rajaus -q -nomd | findstr POLYGON > rajaus.wkt
 > set /p rajaus=<rajaus.wkt
 ```
 (Rajauksen pitää olla alle 1024 merkkiä! Rajaukseen käytetyn tason nimi on tässä `rajaus`. Nimi on johdettu *Shapefile* tiedoston nimestä.)
