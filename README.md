@@ -37,7 +37,7 @@ annetaan ETRS-TM35FIN -muodossa, joten rajaus on tarpeen muuttaa ETRS-TM35FIN -m
 Käynnistä OSGeo4W Shell (komentotulkki) esimerkiksi Windows:n *Start* -valikon kautta ja muuta aluerajaus MML:n käyttämään koordinaatistoon:
 
 ```
-> ogr2ogr -t_srs EPSG:3067 rajaus.gpkg geojson.net\layers\POLYGON.shp
+> ogr2ogr -t_srs EPSG:3067 rajaus.gpkg geojson.net\layers\POLYGON.shp -nln rajaus
 ```
 Älä sulje *OSGeo4W shell*:iä komennon jälkeen (myöhemmin tässä ohjeessa suoritettavat komennot ajetaan
 samasta ikkunasta).
