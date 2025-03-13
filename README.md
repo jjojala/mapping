@@ -231,6 +231,11 @@ Lopuksi muutetaan lopputulos käyräviivaksi (puolen metrin käyrävälein):
 > ```
 > > gdal_rasterize -a elev -tr 0.5 0.5  -ot Byte Kaitajarvi_contours05.shp Kaitajarvi_contours05.tif -co compress=JPEG
 > ```
+> Rasteroitu kuva kannattaa jälkikäsitellä, esim. ilmaisella Paint.NET -ohjelmalla seuraavasti:
+> 1. Käyttäen "Magic Wand" -työkalua, valitse Shift -nappi pohjassa kuva-alueen ulkopuolinen musta piste (kohta, jossa ei ole käyräinformaatiota)
+> 2. Poista ko. tieto "Del" -napilla (näistä alueista tulee läpinäkyviä), jäljelle jää vain käyrät
+> 3. Muuta käyrien väri yhdeksi väriksi: "Adustments" -> "Levels" ja säädetään molempiin "Input" -kenttiin arvo 255.
+> 4. Tallenna formaatissa, joka tukee Alpha -kanavia (läpinäkyviä alueita), esim. alkuperäinen TIF/JPEG, jossa
 
 Syntynyt `Kaitajarvi_contours05.shp` sisältää korkeuskäyrät puolen metrin käyrävälillä.
 
