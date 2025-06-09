@@ -91,7 +91,7 @@ Rajataan kartoitettava alue:
 
 ```
 > gdalwarp -cutline rajaus.gpkg -crop_to_cutline -dstalpha -s_srs EPSG:3067 ^
-            -co COMPRESS=JPEG -MapAnt\MapAnt.png Kaitajarvi_MapAnt.tif
+            -co COMPRESS=JPEG MapAnt\MapAnt.png Kaitajarvi_MapAnt.tif
 ```
 
 Tässä vaiheessa on luontevaa luoda OOM -kartta ja tuoda sinne edellä synnytetty `Kaitajarvi_MapAnt.tif` taustakartaksi
