@@ -121,7 +121,7 @@ Ydistetään (tarvittaessa) ja rajataan kiinteistörajat:
 ```
 > ogrmerge -single -nln kiinteistoraja -o kiinteistörajat-all.vrt ^
             MML\M4211E\M4211E_kiinteistoraja.shp MML\M4211F_kiinteistoraja.shp
-> ogr2ogr -clipsrc rajaus.gpkg Kaitajarvi_kiinteistorajat.gpkg kiinteistorajat-all.vrt
+> ogr2ogr -clipsrc rajaus.gpkg Kaitajarvi_kiinteistorajat.gpkg kiinteistorajat-all.vrt KiinteistorajanSijaintitiedot
 ```
 
 Lopputuloksena syntyvä `Kaitajarvi_kiinteistorajat.gpkg` voidaan tuoda _taustakarttana_ OMAP-karttaan.
