@@ -134,7 +134,8 @@ Tässä vaiheessa on jälleen hyvä avata syntynyt `field\Orto.tif` luotavan kar
 Rajataan kiinteistörajat:
 
 ```
-> ogr2ogr -clipsrc field\rajaus.gpkg field\Kiinteistorajat.gpkg tmp\kiinteistorekisterikartta.gpkg KiinteistorajanSijaintitiedot
+> ogr2ogr -clipsrc field\rajaus.gpkg field\Kiinteistorajat.gpkg ^
+	tmp\kiinteistorekisterikartta.gpkg KiinteistorajanSijaintitiedot
 ```
 
 Lopputuloksena syntyvä `field\Kiinteistorajat.gpkg` voidaan tuoda _taustakarttana_ OMAP-karttaan.
