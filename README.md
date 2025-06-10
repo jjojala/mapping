@@ -16,6 +16,19 @@ Lisäksi tarvitset:
 * MML:n MTK --> ISOM2017 -translaatiotaulukon [MTK-ISOM2017.crt](https://github.com/jjojala/mapping/raw/master/MTK-ISOM2017.crt), sekä
 * Korkeuskäyrien luokitteluun tarkoitetun [`contours.py` -komennon](contours.py)
 
+## Valmistelut
+
+Tehdään kansio projektille haluttuun paikkaan, esim. `Documents\Kaitajarvi` ja sen alle seuraavat kansiot:
+```
+Documents\
+	+ Kaitajarvi\
+		+ tmp\		-- tänne tuodaan tilapäistiedostot
+		+ field\	-- tänne luodaan karttatiedosto ja tuodaan kaikki kartanteon
+				-- aikana tallennettavat, pysyvät tiedostot
+```
+
+Kun valmistelu on valmis, voi `tmp` -kansion halutessaan poistaa.
+
 ## Alueen rajaus
 
 Aloitetaan alueen rajaamisella. Se onnistuu esimerkiksi 
@@ -28,16 +41,17 @@ alue. Tallenna alue *Shapefile* (ESRi Shapefile) -muodossa valikon *Save->Shapef
 
 ![geojson.net](images/geojsonio.png)
 
-Pura ladattu tiedosto esimerkiksi tekemääsi hakemistoon `geojson.net`.
+Pura ladattu tiedosto esimerkiksi tekemääsi hakemistoon `tmp`.
 
 geojson.net -palvelu käyttää WGS-84, eli EPSG:4326 -koordinaattijärjestelmää. Sen sijaan maanmittauslaitos käyttää
 kaikissa aineistoissaa ETRS-TM35FIN, eli EPSG:3067 -koordinaattijärjestelmää. Jäljempänä oletetaan, että rajaus
 annetaan ETRS-TM35FIN -muodossa, joten rajaus on tarpeen muuttaa ETRS-TM35FIN -muotoon.
 
-Käynnistä OSGeo4W Shell (komentotulkki) esimerkiksi Windows:n *Start* -valikon kautta ja muuta aluerajaus MML:n käyttämään koordinaatistoon:
+Käynnistä OSGeo4W Shell (komentotulkki) esimerkiksi Windows:n *Start* -valikon kautta ja muuta aluerajaus MML:n käyttämään koordinaatistoon
+(alla, ja jatkossa oletus on, että komennot suoritetaan kansiossa `Documents\Kaitajarvi`):
 
 ```
-> ogr2ogr -t_srs EPSG:3067 rajaus.gpkg geojson.net\layers\POLYGON.shp -nln rajaus
+> ogr2ogr -t_srs EPSG:3067 field\rajaus.gpkg tmp\layers\POLYGON.shp -nln rajaus
 ```
 Älä sulje *OSGeo4W shell*:iä komennon jälkeen (myöhemmin tässä ohjeessa suoritettavat komennot ajetaan
 samasta ikkunasta).
@@ -54,17 +68,18 @@ Tarvittavat avoimet aineistot saadaan seuraavista palveluista:
 Lataa MML:n avoimet aineistot palvelusta:
   https://tiedostopalvelu.maanmittauslaitos.fi/tp/kartta
 
-Valitse vasemmassa reunassa noudettavan materiaalin tyyppi yksi kerraallaan ja klikkaa sen jälkeen haluamaasi aluetta.
+Valitse noudettavan materiaalin tyyppi yksi kerraallaan ja klikkaa sen jälkeen haluamaasi aluetta.
 Lista noudettavasta materiaalista muodostuu oikeaan reunaan. Noudettavia materiaaleja ovat:
-* orto- ja vääräväri-kuvat
-* laserkeilaus-, eli pistepilviaineisto (mielellään stereomalliluokiteltu)
-* Maastotietokanta, kaikki kohteet
-* kiinteistörekisterikartta, vektori, kaikki kohteet
+* orto- ja vääräväri-kuvat (JP2000 -formaatti)
+* laserkeilaus-, eli pistepilviaineisto (mielellään stereomalliluokiteltu, laz-formaatti)
+* Maastotietokanta, kaikki kohteet (GeoPackage, gpkg -muoto)
+* kiinteistörekisterikartta, vektori, kaikki kohteet (GeoPackage)
 
 ![MML](images/MML.png)
 
 Tee lataustilaus ja odota, että saat sähköpostiisi latauslinkin. Lataa aineistot ja kopioi ne esimerkiksi tekemääsi
-hakemistoon `MML`. Pura zip -paketit vastaavan nimiseen hakemistoon, esim. `MML\M4211R.shp.zip` --> `MML\M4211R.shp`
+hakemistoon `tmp`. Pura zip -paketit. *Huom!* Orto- ja väärävärikuvat ovat saman nimisiä, joten tallenna ne omiin 
+alahakemistoihinsa `tmp\orto\` ja `tmp\vaaravari`.
 
 ### MapAnt
 
@@ -74,12 +89,12 @@ hiirellä rajataan kartalta noudettava suorakaiteenmuotoinen alue. Käytä tuonn
 
 ![MapAnt](images/mapant.png)
 
-Pura ladattu zip-tiedosto esimerkiksi tekemääsi hakemistoon `MapAnt`.
+Pura ladattu zip-tiedosto `tmp` -kansioon.
 
 ### OpenStreetMap (OSM)
 
 OSM -palvelu löytyy osoitteesta https://openstreetmap.org/. Aineiston voi rajata ja tuoda karttanäkymästä *Export* -toiminnolla.
-Kopioi ladattu `map.osm` hakemistoon `OSM`.
+Kopioi ladattu `map.osm` hakemistoon `tmp`.
 
 ![OSM](images/OSM.png)
 
@@ -90,11 +105,11 @@ Kopioi ladattu `map.osm` hakemistoon `OSM`.
 Rajataan kartoitettava alue:
 
 ```
-> gdalwarp -cutline rajaus.gpkg -crop_to_cutline -dstalpha -s_srs EPSG:3067 ^
-            -co COMPRESS=JPEG MapAnt\MapAnt.png Kaitajarvi_MapAnt.tif
+> gdalwarp -cutline field\rajaus.gpkg -crop_to_cutline -dstalpha -s_srs EPSG:3067 ^
+            -co COMPRESS=JPEG tmp\MapAnt.png field\MapAnt.tif
 ```
 
-Tässä vaiheessa on luontevaa luoda OOM -kartta ja tuoda sinne edellä synnytetty `Kaitajarvi_MapAnt.tif` taustakartaksi
+Tässä vaiheessa on luontevaa luoda OOM -kartta ja tuoda sinne edellä synnytetty `field\MapAnt.tif` taustakartaksi
 georeferointeineen ja erannon asetuksineen (kts. pikakartan valmistusohjetta). Maanmittauslaitos tuottaa Ilmatieteenlaitoksen erantomittausten pohjalta [erantokarttaa](https://www.maanmittauslaitos.fi/kartat-ja-paikkatieto/kartat/erantokartta), jonka mukaan eranto kannattaa OOM:ssä asettaa.
 
 ### Ortoilmakuvien valmistelu
@@ -102,39 +117,37 @@ georeferointeineen ja erannon asetuksineen (kts. pikakartan valmistusohjetta). M
 Yhdistetään ja rajataan kuvat:
 
 ```
-> gdalbuildvrt merged.vrt MML\M4211E.jp2 MML\M4211F.jp2
-> gdalwarp -cutline rajaus.gpkg -crop_to_cutline -dstalpha -s_srs EPSG:3067 ^
-           -co compress=JPEG merged.vrt Kaitajarvi_Orto.tif
+> gdalbuildvrt tmp\orto-merged.vrt tmp\orto\M4211E.jp2 tmp\orto\M4211F.jp2
+> gdalwarp -cutline field\rajaus.gpkg -crop_to_cutline -dstalpha -s_srs EPSG:3067 ^
+           -co compress=JPEG tmp\orto-merged.vrt field\Orto.tif
 ```
 > [!TIP]
-> Pieniä rasteritiedostoja voi yhdistää myös komennolla `gdal_warp`:
+> Pieniä rasteritiedostoja voi yhdistää myös komennolla `gdalwarp`:
 > ```
-> > gdalwarp MML\M4211E.jp2 MML\M4211F.jp2 merged.tif
+> > gdalwarp tmp\orto\M4211E.jp2 tmp\orto\M4211F.jp2 tmp\orto-merged.tif
 > ```
 
-Tässä vaiheessa on jälleen hyvä avata syntynyt `Kaitajarvi_Orto.tif` luotavan kartan taustakartaksi.
+Tässä vaiheessa on jälleen hyvä avata syntynyt `field\Orto.tif` luotavan kartan taustakartaksi.
 
 ### Kiinteistörajojen valmistelu ja tuonti
 
-Ydistetään (tarvittaessa) ja rajataan kiinteistörajat:
+Rajataan kiinteistörajat:
 
 ```
-> ogrmerge -single -nln kiinteistoraja -o kiinteistörajat-all.vrt ^
-            MML\M4211E\M4211E_kiinteistoraja.shp MML\M4211F_kiinteistoraja.shp
-> ogr2ogr -clipsrc rajaus.gpkg Kaitajarvi_kiinteistorajat.gpkg kiinteistorajat-all.vrt KiinteistorajanSijaintitiedot
+> ogr2ogr -clipsrc field\rajaus.gpkg field\Kiinteistorajat.gpkg tmp\kiinteistorekisterikartta.gpkg KiinteistorajanSijaintitiedot
 ```
 
-Lopputuloksena syntyvä `Kaitajarvi_kiinteistorajat.gpkg` voidaan tuoda _taustakarttana_ OMAP-karttaan.
+Lopputuloksena syntyvä `field\Kiinteistorajat.gpkg` voidaan tuoda _taustakarttana_ OMAP-karttaan.
 
 ### OpenStreetMap -kartan valmistelu ja tuonti
 
 OSM -kartta ei käytä MML:n käyttämää koordinaattijärjestelmää, joten se pitää muuttaa samalla kun rajataan alue:
 
 ```
-> ogr2ogr -t_srs EPSG:3067 -clipsrc rajaus.gpkg Kaitajarvi_osm.gpkg OSM\map.osm
+> ogr2ogr -t_srs EPSG:3067 -clipsrc field\rajaus.gpkg field\OSM.gpkg tmp\map.osm
 ```
 
-Lopputuloksenä syntyvä `Kaitajarvi_osm.gpkg` on yleensä mielekästä avata taustakarttana. Tällöin taustakartan
+Lopputuloksenä syntyvä `Osm.gpkg` on yleensä mielekästä avata taustakarttana. Tällöin taustakartan
 avaulla piirretään taustakartan halutut kohteet myös OOM-karttaan.
 
 Jos OSM-kartta sisältää huomattavan paljon kartalle sellaisenaan tuotavia kohteita (esimerkiksi polkuja), voi olla
@@ -143,34 +156,33 @@ mielekästä tuoda OSM-kartta OOM-karttaan sellaisenaan. Tuotuun karttaan sovell
 
 ### Maastotietokannan valmistelu ja tuonti
 
-Useista Shapefileistä koostuva maastotietokanta (purettu zip:stä) yhdistetään yhdeksi GML-tiedostoksi:
+Rajataan maastotietokanta:
 
 ```
-> ogrmerge -o MML\M4211R.gpkg MML\M4211R.shp\*.shp
+> ogr2ogr -clipsrc field\rajaus.gpkg tmp\mtk_rajattu.gpkg tmp\maastotietokanta_kaikki.gpkg
 ```
 
-... ja rajataan:
-
-```
-> ogr2ogr -clipsrc rajaus.gpkg Kaitajarvi_mtk.gpkg MML\M4211R.gpkg
-```
-
-Lopputuloksena syntyvä `Kaitajarvi_mtk.gpkg` tuodaan OOM -karttaan. Maastotietokannan symbolit muutetaan OMAP -symboleiksi
+Lopputuloksena syntyvä `tmp\mtk_rajattu.gpkg` tuodaan OOM -karttaan. Maastotietokannan symbolit muutetaan OMAP -symboleiksi
 lataamalla `MTK-ISOM2017.crt` -tiedosto. Hyödyttömiä symboleita voi tässä vaiheessa poistaa tai piilottaa.
+
+> [!TIP]
+> Käytännössä voi myös käyttää OMAP:n "Etsi ..." -toimintoa ja hakea symbolityyppi kerrallaan kaikki tässä vaiheessa purppuralla
+> kuvatut lopulliseen karttaan halutut objektit ja muuttaa ne OOM:n "Vaihda symbolia" -toiminnolla halutuksi suunnistuskarta symboliksi.
+> Vaikka erilaisia symboleja on varsin paljon, on työ silti varsin kohtuullinen (ehkä kehitän tähän jossain kohtaa jotakin...).
 
 ### Laserpistepilven valmistelu ja tuonti
 
 Jos pistepilvitiedostoja on useita, yhdistetään ne:
 
 ```
-> pdal merge MML\M4211E4.laz MML\M4211F3.laz MML\M4211E4+F3.laz
+> pdal merge tmp\M4211E4.laz tmp\M4211F3.laz tmp\merged.laz
 ```
 
 Kartan korkeuskuvauksen kannalta vain maanpintaa kuvaavat "ground", eli "class 2" -pisteet
 tarvitaan. Muut, esimerkiksi kasvillisuutta tai vesistöjä kuvaavat pisteet suodatetaan pois:
 
 ```
-> pdal translate -i MML\M4211E4+F3.laz -o MML\M4211E4+F3_ground.laz ^
+> pdal translate -i tmp\merged.laz -o tmp\merged_ground.laz ^
 			-f range --filters.range.limits="Classification[2:2]"
 ```
 
@@ -178,33 +190,31 @@ Pistepilviaineiston rajaaminen kattamaan vain tarvittava alue edellyttää rajau
 *WKT* (Well Known Text) -muodossa:
 
 ```
-> ogrinfo rajaus.gpkg rajaus -q -nomd | findstr POLYGON > rajaus.wkt
-> set /p rajaus=<rajaus.wkt
+> ogrinfo field\rajaus.gpkg rajaus -q -nomd | findstr POLYGON > tmp\rajaus.wkt
+> set /p rajaus=<tmp\rajaus.wkt
 ```
 (Rajauksen pitää olla alle 1024 merkkiä! Rajaukseen käytetyn tason nimi on tässä `rajaus`. Nimi on johdettu *Shapefile* tiedoston nimestä.)
  
 Tämän jälkeen tarvittava materiaali voidaan rajata:
 
 ```
-> pdal translate -i MML\M4211E4+F3_ground.laz -o MML\Kaitajarvi_ground.laz ^
+> pdal translate -i tmp\merged_ground.laz -o tmp\ground.laz ^
 			-f crop --filters.crop.polygon="%rajaus%"
 ```
 (pdal ei salli skandimerkistön käyttöä tiedoston nimissä!)
 
-Seuraavaksi rajausta, maanpitaa kuvaavasta pistepilvestä tehdään *DTM* (Digital Terrain Model):
+Seuraavaksi rajausta, maanpitaa kuvaavasta pistepilvestä tehdään *DEM* (Digital Elevation Model):
 
 ```
-> pdal translate -i MML\Kaitajarvi_ground.laz -o MML\Kaitajarvi_dem.tif ^
+> pdal translate -i tmp\ground.laz -o tmp\dem.tif ^
 			-w gdal --writers.gdal.resolution=0.2 --writers.gdal.radius=3 ^
 			--writers.gdal.window_size=1 --writers.gdal.output_type="idw"
 ```
-(Digital Elevation Model, DEM on yleisnimi erilaisille pintamalleille. Maanpinnan pinnanmuotoja
-kuvaava DTM on eräs DEM:n muoto.)
 
 Lopuksi DEM muutetaan käyräviivaksi (puolen metrin käyrävälein):
 
 ```
-> gdal_contour -i 0.5 -a "elev" MML\Kaitajarvi_dem.tif Kaitajarvi_contours05.gpkg
+> gdal_contour -i 0.5 -a "elev" tmp\dem.tif tmp\contours05.gpkg
 ```
 
 > [!TIP]
@@ -214,24 +224,24 @@ Lopuksi DEM muutetaan käyräviivaksi (puolen metrin käyrävälein):
 >
 > Käyrien kuvaamiseen karkeampi:
 > ```
-> > pdal translate -i MML\Kaitajarvi_ground.laz -o MML\Kaitajarvi_dem.tif ^
+> > pdal translate -i tmp\ground.laz -o tmp\dem.tif ^
 >			  -w gdal --writers.gdal.resolution=1.0 --writers.gdal.radius=3.0 ^
 > 			  --writers.gdal.window_size=1 --writers.gdal.output_type="idw"
 > ```
 >
 > Pohja-aineistoksi tarkempi:
 > ```
-> > pdal translate -i MML\Kaitajarvi_ground.laz -o MML\Kaitajarvi_dem_dense.tif ^
+> > pdal translate -i tmp\ground.laz -o tmp\dem_dense.tif ^
 > 			  -w gdal --writers.gdal.resolution=0.2 --writers.gdal.radius=1.0 ^
 >			  --writers.gdal.window_size=0 --writers.gdal.output_type="idw"
-> > gdal_contour -i 0.5 -a "elev" MML\Kaitajarvi_dem_dense.tif Kaitajarvi_contours05_dense.gpkg
+> > gdal_contour -i 0.5 -a "elev" tmp\dem_dense.tif tmp\contours05_dense.gpkg
 > ```
 > 
 > Varsinkin MML:n tarkemmalla laseraineistolla voi kannattaa tehdä myös käyristä tarkempi
 > kuvatiedosto, jota on helpompi käyttää tausta-aineistona:
 > ```
-> > gdal_rasterize -a elev -tr 0.5 0.5  -ot Byte Kaitajarvi_contours05_dense.gpkg ^
-> 			  Kaitajarvi_contours05_dense.tif -co compress=JPEG
+> > gdal_rasterize -a "elev" -tr 0.5 0.5  -ot Byte tmp\contours05_dense.gpkg ^
+> 			  field\Contours05_dense.tif -co compress=JPEG
 > ```
 > Rasteroitu kuva kannattaa jälkikäsitellä, esim. ilmaisella Paint.NET -ohjelmalla seuraavasti:
 > 1. Käyttäen "Magic Wand" -työkalua, valitse Shift -nappi pohjassa kuva-alueen ulkopuolinen musta piste (kohta, jossa ei ole käyräinformaatiota)
@@ -242,54 +252,24 @@ Lopuksi DEM muutetaan käyräviivaksi (puolen metrin käyrävälein):
 >
 > DEM-mallista voi tuottaa myös rinnevarjostuskuvan (multidirectional - varjostus useasta suunnasta):
 > ```
-> > gdaldem hillshade MML\Kaitajarvi_dem_dense.tif hillshade.tif -multidirectional -co compress=JPEG
+> > gdaldem hillshade tmp\dem_dense.tif field\Hillshade.tif -multidirectional -co compress=JPEG
 > ```
+> 
 > ja niin ikään hyödyllisen TRI (Terrain Roughiness Index) -kuvan:
 > ```
-> > gdaldem TRI MML\Kaitajarvi_dem_dense.tif tri-data.tif -co compress=DEFLATE -co predictor=2
-> > gdal_translate -scale 0 0.4 -ot Byte tri-data.tif tri.tif -co compress=JPEG
+> > gdaldem TRI tmp\dem_dense.tif tmp\tri-data.tif -co compress=DEFLATE -co predictor=2
+> > gdal_translate -scale 0 0.4 -ot Byte tmp\tri-data.tif field\Tri.tif -co compress=JPEG
 > ```
 
-Syntynyt `Kaitajarvi_contours05.gpkg` sisältää korkeuskäyrät puolen metrin käyrävälillä.
+Syntynyt `tmp\contours05.gpkg` sisältää korkeuskäyrät puolen metrin käyrävälillä.
 
-Seuraavaksi onkin päätettävä kartassa käytettävä käyräväli ja johtokäyrien tasot. Komennolla:
+Lopputulos `tmp\contours05.gpkg` voidaan lisätä OOM -karttaan "Tuo" -toiminnolla. Tuonnin jälkeen OOM:n "Tag Editor" -ikkunassa
+näkee kulloinkin valittuna olevan, tässä vaiheessa purppuralla viivalla kuvatun käyrän korkeuden merenpinnasta "elev" -attribuutissa.
 
-```
-> python contours.py -info MML\Kaitajarvi_contours05.shp
-```
-
-... saat yhteenvedon korkeusvaihtelusta ja taulukon, jossa on kuvattu miten monta käyräsymbolia milläkin korkeustasolla esiintyy:
-
-```
-Elevation range: 107.50 - 155.00m:
-        Elevation | count
-        -----------------------
-        107.50m   |    3
-        108.75m   |    2
-        ...
-        ...
-        150.00m   |   17
-        151.25m   |   21
-        152.50m   |    9
-        153.75m   |    4
-        155.00m   |    1
-```
-
-Esimerkiksi tässä tapauksessa alueen korkeus vaihtelee välillä 107,5 - 155m ja on siis 47,5m. Jos (ja kun) käyräväliksi
-valitaan viisi metriä, johtokäyrätasoja mahtuu vaihteluvälille kaksi (koska joka viides korkeuskäyrä on johtokäyrä), 
-ylemmän ollessa esimerkiksi tasolla 145m. ISOM 2017 suosittelee johtokäyrätason valinnaksi "*merkittävimpien rinteiden
-keskitason*".
-
-Nyt, kun tiedetään käyräväli (5m) ja vähintään yksi käytetettävä johtokäyrän korkeustaso (145m), voidaan tehdä käyrien luokittelu:
-
-```
-> python contours.py -tag 145 5 MML\Kaitajarvi_contours05.shp Kaitajarvi_contours05.gml
-```
-
-Lopputulos `Kaitajarvi_contours05.gml` voidaan lisätä OOM -karttaan "Tuo" -toiminnolla. Tuodut käyräsymbolit muutetaan
-OMAP -symboleiksi lataamalla `MTK-ISOM2017.crt` -tiedosto. Lopullisesta kartasta pois jäävät kartoituksen avuksi tarkoitetut
-tukikäyrät esitetään purppuralla oletussymbolilla, mutta niitä varten kannattaa käsin tehdä esim. 0,03mm leveä tumman vihreä
-käyräsymboli. Kokonaan niitä ei kannata poistaa, sillä tukikäyrät ovat mm. maastossa hyvin tarpeellisia.
+Tämän jälkeen:
+* Päätetään johtokäyrien taso. Kuvausohjeen mukaan johtokäyrä -symbolilla tulee kuvata korkeuskäyrä _"merkittävien rinteiden puolestavälistä"_.
+* Valitaan johtokäyriksi muutettavat symbolit "Etsi..." -ikkunassa hakemalla symboleita, joissa attribuutti "elev" on valittu korkeustaso ("Etsi kaikki"). Kun ko. symbolit on valittuna, valitaan symboli-ikkunasta haluttu symboli ja painetaan "vaihda symboli" -nappia.
+* ... toistetaan kaikille johtokäyrä, korkeuskäyrä ja apukäyrä -tasoille
 
 ![OOM](images/OOM.png)
 
