@@ -230,7 +230,8 @@ Lopuksi DEM muutetaan käyräviivaksi (puolen metrin käyrävälein):
 > Varsinkin MML:n tarkemmalla laseraineistolla voi kannattaa tehdä myös käyristä tarkempi
 > kuvatiedosto, jota on helpompi käyttää tausta-aineistona:
 > ```
-> > gdal_rasterize -a elev -tr 0.5 0.5  -ot Byte Kaitajarvi_contours05_dense.gpkg Kaitajarvi_contours05_dense.tif -co compress=JPEG
+> > gdal_rasterize -a elev -tr 0.5 0.5  -ot Byte Kaitajarvi_contours05_dense.gpkg ^
+> 			  Kaitajarvi_contours05_dense.tif -co compress=JPEG
 > ```
 > Rasteroitu kuva kannattaa jälkikäsitellä, esim. ilmaisella Paint.NET -ohjelmalla seuraavasti:
 > 1. Käyttäen "Magic Wand" -työkalua, valitse Shift -nappi pohjassa kuva-alueen ulkopuolinen musta piste (kohta, jossa ei ole käyräinformaatiota)
