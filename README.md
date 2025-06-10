@@ -29,7 +29,7 @@ Documents\
 
 Kun valmistelu on valmis, voi `tmp` -kansion halutessaan poistaa.
 
-## Alueen rajaus
+### Alueen rajaus
 
 Aloitetaan alueen rajaamisella. Se onnistuu esimerkiksi 
 [geojson.io](https://geojson.io/) -palvelussa. Käyttääksesi palvelua et tarvitse 
