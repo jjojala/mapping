@@ -201,43 +201,55 @@ Seuraavaksi rajausta, maanpitaa kuvaavasta pistepilvestä tehdään *DTM* (Digit
 (Digital Elevation Model, DEM on yleisnimi erilaisille pintamalleille. Maanpinnan pinnanmuotoja
 kuvaava DTM on eräs DEM:n muoto.)
 
+Lopuksi DEM muutetaan käyräviivaksi (puolen metrin käyrävälein):
+
+```
+> gdal_contour -i 0.5 -a "elev" MML\Kaitajarvi_dem.tif Kaitajarvi_contours05.gpkg
+```
+
 > [!TIP]
 > MML:n uudella 5p/m<sup>2</sup> -materiaalilla voi olla mielekästä tehdä kaksi DEM-mallia: toinen kartalle
-> tulevien käyrien piirtämiseen (kts. ohjeet jatkossa), jolloin resoluutio voi olla kenties hieman
-> karkeampi, esim. 0.5 ... 1.0 (muiden parametrien säilyessä ennallaan). Toista mallia käytetään
-> pohja-aineistona esim. kivien ja jyrkänteiden tunnistamiseen. Tällöin resoluutio voi olla 0.2,
-> radius 1.0 ja window_size=0 (ei välttämättä pyritä yhtenäiseen viivaan). Tarkka käyrästö vie paljon tilaa,
-> joten voi olla mielekästä muuttaa se OOM:llä jpg-muotoon.
+> tulevien käyrien kuvaamiseen (kts. ohjeet jatkossa) ja toinen pohja-aineistoksi maastotyössä, esim. kivien,
+> jyrkänteiden ja pienten maaston muotojen kuvaamiseen.
 >
-> Tarkemmasta DEM-mallista voi tuottaa myös rinnevarjostuskuvan (multidirectional - varjostus useasta suunnasta):
+> Käyrien kuvaamiseen karkeampi:
 > ```
-> > gdaldem hillshade dem.tif hillshade.tif -multidirectional -co compress=JPEG
+> > pdal translate -i MML\Kaitajarvi_ground.laz -o MML\Kaitajarvi_dem.tif ^
+>			  -w gdal --writers.gdal.resolution=1.0 --writers.gdal.radius=3.0 ^
+> 			  --writers.gdal.window_size=1 --writers.gdal.output_type="idw"
 > ```
-> ja niin ikään hyödyllisen TRI (Terrain Roughiness Index) -kuvan:
+>
+> Pohja-aineistoksi tarkempi:
 > ```
-> > gdaldem TRI dem.tif tri-data.tif -co compress=DEFLATE -co predictor=2
-> > gdal_translate -scale 0 0.4 -ot Byte tri-data.tif tri.tif -co compress=JPEG
+> > pdal translate -i MML\Kaitajarvi_ground.laz -o MML\Kaitajarvi_dem_dense.tif ^
+> 			  -w gdal --writers.gdal.resolution=0.2 --writers.gdal.radius=1.0 ^
+>			  --writers.gdal.window_size=0 --writers.gdal.output_type="idw"
+> > gdal_contour -i 0.5 -a "elev" MML\Kaitajarvi_dem_dense.tif Kaitajarvi_contours05_dense.gpkg
 > ```
-
-Lopuksi muutetaan lopputulos käyräviivaksi (puolen metrin käyrävälein):
-
-```
-> gdal_contour -i 0.5 -a "elev" MML\Kaitajarvi_dem.tif Kaitajarvi_contours05.shp
-```
-
-> [!TIP]
+> 
 > Varsinkin MML:n tarkemmalla laseraineistolla voi kannattaa tehdä myös käyristä tarkempi
-> kuvatiedosto, jota voi käyttää tausta-aineistona:
+> kuvatiedosto, jota on helpompi käyttää tausta-aineistona:
 > ```
-> > gdal_rasterize -a elev -tr 0.5 0.5  -ot Byte Kaitajarvi_contours05.shp Kaitajarvi_contours05.tif -co compress=JPEG
+> > gdal_rasterize -a elev -tr 0.5 0.5  -ot Byte Kaitajarvi_contours05_dense.gpkg Kaitajarvi_contours05_dense.tif -co compress=JPEG
 > ```
 > Rasteroitu kuva kannattaa jälkikäsitellä, esim. ilmaisella Paint.NET -ohjelmalla seuraavasti:
 > 1. Käyttäen "Magic Wand" -työkalua, valitse Shift -nappi pohjassa kuva-alueen ulkopuolinen musta piste (kohta, jossa ei ole käyräinformaatiota)
 > 2. Poista ko. tieto "Del" -napilla (näistä alueista tulee läpinäkyviä), jäljelle jää vain käyrät
 > 3. Muuta käyrien väri yhdeksi väriksi: "Adustments" -> "Levels" ja säädetään molempiin "Input" -kenttiin arvo 255.
-> 4. Tallenna formaatissa, joka tukee Alpha -kanavia (läpinäkyviä alueita), esim. alkuperäinen TIF/JPEG, jossa
+> 4. Tallenna formaatissa, joka tukee Alpha -kanavia (läpinäkyviä alueita), esim. alkuperäinen TIF (JPEG), jossa samalla säilyy myös georeferointi .
+>
+>
+> DEM-mallista voi tuottaa myös rinnevarjostuskuvan (multidirectional - varjostus useasta suunnasta):
+> ```
+> > gdaldem hillshade MML\Kaitajarvi_dem_dense.tif hillshade.tif -multidirectional -co compress=JPEG
+> ```
+> ja niin ikään hyödyllisen TRI (Terrain Roughiness Index) -kuvan:
+> ```
+> > gdaldem TRI MML\Kaitajarvi_dem_dense.tif tri-data.tif -co compress=DEFLATE -co predictor=2
+> > gdal_translate -scale 0 0.4 -ot Byte tri-data.tif tri.tif -co compress=JPEG
+> ```
 
-Syntynyt `Kaitajarvi_contours05.shp` sisältää korkeuskäyrät puolen metrin käyrävälillä.
+Syntynyt `Kaitajarvi_contours05.gpkg` sisältää korkeuskäyrät puolen metrin käyrävälillä.
 
 Seuraavaksi onkin päätettävä kartassa käytettävä käyräväli ja johtokäyrien tasot. Komennolla:
 
