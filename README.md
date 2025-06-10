@@ -68,9 +68,9 @@ hakemistoon `MML`. Pura zip -paketit vastaavan nimiseen hakemistoon, esim. `MML\
 
 ### MapAnt
 
-Hae MapAnt -kartta palvelusta https://www.mapant.fi/. Tuonti käynnistetään *Export* -toiminnolla, jonka jälkeen
-hiirellä rajataan kartalta noudettava suorakaiteenmuotoinen alue. Käytä tuonnissa tarkinta lähennystasoa (Zoom=9)
-ja muotona georeferoitua PNG:tä (Format="Georeferenced PNG"):
+Hae MapAnt -kartta palvelusta https://www.mapant.fi/. Tuonti käynnistetään *Export* -toiminnolla, jonka jälkeen 
+hiirellä rajataan kartalta noudettava suorakaiteenmuotoinen alue. Käytä tuonnissa tarkinta mahdollista lähennystasoa
+(vaihtelee tuotavan alueen koon mukaan) ja muotona georeferoitua PNG:tä (Format="Georeferenced PNG"):
 
 ![MapAnt](images/mapant.png)
 
